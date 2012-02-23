@@ -15,7 +15,7 @@ hi Normal           guifg=#FFFFFF guibg=#22282A
 hi CursorLine       guibg=#32383A
 hi CursorColumn     guibg=#32383A
 hi Search           guibg=#808080
-hi Visual           guifg=#FFFFFF guibg=#4F6164 
+hi Visual           guifg=#FFFFFF guibg=#FFFFFF
 hi VisualNOS        guifg=#FFFFFF guibg=#4F6164 
 hi Identifier       guifg=#FFFFFF
 hi Number           guifg=#FFCD22 
@@ -35,7 +35,7 @@ hi xmlCdata         guifg=#99A38A
 hi xmlAttrib        guifg=#678CB1
 hi htmlTagName      guifg=#93C763
 hi htmlArg          guifg=#678CB1
-hi ErrorMsg         guifg=#FF0000
+hi ErrorMsg         guifg=#FFFFFF guibg=#FF0000
 hi WarningMsg       guifg=#FFCD22
 hi Folded           guifg=#808080 guibg=#1C2325
 hi PMenu            guifg=#CCCCFF guibg=#1C2325
