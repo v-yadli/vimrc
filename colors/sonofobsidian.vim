@@ -15,7 +15,7 @@ hi Normal           guifg=#FFFFFF guibg=#22282A
 hi CursorLine       guibg=#32383A
 hi CursorColumn     guibg=#32383A
 hi Search           guibg=#808080
-hi Visual           guifg=#FFFFFF guibg=#FFFFFF
+hi Visual           guifg=#333333
 hi VisualNOS        guifg=#FFFFFF guibg=#4F6164 
 hi Identifier       guifg=#FFFFFF
 hi Number           guifg=#FFCD22 
