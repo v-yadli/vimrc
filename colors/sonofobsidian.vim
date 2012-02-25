@@ -10,7 +10,7 @@ endif
 let g:colors_name="sonofobsidian"
 
 
-hi Comment          guifg=#99AA8A
+hi Comment          guifg=#FF7E00
 hi Normal           guifg=#FFFFFF guibg=#22282A
 hi CursorLine       guibg=#32383A
 hi CursorColumn     guibg=#32383A
