@@ -9,22 +9,43 @@ set encoding=utf-8
 set nocompatible
 set ignorecase
 set smartcase
-
 " Menu options
 set wildmenu
 set wildmode=longest:full
+" Auto mouse
 set mouse=a
+" Line number
 set number
+" Highlight search & incremental search
 set hlsearch
 set incsearch
+" Disable toolbar
+set guioptions-=T
+
+" Set wide font to YaHei
+set guifontwide=NSimSun:h11
 
 " Terminal color workaround
 set t_Co=256
 " Backspace workaround
 set backspace=indent,eol,start
 " I don't like wrap
+set formatoptions+=tcroql
 set nowrap
+set textwidth=80
 
+" Let TeX file always be recognized
+" http://weichen.wordpress.com/2007/01/09/howto-make-vim-latex-suite-always-recognise-tex-file/
+
+let g:tex_flavor = "latex"
+
+" For LaTeX files, activate "long line break" feature
+" Note that a(english) word won't be broken into two lines
+" And, add a color margin line for LaTeX mode!
+autocmd FileType tex set formatoptions-=l
+autocmd FileType tex set formatoptions+=m
+autocmd FileType tex set colorcolumn=81
+autocmd FileType tex nmap <C-F5> :!make.bat<CR>
 " Son of obsidian!
 colorscheme sonofobsidian
 set cursorline
@@ -47,6 +68,10 @@ imap <C-l> <Esc><C-w>li
 filetype on
 filetype plugin on
 filetype indent on
+
+nmap <C-s> :update<CR>
+imap <C-s> <Esc>:update<CR>a
+
 " Folding workaround
 set foldmethod=marker
 " Quick resource vim configuration
@@ -54,6 +79,8 @@ nmap <Leader>ss :source ~/.vimrc<CR>
 
 " Tab operations and buffer operations{{{
 nmap <Leader>tt :tab new<CR>
+nmap <Leader>tn :tabNext<CR>
+nmap <Leader>tp :tabPrev<CR>
 nmap <Leader>bf :buffers<CR>
 nmap <Leader>bp :bp<CR>
 nmap <Leader>ba :ba<CR>
