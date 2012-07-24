@@ -1,3 +1,4 @@
+source $VIM\sysrc.vim
 set cindent
 set shiftwidth=4
 set tabstop=4
@@ -24,15 +25,16 @@ set guioptions-=T
 
 " Set wide font to YaHei
 set guifontwide=NSimSun:h11
+set guifont=Consolas:h11
 
 " Terminal color workaround
 set t_Co=256
 " Backspace workaround
 set backspace=indent,eol,start
 " I don't like wrap
-set formatoptions+=tcroql
+set formatoptions+=tcroqlmM
 set nowrap
-set textwidth=80
+set textwidth=70
 
 " Let TeX file always be recognized
 " http://weichen.wordpress.com/2007/01/09/howto-make-vim-latex-suite-always-recognise-tex-file/
@@ -44,14 +46,14 @@ let g:tex_flavor = "latex"
 " And, add a color margin line for LaTeX mode!
 autocmd FileType tex set formatoptions-=l
 autocmd FileType tex set formatoptions+=m
-autocmd FileType tex set colorcolumn=81
+autocmd FileType tex set colorcolumn=72
 autocmd FileType tex nmap <C-F5> :!make.bat<CR>
 " Son of obsidian!
 colorscheme sonofobsidian
 set cursorline
 set laststatus=2
 
-" Quick movement between windows
+" Quick movement between windows, and quick window adjustment
 " {{{
 nmap <C-j> <C-w>j
 nmap <C-k> <C-w>k
