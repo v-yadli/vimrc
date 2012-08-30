@@ -1,4 +1,8 @@
-source $VIM\sysrc.vim
+if has("unix")
+    source ~/.vim/sysrc.vim
+elseif has("win32")
+    source $VIM/sysrc.vim
+endif
 set cindent
 set shiftwidth=4
 set tabstop=4
@@ -23,9 +27,16 @@ set incsearch
 " Disable toolbar
 set guioptions-=T
 
+
 " Set wide font to YaHei
-set guifontwide=NSimSun:h11
-set guifont=Consolas:h11
+if has("unix")
+    set guifontwide=WenQuanYi\ Zen\ Hei\ 11
+    set guifont=MonoSpace\ 11
+elseif has("win32")
+    set guifontwide=NSimSun:h11
+    set guifont=Consolas:h11
+endif
+
 
 " Terminal color workaround
 set t_Co=256
