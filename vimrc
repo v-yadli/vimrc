@@ -23,7 +23,8 @@ set incsearch
 " Disable toolbar
 set guioptions-=T
 
-" Set wide font to YaHei
+" Set wide font to NSimSun
+" Of course we want Consolas for programming and English.
 set guifontwide=NSimSun:h11
 set guifont=Consolas:h11
 
@@ -35,7 +36,7 @@ set backspace=indent,eol,start
 set formatoptions+=tcroqlmM
 set nowrap
 set textwidth=70
-
+"{{{ Latex Settings
 " Let TeX file always be recognized
 " http://weichen.wordpress.com/2007/01/09/howto-make-vim-latex-suite-always-recognise-tex-file/
 
@@ -47,7 +48,8 @@ let g:tex_flavor = "latex"
 autocmd FileType tex set formatoptions-=l
 autocmd FileType tex set formatoptions+=m
 autocmd FileType tex set colorcolumn=72
-autocmd FileType tex nmap <C-F5> :!make.bat<CR>
+autocmd FileType tex nnoremap <C-F5> :!make.bat<CR>
+"}}}
 " Son of obsidian!
 colorscheme sonofobsidian
 set cursorline
@@ -77,7 +79,7 @@ imap <C-s> <Esc>:update<CR>a
 " Folding workaround
 set foldmethod=marker
 " Quick resource vim configuration
-nmap <Leader>ss :source ~/.vimrc<CR>
+nmap <Leader>ss :source $MYVIMRC<CR>
 
 " Tab operations and buffer operations{{{
 nmap <Leader>tt :tab new<CR>
@@ -86,12 +88,14 @@ nmap <Leader>tp :tabPrev<CR>
 nmap <Leader>bf :buffers<CR>
 nmap <Leader>bp :bp<CR>
 nmap <Leader>ba :ba<CR>
-nmap <Leader>bb :bn<CR>
+nmap <Leader>bn :bn<CR>
 nmap <Leader>bd <C-w><C-v><C-l>:bn<CR><C-h>:bd<CR>
 "}}}
 
 " Vimwiki settings{{{
 let g:vimwiki_CJK_length=1
+autocmd FileType vimwiki nmap <C-F5> :VimwikiAll2HTML<CR><CR>
+autocmd FileType vimwiki imap <C-F5> <ESC>:VimwikiAll2HTML<CR><CR>i
 "}}}
 
 " Bring back NERD-Tree
@@ -99,7 +103,7 @@ nmap <F3> :NERDTreeToggle<CR>
 imap <F3> <Esc>:NERDTreeToggle<CR>
 
 " Quick edit vimrc!
-command! -nargs=0 Vimrc :silent! tabnew ~/.vim/vimrc
+command! -nargs=0 Vimrc :silent! tabnew $MYVIMRC
 
 " Weird... <C-S> will freeze the terminal. Use <C-Q> to unfreeze it.
 " WTF statusline...
@@ -113,3 +117,8 @@ autocmd FileType python nmap <Leader>rr :!python %<CR>
 
 " auto complete drop list.
 set completeopt=longest,menu
+
+" Necessary Evil
+set clipboard=unnamed
+vmap <C-C> gy
+vmap <C-V> gp
