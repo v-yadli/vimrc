@@ -26,6 +26,8 @@ set hlsearch
 set incsearch
 " Disable toolbar
 set guioptions-=T
+" Bin ESC in normal mode to clear highlight search
+nnoremap <Esc> :nohlsearch<CR><Esc>
 
 "Set fonts according to OS
 if has("unix")
@@ -59,7 +61,7 @@ autocmd FileType tex set colorcolumn=72
 autocmd FileType tex nnoremap <C-F5> :!make.bat<CR>
 "}}}
 " Son of obsidian!
-colorscheme sonofobsidian
+colorscheme darkZ
 set cursorline
 set laststatus=2
 
@@ -130,3 +132,14 @@ set completeopt=longest,menu
 set clipboard=unnamed
 vmap <C-C> gy
 vmap <C-V> gp
+
+
+" Vimwiki settings
+let g:vimwiki_camel_case = 0
+let g:vimwiki_CJK_length = 1
+function AddWikiTitle()
+    let wiki_name = expand("%:t:r")
+    execute "normal" "i= ".wiki_name." =\n"
+endfunction
+autocmd BufNewFile *.wiki call AddWikiTitle()
+

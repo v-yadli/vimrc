@@ -2,20 +2,22 @@
 if has("unix")
     let g:vimwiki_list = [
         \{
-            \'path'			: '~/Dropbox/vimwiki',
+            \'path'			: '~/Dropbox/vimwiki/',
             \'path_html'	: '~/git/v-yadli.github.com/',
-            \'html_header'	: '~/Dropbox/template/header.tpl',
-            \'html_footer'	: '~/Dropbox/template/footer.tpl',
             \'nested_syntaxes'  : { 'python' : 'python' , 'c++' : 'cpp', 'c#' : 'cs', 'vim': 'vim' }
+            \'template_path': '~/Dropbox/template/',
+            \'template_default': 'disqus',
+            \'template_ext' : '.html',
         \}
         \]
 elseif has("win32")
     let g:vimwiki_list = [
         \{
-            \'path'			: '~/Dropbox/',
+            \'path'			: 'Z:/Dropbox/vimwiki',
             \'path_html'	: '~/git/v-yadli.github.com/',
-            \'html_header'	: '~/Dropbox/template/header.tpl',
-            \'html_footer'	: '~/Dropbox/template/footer.tpl',
+            \'template_path': 'Z:/Dropbox/template/',
+            \'template_default': 'disqus',
+            \'template_ext' : '.html',
             \'nested_syntaxes'  : { 'python' : 'python' , 'c++' : 'cpp', 'c#' : 'cs', 'vim': 'vim' }
         \}
         \]
