@@ -3,7 +3,6 @@ if has("unix")
 elseif has("win32")
     source $VIM/sysrc.vim
 endif
-
 set cindent
 set shiftwidth=4
 set tabstop=4
@@ -27,6 +26,7 @@ set hlsearch
 set incsearch
 " Disable toolbar
 set guioptions-=T
+set guioptions-=m
 " Bin ESC in normal mode to clear highlight search
 nnoremap <Esc> :nohlsearch<CR><Esc>
 
