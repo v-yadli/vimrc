@@ -3,6 +3,7 @@ if has("unix")
 elseif has("win32")
     source $VIM/sysrc.vim
 endif
+
 set cindent
 set shiftwidth=4
 set tabstop=4
