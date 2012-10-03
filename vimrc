@@ -102,11 +102,6 @@ nmap <Leader>bn :bn<CR>
 nmap <Leader>bd <C-w><C-v><C-l>:bn<CR><C-h>:bd<CR>
 "}}}
 
-" Vimwiki settings{{{
-let g:vimwiki_CJK_length=1
-autocmd FileType vimwiki nmap <C-F5> :VimwikiAll2HTML<CR><CR>
-autocmd FileType vimwiki imap <C-F5> <ESC>:VimwikiAll2HTML<CR><CR>i
-"}}}
 
 " Bring back NERD-Tree
 nmap <F3> :NERDTreeToggle<CR>
@@ -134,12 +129,19 @@ vmap <C-C> gy
 vmap <C-V> gp
 
 
-" Vimwiki settings
+" Vimwiki settings{{{
+" \bn\bp:After generating the html files, it seems that vimwiki will
+" lose syntax highlights. \bn\bp will switch between buffers, bringing
+" them back.
+let g:vimwiki_CJK_length=1
+autocmd FileType vimwiki nmap <C-F5> :VimwikiAll2HTML<CR><CR>\bn\bp
+autocmd FileType vimwiki imap <C-F5> <ESC>:VimwikiAll2HTML<CR><CR>\bn\bpi
 let g:vimwiki_camel_case = 0
 let g:vimwiki_CJK_length = 1
-function AddWikiTitle()
+function! AddWikiTitle()
     let wiki_name = expand("%:t:r")
     execute "normal" "i= ".wiki_name." =\n"
 endfunction
 autocmd BufNewFile *.wiki call AddWikiTitle()
-
+autocmd FileType vimwiki nmap <C-F6> <C-F5>:cd<Space><C-R>=g:vimwiki_list[0]['path_html']<CR><CR>:!update.bat<CR>
+"}}}
