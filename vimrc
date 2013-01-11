@@ -35,8 +35,19 @@ if has("unix")
     set guifontwide=WenQuanYi\ Zen\ Hei\ 11
     set guifont=MonoSpace\ 11
 elseif has("win32")
-    set guifontwide=NSimSun:h11
-    set guifont=Consolas:h11
+    "Check if Yadli's messing around with his iPad
+    "Here we use qres, the output is like:
+    "1920x1080, 32 bits @ 60 Hz.
+    let screen_resolution=matchstr(system("qres /S"),"2048x1536")
+    if screen_resolution=="2048x1536"
+        "iPad detected!
+        set guifontwide=NSimSun:h22
+        set guifont=Consolas:h22
+    else
+        "Normal resolution
+        set guifontwide=NSimSun:h11
+        set guifont=Consolas:h11
+    endif
 endif
 
 " Terminal color workaround
@@ -94,8 +105,8 @@ nmap <Leader>ss :source $MYVIMRC<CR>
 
 " Tab operations and buffer operations{{{
 nmap <Leader>tt :tab new<CR>
-nmap <Leader>tn :tabNext<CR>
-nmap <Leader>tp :tabPrev<CR>
+nmap <Leader>tn :tabnext<CR>
+nmap <Leader>tp :tabprevious<CR>
 nmap <Leader>bf :buffers<CR>
 nmap <Leader>bp :bp<CR>
 nmap <Leader>ba :ba<CR>
