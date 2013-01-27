@@ -38,8 +38,10 @@ elseif has("win32")
     "Check if Yadli's messing around with his iPad
     "Here we use qres, the output is like:
     "1920x1080, 32 bits @ 60 Hz.
-    let screen_resolution=matchstr(system("qres /S"),"2048x1536")
-    if screen_resolution=="2048x1536"
+    "The ipad has 2048x1536, in both landscape and portrait.
+    "So we detect keyword 2048
+    let screen_resolution=matchstr(system("qres /S"),"2048")
+    if screen_resolution=="2048"
         "iPad detected!
         set guifontwide=NSimSun:h22
         set guifont=Consolas:h22
@@ -148,6 +150,7 @@ vmap <C-V> gp
 let g:vimwiki_CJK_length=1
 autocmd FileType vimwiki nmap <C-F5> :VimwikiAll2HTML<CR><CR>\bn\bp
 autocmd FileType vimwiki imap <C-F5> <ESC>:VimwikiAll2HTML<CR><CR>\bn\bpi
+autocmd FileType vimwiki set formatoptions-=t
 let g:vimwiki_camel_case = 0
 let g:vimwiki_CJK_length = 1
 function! AddWikiTitle()
