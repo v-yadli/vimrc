@@ -30,7 +30,7 @@ set guioptions-=m
 " Bin ESC in normal mode to clear highlight search
 nnoremap <Esc> :nohlsearch<CR><Esc>
 
-"Set fonts according to OS
+"Set fonts according to OS {{{
 if has("unix")
     set guifontwide=WenQuanYi\ Zen\ Hei\ 11
     set guifont=MonoSpace\ 11
@@ -51,6 +51,7 @@ elseif has("win32")
         set guifont=Consolas:h11
     endif
 endif
+"}}}
 
 " Terminal color workaround
 set t_Co=256
@@ -85,6 +86,15 @@ nmap <C-j> <C-w>j
 nmap <C-k> <C-w>k
 nmap <C-h> <C-w>h
 nmap <C-l> <C-w>l
+nmap <C-Up> <C-w>+
+nmap <C-Down> <C-w>-
+nmap <C-Left> <C-w><
+nmap <C-Right> <C-w>>
+
+nmap <A-j> <C-w>+
+nmap <A-k> <C-w>-
+nmap <A-h> <C-w><
+nmap <A-l> <C-w>>
 
 imap <C-j> <Esc><C-w>ji
 imap <C-k> <Esc><C-w>ki
