@@ -75,8 +75,20 @@ autocmd FileType tex set formatoptions+=m
 autocmd FileType tex set colorcolumn=72
 autocmd FileType tex nnoremap <C-F5> :!make.bat<CR>
 "}}}
-" Son of obsidian!
-colorscheme darkZ
+" Son of obsidian? Perhaps I should try more...
+colorscheme sonofobsidian
+" Nice one, finally worked out how to solve the puzzle!
+function! SwitchColorScheme()
+    if &ft =~ 'vimwiki\|tex'
+        colorscheme colorzone
+    else
+        colorscheme sonofobsidian
+    endif
+endfunction
+autocmd BufEnter * call SwitchColorScheme()
+"colorscheme darkZ
+"colorscheme colorzone
+"colorscheme solarized
 set cursorline
 set laststatus=2
 
