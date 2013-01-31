@@ -1,1 +1,2 @@
-When using Windows, copy QRes to your PATH.
+When using Windows, copy QRes to your PATH, and put gvimfullscreen.dll
+to the folder containing gvim.exe
