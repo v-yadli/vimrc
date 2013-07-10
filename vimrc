@@ -44,11 +44,11 @@ elseif has("win32")
     if screen_resolution=="2048"
         "iPad detected!
         set guifontwide=NSimSun:h22
-        set guifont=Consolas:h22
+        set guifont=Terminus:h22
     else
         "Normal resolution
         set guifontwide=NSimSun:h11
-        set guifont=Consolas:h11
+        set guifont=Terminus:h11
     endif
 endif
 "}}}
@@ -66,6 +66,7 @@ set textwidth=70
 " http://weichen.wordpress.com/2007/01/09/howto-make-vim-latex-suite-always-recognise-tex-file/
 
 let g:tex_flavor = "latex"
+let g:Tex_CompileRule_dvi = 'latex -interaction=nonstopmode -src-specials $*'
 
 " For LaTeX files, activate "long line break" feature
 " Note that a(english) word won't be broken into two lines
@@ -164,6 +165,12 @@ set clipboard=unnamed
 vmap <C-C> gy
 vmap <C-V> gp
 
+" Quicker navigation in tabs
+nmap <C-tab> :tabnext<CR>
+nmap <C-S-tab> :tabprevious<CR>
+nmap <C-n> :tabnext<CR>
+nmap <C-p> :tabprevious<CR>
+
 
 " Vimwiki settings{{{
 " \bn\bp:After generating the html files, it seems that vimwiki will
@@ -181,4 +188,6 @@ function! AddWikiTitle()
 endfunction
 autocmd BufNewFile *.wiki call AddWikiTitle()
 autocmd FileType vimwiki nmap <C-F6> <C-F5>:cd<Space><C-R>=g:vimwiki_list[0]['path_html']<CR><CR>:!update.bat<CR>
+"Handle text files as wiki files
+autocmd FileType txt set filetype=vimwiki
 "}}}
