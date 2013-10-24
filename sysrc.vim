@@ -4,10 +4,10 @@ if has("unix")
         \{
             \'path'			: '~/Dropbox/vimwiki/',
             \'path_html'	: '~/git/v-yadli.github.com/',
-            \'nested_syntaxes'  : { 'python' : 'python' , 'c++' : 'cpp', 'c#' : 'cs', 'vim': 'vim' }
+            \'nested_syntaxes'  : { 'python' : 'python' , 'c++' : 'cpp', 'c#' : 'cs', 'vim': 'vim' },
             \'template_path': '~/Dropbox/template/',
             \'template_default': 'disqus',
-            \'template_ext' : '.html',
+            \'template_ext' : '.html'
         \}
         \]
 elseif has("win32")
