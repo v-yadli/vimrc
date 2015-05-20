@@ -7,16 +7,26 @@ set nocompatible              " be iMproved, required
 filetype off                  " required
 
 " set the runtime path to include Vundle and initialize
-set rtp+=~/_vim/bundle/Vundle.vim
-let bundle_path='~/_vim/bundle'
-call vundle#begin(bundle_path)
+
+if has("unix")
+    set rtp+=~/.vim/bundle/Vundle.vim
+    call vundle#begin()
+else
+    set rtp+=~/_vim/bundle/Vundle.vim
+    let bundle_path='~/_vim/bundle'
+    call vundle#begin(bundle_path)
+endif
+
 " alternatively, pass a path where Vundle should install plugins
 "call vundle#begin('~/some/path/here')
 
 " let Vundle manage Vundle, required
 Plugin 'gmarik/Vundle.vim'
-Plugin 'molokai'
-Plugin 'Powerline'
+Plugin 'tomasr/molokai'
+Plugin 'bling/vim-airline'
+Plugin 'tpope/vim-fugitive'
+Plugin 'kien/ctrlp.vim'
+Plugin 'scrooloose/nerdtree'
 
 " The following are examples of different formats supported.
 " Keep Plugin commands between vundle#begin/end.
@@ -62,7 +72,7 @@ set ignorecase
 set smartcase
 " Menu options
 set wildmenu
-set wildmode=longest:full
+set wildmode=full
 " Auto mouse
 set mouse=a
 " Line number
@@ -74,12 +84,12 @@ set incsearch
 set guioptions-=T
 set guioptions-=m
 " Bind ESC in normal mode to clear highlight search
-nnoremap <Esc> :nohlsearch<CR><Esc>
+autocmd VimEnter nnoremap <Esc> :nohlsearch<CR><Esc>
 
 "Set fonts according to OS {{{
 if has("unix")
-    set guifontwide=WenQuanYi\ Zen\ Hei\ 11
-    set guifont=MonoSpace\ 11
+    set guifontwide=Consolas:h14
+    set guifont=Consolas:h14
 elseif has("win32")
     set guifontwide=Consolas:h11
     set guifont=Consolas:h11
@@ -110,15 +120,6 @@ autocmd FileType tex set colorcolumn=72
 autocmd FileType tex nnoremap <C-F5> :!make.bat<CR>
 "}}}
 colorscheme molokai
-" Nice one, finally worked out how to solve the puzzle!
-function! SwitchColorScheme()
-    if &ft =~ 'vimwiki\|tex'
-        colorscheme molokai
-    else
-        colorscheme molokai
-    endif
-endfunction
-autocmd BufEnter * call SwitchColorScheme()
 "colorscheme darkZ
 "colorscheme colorzone
 "colorscheme solarized
@@ -144,7 +145,11 @@ imap <C-s> <Esc>:update<CR>a
 " Folding workaround
 set foldmethod=marker
 " Quick resource vim configuration
-nmap <Leader>ss :source ~/_vimrc<CR>
+if has("unix")
+    nmap <Leader>ss :source ~/.vimrc<CR>
+else
+    nmap <Leader>ss :source ~/_vimrc<CR>
+endif
 
 " Tab operations and buffer operations{{{
 nmap <Leader>tt :tab new<CR>
@@ -157,55 +162,37 @@ nmap <Leader>bn :bn<CR>
 nmap <Leader>bd <C-w><C-v><C-l>:bn<CR><C-h>:bd<CR>
 "}}}
 
-
 " Bring back NERD-Tree
 nmap <F3> :NERDTreeToggle<CR>
 imap <F3> <Esc>:NERDTreeToggle<CR>
 
 " Quick edit vimrc!
-command! -nargs=0 Vimrc :silent! tabnew ~/_vim/vimrc
+if has("win32")
+    command! -nargs=0 Vimrc :silent! tabnew ~/_vim/vimrc
+else
+    command! -nargs=0 Vimrc :silent! tabnew ~/.vim/vimrc
+endif
 
 " Weird... <C-S> will freeze the terminal. Use <C-Q> to unfreeze it.
-" WTF statusline...
-set statusline=%t\ %1*%m%*\ %1*%r%*\ %2*%h%*%w%=%l%3*/%L(%p%%)%*,%c%V]\ [%b:0x%B]\ [%{&ft==''?'TEXT':toupper(&ft)},%{toupper(&ff)},%{toupper(&fenc!=''?&fenc:&enc)}%{&bomb?',BOM':''}%{&eol?'':',NOEOL'}]
 " Use tab to indent
 vmap <tab> >gv
 vmap <s-tab> <gv
 
-autocmd FileType javascript nmap <Leader>rr :!node %<CR>
-autocmd FileType python nmap <Leader>rr :!python %<CR>
-
 " auto complete drop list.
-set completeopt=longest,menu
+set completeopt=menu,longest,preview
 
 " Necessary Evil
 set clipboard=unnamed
 vmap <C-C> gy
 vmap <C-V> gp
+imap <C-V> <S-insert>
 
 " Quicker navigation in tabs
 nmap <C-tab> :tabnext<CR>
 nmap <C-S-tab> :tabprevious<CR>
-nmap <C-n> :tabnext<CR>
-nmap <C-p> :tabprevious<CR>
 
-
-" Vimwiki settings{{{
-" \bn\bp:After generating the html files, it seems that vimwiki will
-" lose syntax highlights. \bn\bp will switch between buffers, bringing
-" them back.
-let g:vimwiki_CJK_length=1
-autocmd FileType vimwiki nmap <C-F5> :VimwikiAll2HTML<CR><CR>\bn\bp
-autocmd FileType vimwiki imap <C-F5> <ESC>:VimwikiAll2HTML<CR><CR>\bn\bpi
-autocmd FileType vimwiki set formatoptions-=t
-let g:vimwiki_camel_case = 0
-let g:vimwiki_CJK_length = 1
-function! AddWikiTitle()
-    let wiki_name = expand("%:t:r")
-    execute "normal" "i= ".wiki_name." =\n"
-endfunction
-autocmd BufNewFile *.wiki call AddWikiTitle()
-autocmd FileType vimwiki nmap <C-F6> <C-F5>:cd<Space><C-R>=g:vimwiki_list[0]['path_html']<CR><CR>:!update.bat<CR>
-"Handle text files as wiki files
-autocmd FileType txt set filetype=vimwiki
-"}}}
+" Enable airline fonts
+let g:airline_powerline_fonts=1
+" let g:airline#extensions#tabline#enabled = 1
+let g:airline_theme='powerlineish'
+set ttimeoutlen=50
