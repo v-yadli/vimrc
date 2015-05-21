@@ -27,9 +27,12 @@ Plugin 'bling/vim-airline'
 Plugin 'tpope/vim-fugitive'
 Plugin 'kien/ctrlp.vim'
 Plugin 'scrooloose/nerdtree'
+Plugin 'rking/ag.vim'
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'junegunn/vim-easy-align'
 
 " The following are examples of different formats supported.
-" Keep Plugin commands between vundle#begin/end.
+"{{{ Keep Plugin commands between vundle#begin/end.
 " plugin on GitHub repo
 "Plugin 'tpope/vim-fugitive'
 "" plugin from http://vim-scripts.org/vim/scripts.html
@@ -43,6 +46,7 @@ Plugin 'scrooloose/nerdtree'
 "Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
 "" Avoid a name conflict with L9
 "Plugin 'user/L9', {'name': 'newL9'}
+"}}}
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -84,6 +88,7 @@ set incsearch
 set guioptions-=T
 set guioptions-=m
 " Bind ESC in normal mode to clear highlight search
+" TODO
 autocmd VimEnter nnoremap <Esc> :nohlsearch<CR><Esc>
 
 "Set fonts according to OS {{{
@@ -119,6 +124,7 @@ autocmd FileType tex set formatoptions+=m
 autocmd FileType tex set colorcolumn=72
 autocmd FileType tex nnoremap <C-F5> :!make.bat<CR>
 "}}}
+let g:molokai_original = 1
 colorscheme molokai
 "colorscheme darkZ
 "colorscheme colorzone
@@ -162,10 +168,6 @@ nmap <Leader>bn :bn<CR>
 nmap <Leader>bd <C-w><C-v><C-l>:bn<CR><C-h>:bd<CR>
 "}}}
 
-" Bring back NERD-Tree
-nmap <F3> :NERDTreeToggle<CR>
-imap <F3> <Esc>:NERDTreeToggle<CR>
-
 " Quick edit vimrc!
 if has("win32")
     command! -nargs=0 Vimrc :silent! tabnew ~/_vim/vimrc
@@ -193,6 +195,32 @@ nmap <C-S-tab> :tabprevious<CR>
 
 " Enable airline fonts
 let g:airline_powerline_fonts=1
-" let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#enabled = 1
 let g:airline_theme='powerlineish'
 set ttimeoutlen=50
+
+autocmd FileType vim nmap <buffer> <S-K> :call VimrcGetHelp()<CR>
+autocmd FileType help nmap <buffer> q :helpclose<CR>
+
+function! VimrcGetHelp()
+    let currentWord = expand("<cword>")
+    echo currentWord | help
+endfunction
+
+"Visual Studio key bindings
+"{{{
+
+nmap <C-;> :NERDTreeToggle<CR>
+imap <C-;> <Esc>:NERDTreeToggle<CR>
+
+" nmap <C-S-f> :Ag 
+ "nmap <C-S-B> :make<CR>
+vmap <C-k><C-c> <plug>NERDCommenterComment
+vmap <C-k><C-u> <plug>NERDCommenterUncomment
+
+nnoremap <C-k>c <S-v><plug>NERDCommenterComment
+nmap <C-k><C-u> <plug>NERDCommenterUncomment
+
+vmap <C-]> :EasyAlign =<CR>
+
+"}}}
