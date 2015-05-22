@@ -30,6 +30,8 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'rking/ag.vim'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'junegunn/vim-easy-align'
+Plugin 'jistr/vim-nerdtree-tabs'
+Plugin 'vim-scripts/Conque-Shell'
 
 " The following are examples of different formats supported.
 "{{{ Keep Plugin commands between vundle#begin/end.
@@ -89,7 +91,7 @@ set guioptions-=T
 set guioptions-=m
 " Bind ESC in normal mode to clear highlight search
 " TODO
-autocmd VimEnter nnoremap <Esc> :nohlsearch<CR><Esc>
+autocmd VimEnter * nnoremap <Esc> :nohlsearch<CR>
 
 "Set fonts according to OS {{{
 if has("unix")
@@ -204,23 +206,45 @@ autocmd FileType help nmap <buffer> q :helpclose<CR>
 
 function! VimrcGetHelp()
     let currentWord = expand("<cword>")
-    echo currentWord | help
+    execute "help ".currentWord
 endfunction
 
 "Visual Studio key bindings
 "{{{
 
-nmap <C-;> :NERDTreeToggle<CR>
-imap <C-;> <Esc>:NERDTreeToggle<CR>
+nmap <F6> :make<CR>
 
-" nmap <C-S-f> :Ag 
- "nmap <C-S-B> :make<CR>
+" <C-W> (window) family
+nmap <C-w><C-s> :NERDTreeTabsToggle<CR>
+imap <C-w><C-s> <Esc>:NERDTreeTabsToggle<CR>
+
+nmap <C-w><C-e> :copen<CR>
+nmap <C-w><C-c> :call OpenConsole()<CR>
+
+" <C-k> (kontrol) family
 vmap <C-k><C-c> <plug>NERDCommenterComment
 vmap <C-k><C-u> <plug>NERDCommenterUncomment
 
-nnoremap <C-k>c <S-v><plug>NERDCommenterComment
-nmap <C-k><C-u> <plug>NERDCommenterUncomment
+nnoremap <C-c> <silent> <C-c>
+nnoremap <C-k><C-c> <S-v>:call NERDComment("x", "Comment")<CR>
+nnoremap <C-k><C-u> <plug>NERDCommenterUncomment
 
-vmap <C-]> :EasyAlign =<CR>
+nmap <C-k><C-r> :call FindReferences()<CR>
+
+function! SetDirectoryToCurrentFile()
+    lcd %:p:h
+endfunction
+
+function! FindReferences()
+    call SetDirectoryToCurrentFile()
+    let currentWord = expand("<cword>", 1)
+    execute "Ag ".currentWord." ."
+endfunction
+
+function! OpenConsole()
+
+endfunction
+
+vmap <C-k><C-a> :EasyAlign =<CR>
 
 "}}}
