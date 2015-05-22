@@ -187,7 +187,7 @@ set completeopt=menu,longest,preview
 
 " Necessary Evil
 set clipboard=unnamed
-vmap <C-C> gy
+vmap <C-C> y
 vmap <C-V> gp
 imap <C-V> <S-insert>
 
@@ -209,6 +209,11 @@ function! VimrcGetHelp()
     execute "help ".currentWord
 endfunction
 
+if has("win32")
+    nmap <M-{> :tabprevious<CR>
+    nmap <M-}> :tabnext<CR>
+endif
+
 "Visual Studio key bindings
 "{{{
 
@@ -227,7 +232,7 @@ vmap <C-k><C-u> <plug>NERDCommenterUncomment
 
 nnoremap <C-c> <silent> <C-c>
 nnoremap <C-k><C-c> <S-v>:call NERDComment("x", "Comment")<CR>
-nnoremap <C-k><C-u> <plug>NERDCommenterUncomment
+nnoremap <C-k><C-u> <S-v>:call NERDComment("x", "Uncomment")<CR>
 
 nmap <C-k><C-r> :call FindReferences()<CR>
 
