@@ -33,6 +33,14 @@ Plugin 'junegunn/vim-easy-align'
 Plugin 'jistr/vim-nerdtree-tabs'
 Plugin 'vim-scripts/Conque-Shell'
 
+" Writing tools
+" {{{
+Plugin 'reedes/vim-lexical'
+Plugin 'vim-autocorrect'
+Plugin 'reedes/vim-colors-pencil'
+Plugin 'reedes/vim-wordy'
+" }}}
+
 " The following are examples of different formats supported.
 "{{{ Keep Plugin commands between vundle#begin/end.
 " plugin on GitHub repo
@@ -89,6 +97,9 @@ set incsearch
 " Disable toolbar
 set guioptions-=T
 set guioptions-=m
+" Disable scroll bar
+set guioptions-=L
+set guioptions-=r
 " Bind ESC in normal mode to clear highlight search
 " TODO
 autocmd VimEnter * nnoremap <Esc> :nohlsearch<CR>
@@ -121,10 +132,20 @@ let g:Tex_CompileRule_dvi = 'latex -interaction=nonstopmode -src-specials $*'
 " For LaTeX files, activate "long line break" feature
 " Note that a(english) word won't be broken into two lines
 " And, add a color margin line for LaTeX mode!
+
+augroup Latex
+    au!
+augroup END
+
 autocmd FileType tex set formatoptions-=l
 autocmd FileType tex set formatoptions+=m
 autocmd FileType tex set colorcolumn=72
 autocmd FileType tex nnoremap <C-F5> :!make.bat<CR>
+" See: https://github.com/reedes/vim-colors-pencil
+autocmd FileType tex colorscheme pencil
+autocmd FileType tex let g:airline_theme='pencil'
+autocmd FileType tex set background light
+
 "}}}
 let g:molokai_original = 1
 colorscheme molokai
@@ -167,7 +188,7 @@ nmap <Leader>bf :buffers<CR>
 nmap <Leader>bp :bp<CR>
 nmap <Leader>ba :ba<CR>
 nmap <Leader>bn :bn<CR>
-nmap <Leader>bd <C-w><C-v><C-l>:bn<CR><C-h>:bd<CR>
+nmap <Leader>bd :bd!<CR>
 "}}}
 
 " Quick edit vimrc!
@@ -202,7 +223,7 @@ let g:airline_theme='powerlineish'
 set ttimeoutlen=50
 
 autocmd FileType vim nmap <buffer> <S-K> :call VimrcGetHelp()<CR>
-autocmd FileType help nmap <buffer> q :helpclose<CR>
+autocmd FileType help nmap <buffer> q :q<CR>
 
 function! VimrcGetHelp()
     let currentWord = expand("<cword>")
