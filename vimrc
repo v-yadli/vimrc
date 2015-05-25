@@ -146,6 +146,7 @@ function! LatexMode()
     let g:airline_theme='pencil'
     setlocal background=light
     nnoremap <buffer> <C-e><C-d> mZvapgq'Z
+    setlocal smartindent
 endfunction
 
 autocmd FileType tex call LatexMode()
