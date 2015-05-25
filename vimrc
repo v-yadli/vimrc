@@ -241,8 +241,10 @@ endif
 nmap <F6> :make<CR>
 
 " <C-W> (window) family
-nmap <C-w><C-s> :NERDTreeTabsToggle<CR>
-imap <C-w><C-s> <Esc>:NERDTreeTabsToggle<CR>
+nmap <C-w><C-s> :NERDTreeMirrorToggle<CR>
+imap <C-w><C-s> <Esc>:NERDTreeMirrorToggle<CR>
+let g:nerdtree_tabs_open_on_gui_startup     = 0
+let g:nerdtree_tabs_open_on_console_startup = 0
 
 nmap <C-w><C-e> :copen<CR>
 nmap <C-w><C-c> :call OpenConsole()<CR>
