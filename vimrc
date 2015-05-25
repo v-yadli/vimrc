@@ -133,16 +133,21 @@ let g:online_thesaurus_map_keys = 0
 " For LaTeX files, activate "long line break" feature
 " Note that a(english) word won't be broken into two lines
 " And, add a color margin line for LaTeX mode!
+"
 
-autocmd FileType tex set formatoptions-=l
-autocmd FileType tex set formatoptions+=m
-autocmd FileType tex set colorcolumn=72
-autocmd FileType tex nnoremap <buffer> <C-F5> :!make.bat<CR>
-autocmd FileType tex nnoremap <buffer> <S-K> :OnlineThesaurusCurrentWord<CR>
-" See: https://github.com/reedes/vim-colors-pencil
-autocmd FileType tex colorscheme pencil
-autocmd FileType tex let g:airline_theme='pencil'
-autocmd FileType tex set background=light
+function! LatexMode()
+    setlocal formatoptions-=l
+    setlocal formatoptions+=m
+    setlocal colorcolumn=72
+    nnoremap <buffer> <C-F5> :!make.bat<CR>
+    nnoremap <buffer> <S-K> :OnlineThesaurusCurrentWord<CR>
+    colorscheme pencil
+    let g:airline_theme='pencil'
+    setlocal background=light
+    nnoremap <buffer> <C-e><C-d> vapgq
+endfunction
+
+autocmd FileType tex call LatexMode()
 
 "}}}
 let g:molokai_original = 1
