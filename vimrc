@@ -36,9 +36,10 @@ Plugin 'vim-scripts/Conque-Shell'
 " Writing tools
 " {{{
 Plugin 'reedes/vim-lexical'
-Plugin 'vim-autocorrect'
+Plugin 'panozzaj/vim-autocorrect'
 Plugin 'reedes/vim-colors-pencil'
 Plugin 'reedes/vim-wordy'
+Plugin 'v-yadli/vim-online-thesaurus'
 " }}}
 
 " The following are examples of different formats supported.
@@ -128,23 +129,20 @@ set textwidth=70
 
 let g:tex_flavor = "latex"
 let g:Tex_CompileRule_dvi = 'latex -interaction=nonstopmode -src-specials $*'
-
+let g:online_thesaurus_map_keys = 0
 " For LaTeX files, activate "long line break" feature
 " Note that a(english) word won't be broken into two lines
 " And, add a color margin line for LaTeX mode!
 
-augroup Latex
-    au!
-augroup END
-
 autocmd FileType tex set formatoptions-=l
 autocmd FileType tex set formatoptions+=m
 autocmd FileType tex set colorcolumn=72
-autocmd FileType tex nnoremap <C-F5> :!make.bat<CR>
+autocmd FileType tex nnoremap <buffer> <C-F5> :!make.bat<CR>
+autocmd FileType tex nnoremap <buffer> <S-K> :OnlineThesaurusCurrentWord<CR>
 " See: https://github.com/reedes/vim-colors-pencil
 autocmd FileType tex colorscheme pencil
 autocmd FileType tex let g:airline_theme='pencil'
-autocmd FileType tex set background light
+autocmd FileType tex set background=light
 
 "}}}
 let g:molokai_original = 1
@@ -197,6 +195,8 @@ if has("win32")
 else
     command! -nargs=0 Vimrc :silent! tabnew ~/.vim/vimrc
 endif
+
+set noswapfile
 
 " Weird... <C-S> will freeze the terminal. Use <C-Q> to unfreeze it.
 " Use tab to indent
