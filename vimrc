@@ -40,6 +40,7 @@ Plugin 'panozzaj/vim-autocorrect'
 Plugin 'reedes/vim-colors-pencil'
 Plugin 'reedes/vim-wordy'
 Plugin 'v-yadli/vim-online-thesaurus'
+Plugin 'vim-scripts/LaTeX-Box'
 " }}}
 
 " The following are examples of different formats supported.
@@ -139,12 +140,12 @@ function! LatexMode()
     setlocal formatoptions-=l
     setlocal formatoptions+=m
     setlocal colorcolumn=72
-    nnoremap <buffer> <C-F5> :!make.bat<CR>
+    nnoremap <buffer> <C-F5> :silent! !make.bat<CR>
     nnoremap <buffer> <S-K> :OnlineThesaurusCurrentWord<CR>
     colorscheme pencil
     let g:airline_theme='pencil'
     setlocal background=light
-    nnoremap <buffer> <C-e><C-d> vapgq
+    nnoremap <buffer> <C-e><C-d> mZvapgq'Z
 endfunction
 
 autocmd FileType tex call LatexMode()
