@@ -120,10 +120,6 @@ endif
 set t_Co=256
 " Backspace workaround
 set backspace=indent,eol,start
-" I don't like wrap
-set formatoptions+=tcroqlmM
-set nowrap
-set textwidth=70
 "{{{ Latex Settings
 " Let TeX file always be recognized
 " http://weichen.wordpress.com/2007/01/09/howto-make-vim-latex-suite-always-recognise-tex-file/
@@ -137,9 +133,6 @@ let g:online_thesaurus_map_keys = 0
 "
 
 function! LatexMode()
-    setlocal formatoptions-=l
-    setlocal formatoptions+=m
-    setlocal colorcolumn=72
     nnoremap <buffer> <C-F5> :silent! !make.bat<CR>
     nnoremap <buffer> <S-K> :OnlineThesaurusCurrentWord<CR>
     colorscheme pencil
@@ -213,12 +206,6 @@ vmap <s-tab> <gv
 " auto complete drop list.
 set completeopt=menu,longest,preview
 
-" Necessary Evil
-set clipboard=unnamed
-vmap <C-C> y
-vmap <C-V> gp
-imap <C-V> <S-insert>
-
 " Quicker navigation in tabs
 nmap <C-tab> :tabnext<CR>
 nmap <C-S-tab> :tabprevious<CR>
@@ -232,15 +219,56 @@ set ttimeoutlen=50
 autocmd FileType vim nmap <buffer> <S-K> :call VimrcGetHelp()<CR>
 autocmd FileType help nmap <buffer> q :q<CR>
 
+if has("win32")
+    nmap <M-{> :tabprevious<CR>
+    nmap <M-}> :tabnext<CR>
+endif
+
+"Vsim Functions
+"{{{
+function! VsimSetDirectoryToCurrentFile()
+    lcd %:p:h
+endfunction
+
+function! VsimFindReferences()
+    call VsimSetDirectoryToCurrentFile()
+    let currentWord = expand("<cword>", 1)
+    execute "Ag ".currentWord." ."
+endfunction
+
+function! OpenConsole()
+    " TODO
+endfunction
+
 function! VimrcGetHelp()
     let currentWord = expand("<cword>")
     execute "help ".currentWord
 endfunction
 
-if has("win32")
-    nmap <M-{> :tabprevious<CR>
-    nmap <M-}> :tabnext<CR>
-endif
+let g:vsim_wrap_state = 1
+function! VsimToggleWrap()
+    if g:vsim_wrap_state
+        " When I don't like wrap
+        let g:vsim_wrap_state = 0
+        setlocal colorcolumn=72
+        setlocal formatoptions+=tcroqlmM
+        setlocal nowrap
+        setlocal textwidth=70
+        silent! echo "Wrap off"
+    else
+        let g:vsim_wrap_state = 1
+        setlocal formatoptions-=tc
+        setlocal wrap
+        setlocal colorcolumn=0
+        silent! echo "Wrap on"
+        nmap j gj
+        nmap k gk
+        nmap 0 g0
+        nmap $ g$
+    endif
+endfunction
+
+"}}}
 
 "Visual Studio key bindings
 "{{{
@@ -264,22 +292,18 @@ nnoremap <C-c> <silent> <C-c>
 nnoremap <C-k><C-c> <S-v>:call NERDComment("x", "Comment")<CR>
 nnoremap <C-k><C-u> <S-v>:call NERDComment("x", "Uncomment")<CR>
 
-nmap <C-k><C-r> :call FindReferences()<CR>
-
-function! SetDirectoryToCurrentFile()
-    lcd %:p:h
-endfunction
-
-function! FindReferences()
-    call SetDirectoryToCurrentFile()
-    let currentWord = expand("<cword>", 1)
-    execute "Ag ".currentWord." ."
-endfunction
-
-function! OpenConsole()
-
-endfunction
+nmap <C-k><C-r> :call VsimFindReferences()<CR>
 
 vmap <C-k><C-a> :EasyAlign =<CR>
+
+" <C-e> (view) family
+call VsimToggleWrap()
+nnoremap <C-e><C-w> :call VsimToggleWrap()<CR>
+
+" Necessary Evil
+set clipboard=unnamed
+vmap <C-C> y
+vmap <C-V> gp
+imap <C-V> <S-insert>
 
 "}}}
