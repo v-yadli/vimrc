@@ -31,9 +31,11 @@ Plugin 'rking/ag.vim'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'junegunn/vim-easy-align'
 Plugin 'jistr/vim-nerdtree-tabs'
-Plugin 'vim-scripts/Conque-Shell'
 Plugin 'scrooloose/syntastic'
 Plugin 'fsharp/vim-fsharp'
+Plugin 'Shougo/vimproc.vim'
+Plugin 'Shougo/vimshell.vim'
+Plugin 'neilagabriel/vim-geeknote'
 
 " Writing tools
 " {{{
@@ -226,6 +228,14 @@ if has("win32")
     nmap <M-}> :tabnext<CR>
 endif
 
+if has("win32")
+    let g:GeeknoteScratchDirectory="D:\\temp"
+endif
+
+" Shell settings
+nnoremap <F11> :VimShellPop<CR>
+inoremap <F11> <Esc>:VimShellPop<CR>
+
 "Vsim Functions
 "{{{
 function! VsimSetDirectoryToCurrentFile()
@@ -270,6 +280,23 @@ function! VsimToggleWrap()
     endif
 endfunction
 
+function! VsimEditMarkdown()
+    e! \\10.190.174.55\share\trinity-web\blog\test.md
+endfunction
+
+function! VsimEncodeMarkdown()
+    new!
+    r \\10.190.174.55\share\trinity-web\_site\blog\test.html
+    set ft=html
+    normal V35ggxGV5kxggdd0
+    silent! execute "s/language-//g"
+    normal "ad3f>
+    normal G"bddgg
+    silent! execute "%g/^ */s/ /\\&nbsp;/g"
+    silent! execute "%s/\\n/<br\\/>/g"
+    normal "aP$"bpggy2y
+    silent! execute "bd!"
+endfunction
 "}}}
 
 "Visual Studio key bindings
