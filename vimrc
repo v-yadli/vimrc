@@ -33,6 +33,8 @@ Plugin 'junegunn/vim-easy-align'
 Plugin 'jistr/vim-nerdtree-tabs'
 Plugin 'Shougo/vimproc.vim'             " Required by vimshell
 Plugin 'Shougo/vimshell.vim'
+Plugin 'scrooloose/syntastic'
+Plugin 'fsharp/vim-fsharp'
 
 " Writing tools
 " {{{
@@ -112,8 +114,8 @@ autocmd VimEnter * nnoremap <Esc> :nohlsearch<CR>
 
 "Set fonts according to OS {{{
 if has("unix")
-    set guifontwide=Consolas:h14
-    set guifont=Consolas:h14
+    set guifontwide=Sauce\ Code\ Powerline\ Light:h14
+    set guifont=Sauce\ Code\ Powerline\ Light:h14
 elseif has("win32")
     set guifontwide=Consolas:h11
     set guifont=Consolas:h11
