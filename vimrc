@@ -31,9 +31,8 @@ Plugin 'rking/ag.vim'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'junegunn/vim-easy-align'
 Plugin 'jistr/vim-nerdtree-tabs'
-Plugin 'Shougo/vimproc.vim'
+Plugin 'Shougo/vimproc.vim'             " Required by vimshell
 Plugin 'Shougo/vimshell.vim'
-Plugin 'neilagabriel/vim-geeknote'
 
 " Writing tools
 " {{{
@@ -43,6 +42,9 @@ Plugin 'reedes/vim-colors-pencil'
 Plugin 'reedes/vim-wordy'
 Plugin 'v-yadli/vim-online-thesaurus'
 Plugin 'vim-scripts/LaTeX-Box'
+Plugin 'neilagabriel/vim-geeknote'
+Plugin 'godlygeek/tabular'              " Required by vim-markdown
+Plugin 'plasticboy/vim-markdown'
 " }}}
 
 " The following are examples of different formats supported.
@@ -231,8 +233,8 @@ if has("win32")
 endif
 
 " Shell settings
-nnoremap <F11> :VimShellPop<CR>
-inoremap <F11> <Esc>:VimShellPop<CR>
+nnoremap <F11> :call OpenConsole()<CR>
+inoremap <F11> <Esc>:call OpenConsole()<CR>
 
 "Vsim Functions
 "{{{
@@ -247,7 +249,7 @@ function! VsimFindReferences()
 endfunction
 
 function! OpenConsole()
-    " TODO
+    execute "VimShellPop"
 endfunction
 
 function! VimrcGetHelp()
@@ -295,10 +297,14 @@ function! VsimEncodeMarkdown()
     normal "aP$"bpggy2y
     silent! execute "bd!"
 endfunction
+
 "}}}
 
 "Visual Studio key bindings
 "{{{
+
+" <C-backspace> binding
+imap <C-backspace> <C-\><C-o>
 
 nmap <F6> :make<CR>
 
