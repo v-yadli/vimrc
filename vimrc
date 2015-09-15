@@ -35,6 +35,9 @@ Plugin 'Shougo/vimproc.vim'             " Required by vimshell
 Plugin 'Shougo/vimshell.vim'
 Plugin 'scrooloose/syntastic'
 Plugin 'fsharp/vim-fsharp'
+Plugin 'derekwyatt/vim-scala'
+Plugin 'v-yadli/vim-tsl'
+Plugin 'pangloss/vim-javascript'
 
 " Writing tools
 " {{{
@@ -44,7 +47,7 @@ Plugin 'reedes/vim-colors-pencil'
 Plugin 'reedes/vim-wordy'
 Plugin 'v-yadli/vim-online-thesaurus'
 Plugin 'vim-scripts/LaTeX-Box'
-Plugin 'neilagabriel/vim-geeknote'
+"Plugin 'neilagabriel/vim-geeknote'
 Plugin 'godlygeek/tabular'              " Required by vim-markdown
 Plugin 'plasticboy/vim-markdown'
 " }}}
@@ -109,7 +112,6 @@ set guioptions-=m
 set guioptions-=L
 set guioptions-=r
 " Bind ESC in normal mode to clear highlight search
-" TODO
 autocmd VimEnter * nnoremap <Esc> :nohlsearch<CR>
 
 "Set fonts according to OS {{{
@@ -126,7 +128,7 @@ endif
 set t_Co=256
 " Backspace workaround
 set backspace=indent,eol,start
-"{{{ Latex Settings
+"{{{ Latex & markdown Settings
 " Let TeX file always be recognized
 " http://weichen.wordpress.com/2007/01/09/howto-make-vim-latex-suite-always-recognise-tex-file/
 
@@ -138,7 +140,7 @@ let g:online_thesaurus_map_keys = 0
 " And, add a color margin line for LaTeX mode!
 "
 
-function! LatexMode()
+function! WriterMode()
     nnoremap <buffer> <C-F5> :silent! !make.bat<CR>
     nnoremap <buffer> <S-K> :OnlineThesaurusCurrentWord<CR>
     colorscheme pencil
@@ -148,7 +150,8 @@ function! LatexMode()
     setlocal smartindent
 endfunction
 
-autocmd FileType tex call LatexMode()
+autocmd FileType tex call WriterMode()
+autocmd FileType mkd call WriterMode()
 
 "}}}
 let g:molokai_original = 1
