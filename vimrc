@@ -309,7 +309,7 @@ endfunction
 "{{{
 
 " <C-backspace> binding
-imap <C-backspace> <C-\><C-o>
+imap <C-backspace> <C-o>vbx
 
 nmap <F6> :make<CR>
 
