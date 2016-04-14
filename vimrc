@@ -22,8 +22,12 @@ endif
 
 " let Vundle manage Vundle, required
 Plugin 'gmarik/Vundle.vim'
-Plugin 'tomasr/molokai'
+
+" Basic
+Plugin 'flazz/vim-colorschemes'
+" Plugin 'tomasr/molokai'
 Plugin 'bling/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
 Plugin 'tpope/vim-fugitive'
 Plugin 'kien/ctrlp.vim'
 Plugin 'scrooloose/nerdtree'
@@ -33,11 +37,14 @@ Plugin 'junegunn/vim-easy-align'
 Plugin 'jistr/vim-nerdtree-tabs'
 Plugin 'Shougo/vimproc.vim'             " Required by vimshell
 Plugin 'Shougo/vimshell.vim'
+
+" Programming languages
 Plugin 'scrooloose/syntastic'
 Plugin 'fsharp/vim-fsharp'
 Plugin 'derekwyatt/vim-scala'
 Plugin 'v-yadli/vim-tsl'
 Plugin 'pangloss/vim-javascript'
+Plugin 'kovisoft/slimv'
 
 " Writing tools
 " {{{
@@ -123,6 +130,11 @@ elseif has("win32")
     set guifont=Consolas:h11
 endif
 "}}}
+
+" Use a working colorscheme under win32 console
+if has("win32") && !has("gui_win32")
+    colorscheme pencil
+endif
 
 " Terminal color workaround
 set t_Co=256
@@ -222,7 +234,7 @@ nmap <C-S-tab> :tabprevious<CR>
 " Enable airline fonts
 let g:airline_powerline_fonts=1
 let g:airline#extensions#tabline#enabled = 1
-let g:airline_theme='powerlineish'
+let g:airline_theme='pencil'
 set ttimeoutlen=50
 
 autocmd FileType vim nmap <buffer> <S-K> :call VimrcGetHelp()<CR>
@@ -240,6 +252,11 @@ endif
 " Shell settings
 nnoremap <F11> :call OpenConsole()<CR>
 inoremap <F11> <Esc>:call OpenConsole()<CR>
+
+" Lisp settings
+let g:slimv_lisp = 'racket'
+let g:slimv_impl = 'racket'
+let g:slimv_swank_cmd = '!start racket "D:\home\desktop\swank-racket-master\server.rkt" '
 
 "Vsim Functions
 "{{{
