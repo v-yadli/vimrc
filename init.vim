@@ -2,94 +2,88 @@
 " 
 " Yatao Li<yatao.li@live.com>
 
-"{{{ Vundle setup
-set nocompatible              " be iMproved, required
-filetype off                  " required
-
-" set the runtime path to include Vundle and initialize
-
-if has("unix")
-    set rtp+=~/.vim/bundle/Vundle.vim
-    call vundle#begin()
-else
-    set rtp+=~/_vim/bundle/Vundle.vim
-    let bundle_path='~/_vim/bundle'
-    call vundle#begin(bundle_path)
+" NeoBundle Scripts-----------------------------
+if has('vim_starting')  
+  set runtimepath+=~/.config/nvim/bundle/neobundle.vim/
+  set runtimepath+=~/.config/nvim/
 endif
 
-" alternatively, pass a path where Vundle should install plugins
-"call vundle#begin('~/some/path/here')
+let neobundle_readme=expand('~/.config/nvim/bundle/neobundle.vim/README.md')
 
-" let Vundle manage Vundle, required
-Plugin 'gmarik/Vundle.vim'
+if !filereadable(neobundle_readme)  
+  echo "Installing NeoBundle..."
+  echo ""
+  silent !mkdir -p ~/.config/nvim/bundle
+  silent !git clone https://github.com/Shougo/neobundle.vim ~/.config/nvim/bundle/neobundle.vim/
+  let g:not_finsh_neobundle = "yes"
+endif
 
+call neobundle#begin(expand('$HOME/.config/nvim/bundle'))  
+NeoBundleFetch 'Shougo/neobundle.vim'
+
+" ------------------------------------
+" THIS IS WHERE YOUR PLUGINS WILL COME
+" ------------------------------------
 " Basic
-Plugin 'flazz/vim-colorschemes'
-" Plugin 'tomasr/molokai'
-Plugin 'bling/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
-Plugin 'tpope/vim-fugitive'
-Plugin 'kien/ctrlp.vim'
-Plugin 'scrooloose/nerdtree'
-Plugin 'rking/ag.vim'
-Plugin 'scrooloose/nerdcommenter'
-Plugin 'junegunn/vim-easy-align'
-Plugin 'jistr/vim-nerdtree-tabs'
-Plugin 'Shougo/vimproc.vim'             " Required by vimshell
-Plugin 'Shougo/vimshell.vim'
+NeoBundle 'scrooloose/nerdtree'
+NeoBundle 'jistr/vim-nerdtree-tabs'
+NeoBundle 'flazz/vim-colorschemes'
+NeoBundle 'qualiabyte/vim-colorstepper'
+" NeoBundle 'tomasr/molokai'
+NeoBundle 'bling/vim-airline'
+NeoBundle 'vim-airline/vim-airline-themes'
+NeoBundle 'tpope/vim-fugitive'
+NeoBundle 'kien/ctrlp.vim'
+NeoBundle 'rking/ag.vim'
+NeoBundle 'scrooloose/nerdcommenter'
+NeoBundle 'junegunn/vim-easy-align'
 
 " Programming languages
-Plugin 'scrooloose/syntastic'
-Plugin 'fsharp/vim-fsharp'
-Plugin 'derekwyatt/vim-scala'
-Plugin 'v-yadli/vim-tsl'
-Plugin 'pangloss/vim-javascript'
-Plugin 'kovisoft/slimv'
+NeoBundle 'majutsushi/tagbar'
+NeoBundle 'scrooloose/syntastic'
+NeoBundle 'sheerun/vim-polyglot'
+NeoBundle 'fsharp/vim-fsharp'
+NeoBundle 'derekwyatt/vim-scala'
+NeoBundle 'v-yadli/vim-tsl'
+NeoBundle 'pangloss/vim-javascript'
+NeoBundle 'kovisoft/slimv'
+
+" c
+NeoBundle 'vim-scripts/c.vim', {'for': ['c', 'cpp']}
+NeoBundle 'ludwig/split-manpage.vim'
+
+" haskell
+"" Haskell Bundle
+NeoBundle 'eagletmt/neco-ghc'
+NeoBundle 'dag/vim2hs'
+NeoBundle 'pbrisbin/vim-syntax-shakespeare'
+
+" python
+"" Python Bundle
+NeoBundle 'davidhalter/jedi-vim'
+NeoBundle 'raimon49/requirements.txt.vim', {'for': 'requirements'}
 
 " Writing tools
 " {{{
-Plugin 'reedes/vim-lexical'
-Plugin 'panozzaj/vim-autocorrect'
-Plugin 'reedes/vim-colors-pencil'
-Plugin 'reedes/vim-wordy'
-Plugin 'v-yadli/vim-online-thesaurus'
-Plugin 'vim-scripts/LaTeX-Box'
-"Plugin 'neilagabriel/vim-geeknote'
-Plugin 'godlygeek/tabular'              " Required by vim-markdown
-Plugin 'plasticboy/vim-markdown'
+NeoBundle 'reedes/vim-lexical'
+NeoBundle 'panozzaj/vim-autocorrect'
+NeoBundle 'reedes/vim-colors-pencil'
+NeoBundle 'reedes/vim-wordy'
+NeoBundle 'v-yadli/vim-online-thesaurus'
+NeoBundle 'vim-scripts/LaTeX-Box'
+"NeoBundle 'neilagabriel/vim-geeknote'
+NeoBundle 'godlygeek/tabular'              " Required by vim-markdown
+NeoBundle 'plasticboy/vim-markdown'
 " }}}
 
-" The following are examples of different formats supported.
-"{{{ Keep Plugin commands between vundle#begin/end.
-" plugin on GitHub repo
-"Plugin 'tpope/vim-fugitive'
-"" plugin from http://vim-scripts.org/vim/scripts.html
-"Plugin 'L9'
-"" Git plugin not hosted on GitHub
-"Plugin 'git://git.wincent.com/command-t.git'
-"" git repos on your local machine (i.e. when working on your own plugin)
-"Plugin 'file:///home/gmarik/path/to/plugin'
-"" The sparkup vim script is in a subdirectory of this repo called vim.
-"" Pass the path to set the runtimepath properly.
-"Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
-"" Avoid a name conflict with L9
-"Plugin 'user/L9', {'name': 'newL9'}
-"}}}
 
-" All of your Plugins must be added before the following line
-call vundle#end()            " required
-filetype plugin indent on    " required
-" To ignore plugin indent changes, instead use:
-"filetype plugin on
-"
-" Brief help
-" :PluginList       - lists configured plugins
-" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
-" :PluginSearch foo - searches for foo; append `!` to refresh local cache
-" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
-"
-" see :h vundle for more details or wiki for FAQ
-"}}} Put your non-Plugin stuff after this line
+call neobundle#end()  
+filetype plugin indent on
+
+" If there are uninstalled bundles found on startup,
+" this will conveniently prompt you to install them.
+NeoBundleCheck  
+"End NeoBundle Scripts-------------------------
 
 set cindent
 set shiftwidth=4
@@ -166,11 +160,17 @@ autocmd FileType tex call WriterMode()
 autocmd FileType mkd call WriterMode()
 
 "}}}
-let g:molokai_original = 1
-colorscheme molokai
+"colorscheme default
+"let g:molokai_original = 1
+"colorscheme molokai
 "colorscheme darkZ
 "colorscheme colorzone
 "colorscheme solarized
+colorscheme Tomorrow-Night-Blue
+"colorscheme beauty256
+"colorscheme bluez
+"colorscheme C64
+"colorscheme bubblegum-256-light
 set cursorline
 set laststatus=2
 
@@ -180,6 +180,19 @@ nmap <C-Up> <C-w>+
 nmap <C-Down> <C-w>-
 nmap <C-Left> <C-w><
 nmap <C-Right> <C-w>>
+" To use `ALT+{h,j,k,l}` to navigate windows from any mode: >
+tnoremap <A-h> <C-\><C-N><C-w>h
+tnoremap <A-j> <C-\><C-N><C-w>j
+tnoremap <A-k> <C-\><C-N><C-w>k
+tnoremap <A-l> <C-\><C-N><C-w>l
+inoremap <A-h> <C-\><C-N><C-w>h
+inoremap <A-j> <C-\><C-N><C-w>j
+inoremap <A-k> <C-\><C-N><C-w>k
+inoremap <A-l> <C-\><C-N><C-w>l
+nnoremap <A-h> <C-w>h
+nnoremap <A-j> <C-w>j
+nnoremap <A-k> <C-w>k
+nnoremap <A-l> <C-w>l
 " }}}
 
 " Fire up file type detection!
@@ -193,29 +206,23 @@ imap <C-s> <Esc>:update<CR>a
 " Folding workaround
 set foldmethod=marker
 " Quick resource vim configuration
-if has("unix")
-    nmap <Leader>ss :source ~/.vimrc<CR>
-else
-    nmap <Leader>ss :source ~/_vimrc<CR>
-endif
+nmap <Leader>ss :source ~/.config/nvim/init.vim<CR>
 
 " Tab operations and buffer operations{{{
-nmap <Leader>tt :tab new<CR>
-nmap <Leader>tn :tabnext<CR>
-nmap <Leader>tp :tabprevious<CR>
-nmap <Leader>bf :buffers<CR>
-nmap <Leader>bp :bp<CR>
-nmap <Leader>ba :ba<CR>
-nmap <Leader>bn :bn<CR>
-nmap <Leader>bd :bd!<CR>
+nmap <A-t> :tab new<CR>
+nmap <A-w> :tab close<CR>
+nmap <A-n> :tabnext<CR>
+nmap <A-p> :tabprevious<CR>
+nmap <A-b> :bp<CR>
+nmap <A-f> :bn<CR>
+nmap <A-a> :tab sball<CR>
+nmap <C-Space> :tab sball<CR>
+nmap <A-k> :bd!<CR>
+nmap <A-1> :b1<CR>
 "}}}
 
 " Quick edit vimrc!
-if has("win32")
-    command! -nargs=0 Vimrc :silent! tabnew ~/_vim/vimrc
-else
-    command! -nargs=0 Vimrc :silent! tabnew ~/.vim/vimrc
-endif
+command! -nargs=0 Vimrc :silent! tabnew ~/.config/nvim/init.vim
 
 set noswapfile
 
@@ -248,6 +255,31 @@ endif
 if has("win32")
     let g:GeeknoteScratchDirectory="D:\\temp"
 endif
+
+"*****************************************************************************
+"" Abbreviations
+"*****************************************************************************
+"" no one is really happy until you have this shortcuts
+cnoreabbrev W! w!
+cnoreabbrev Q! q!
+cnoreabbrev Qall! qall!
+cnoreabbrev Wq wq
+cnoreabbrev Wa wa
+cnoreabbrev wQ wq
+cnoreabbrev WQ wq
+cnoreabbrev W w
+cnoreabbrev Q q
+cnoreabbrev Qall qall
+
+"" NERDTree configuration
+let g:NERDTreeChDirMode=2
+let g:NERDTreeIgnore=['\.rbc$', '\~$', '\.pyc$', '\.db$', '\.sqlite$', '__pycache__']
+let g:NERDTreeSortOrder=['^__\.py$', '\/$', '*', '\.swp$', '\.bak$', '\~$']
+let g:NERDTreeShowBookmarks=1
+let g:nerdtree_tabs_focus_on_files=1
+let g:NERDTreeMapOpenInTabSilent = '<RightMouse>'
+let g:NERDTreeWinSize = 30
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.db,*.sqlite
 
 " Shell settings
 nnoremap <F11> :call OpenConsole()<CR>
@@ -328,7 +360,7 @@ endfunction
 " <C-backspace> binding
 imap <C-backspace> <C-o>vbx
 
-nmap <F6> :make<CR>
+" nmap <F6> :make<CR>
 
 " <C-W> (window) family
 nmap <C-w><C-s> :NERDTreeMirrorToggle<CR>
@@ -336,8 +368,11 @@ imap <C-w><C-s> <Esc>:NERDTreeMirrorToggle<CR>
 let g:nerdtree_tabs_open_on_gui_startup     = 0
 let g:nerdtree_tabs_open_on_console_startup = 0
 
+nmap <C-w><C-o> :TagbarToggle<CR>
+imap <C-w><C-o> <Esc>:TagbarToggle<CR>
+
 nmap <C-w><C-e> :copen<CR>
-nmap <C-w><C-c> :call OpenConsole()<CR>
+nmap ` :10split term://zsh<CR>a
 
 " <C-k> (kontrol) family
 vmap <C-k><C-c> <plug>NERDCommenterComment
