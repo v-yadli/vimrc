@@ -216,9 +216,11 @@ nmap <A-p> :tabprevious<CR>
 nmap <A-b> :bp<CR>
 nmap <A-f> :bn<CR>
 nmap <A-a> :tab sball<CR>
-nmap <C-Space> :tab sball<CR>
-nmap <A-k> :bd!<CR>
+nmap <A-d> :bd!<CR>
 nmap <A-1> :b1<CR>
+nmap <A-2> :b2<CR>
+nmap <A-3> :b3<CR>
+nmap <A-4> :b4<CR>
 "}}}
 
 " Quick edit vimrc!
