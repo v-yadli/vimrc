@@ -28,7 +28,9 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 NeoBundle 'scrooloose/nerdtree'
 NeoBundle 'jistr/vim-nerdtree-tabs'
 NeoBundle 'flazz/vim-colorschemes'
+NeoBundle 'godlygeek/csapprox'
 NeoBundle 'qualiabyte/vim-colorstepper'
+NeoBundle 'kana/vim-fakeclip'
 " NeoBundle 'tomasr/molokai'
 NeoBundle 'bling/vim-airline'
 NeoBundle 'vim-airline/vim-airline-themes'
@@ -37,6 +39,9 @@ NeoBundle 'kien/ctrlp.vim'
 NeoBundle 'rking/ag.vim'
 NeoBundle 'scrooloose/nerdcommenter'
 NeoBundle 'junegunn/vim-easy-align'
+NeoBundle 'christoomey/vim-tmux-navigator'
+NeoBundle 'benmills/vimux'
+NeoBundle 'tmux-plugins/vim-tmux-focus-events'
 
 " Programming languages
 NeoBundle 'majutsushi/tagbar'
@@ -60,16 +65,16 @@ NeoBundle 'pbrisbin/vim-syntax-shakespeare'
 
 " python
 "" Python Bundle
-NeoBundle 'davidhalter/jedi-vim'
 NeoBundle 'raimon49/requirements.txt.vim', {'for': 'requirements'}
-
+NeoBundle 'davidhalter/jedi-vim'
+NeoBundle 'python-mode/python-mode'
 " Writing tools
 " {{{
 NeoBundle 'reedes/vim-lexical'
 NeoBundle 'panozzaj/vim-autocorrect'
 NeoBundle 'reedes/vim-colors-pencil'
 NeoBundle 'reedes/vim-wordy'
-NeoBundle 'v-yadli/vim-online-thesaurus'
+" NeoBundle 'v-yadli/vim-online-thesaurus'
 NeoBundle 'vim-scripts/LaTeX-Box'
 "NeoBundle 'neilagabriel/vim-geeknote'
 NeoBundle 'godlygeek/tabular'              " Required by vim-markdown
@@ -115,23 +120,10 @@ set guioptions-=r
 " Bind ESC in normal mode to clear highlight search
 autocmd VimEnter * nnoremap <Esc> :nohlsearch<CR>
 
-"Set fonts according to OS {{{
-if has("unix")
-    set guifontwide=Sauce\ Code\ Powerline\ Light:h14
-    set guifont=Sauce\ Code\ Powerline\ Light:h14
-elseif has("win32")
-    set guifontwide=Consolas:h11
-    set guifont=Consolas:h11
-endif
-"}}}
-
-" Use a working colorscheme under win32 console
-if has("win32") && !has("gui_win32")
-    colorscheme pencil
-endif
-
 " Terminal color workaround
-set t_Co=256
+" set t_Co=256
+set t_ut=
+set termguicolors
 " Backspace workaround
 set backspace=indent,eol,start
 "{{{ Latex & markdown Settings
@@ -139,7 +131,7 @@ set backspace=indent,eol,start
 " http://weichen.wordpress.com/2007/01/09/howto-make-vim-latex-suite-always-recognise-tex-file/
 
 let g:tex_flavor = "latex"
-let g:Tex_CompileRule_dvi = 'latex -interaction=nonstopmode -src-specials $*'
+let g:LatexBox_autojump = 0
 let g:online_thesaurus_map_keys = 0
 " For LaTeX files, activate "long line break" feature
 " Note that a(english) word won't be broken into two lines
@@ -147,8 +139,12 @@ let g:online_thesaurus_map_keys = 0
 "
 
 function! WriterMode()
-    nnoremap <buffer> <C-F5> :silent! !make.bat<CR>
+    nnoremap <buffer> <C-F5> :make<CR>
+    nnoremap <buffer> <F5> :silent! NextWordy<CR>
     nnoremap <buffer> <S-K> :OnlineThesaurusCurrentWord<CR>
+    let g:lexical#thesaurus = ['~/thesaurus/words.txt', '~/thesaurus/mthesaur.txt','~/thesaurus/roget13a.txt' ]
+    let g:lexical#spell = 1
+    call lexical#init()
     colorscheme pencil
     let g:airline_theme='pencil'
     setlocal background=light
@@ -166,7 +162,8 @@ autocmd FileType mkd call WriterMode()
 "colorscheme darkZ
 "colorscheme colorzone
 "colorscheme solarized
-colorscheme Tomorrow-Night-Blue
+"colorscheme Tomorrow-Night-Blue
+colorscheme Tomorrow-Night
 "colorscheme beauty256
 "colorscheme bluez
 "colorscheme C64
@@ -209,22 +206,23 @@ set foldmethod=marker
 nmap <Leader>ss :source ~/.config/nvim/init.vim<CR>
 
 " Tab operations and buffer operations{{{
-nmap <A-t> :tab new<CR>
-nmap <A-w> :tab close<CR>
-nmap <A-n> :tabnext<CR>
-nmap <A-p> :tabprevious<CR>
+nmap <A-t> :enew<CR>
+nmap <A-w> :bd<CR>
+nmap <A-n> :bn<CR>
+nmap <A-p> :bp<CR>
 nmap <A-b> :bp<CR>
 nmap <A-f> :bn<CR>
-nmap <A-a> :tab sball<CR>
-nmap <A-d> :bd!<CR>
+nmap <A-d> :bd<CR>
 nmap <A-1> :b1<CR>
 nmap <A-2> :b2<CR>
 nmap <A-3> :b3<CR>
 nmap <A-4> :b4<CR>
+
+nmap <A-a> ggVG
 "}}}
 
 " Quick edit vimrc!
-command! -nargs=0 Vimrc :silent! tabnew ~/.config/nvim/init.vim
+command! -nargs=0 Vimrc :e ~/.config/nvim/init.vim
 
 set noswapfile
 
@@ -237,8 +235,8 @@ vmap <s-tab> <gv
 set completeopt=menu,longest,preview
 
 " Quicker navigation in tabs
-nmap <C-tab> :tabnext<CR>
-nmap <C-S-tab> :tabprevious<CR>
+nmap <C-tab> :bn<CR>
+nmap <C-S-tab> :bp<CR>
 
 " Enable airline fonts
 let g:airline_powerline_fonts=1
@@ -248,15 +246,7 @@ set ttimeoutlen=50
 
 autocmd FileType vim nmap <buffer> <S-K> :call VimrcGetHelp()<CR>
 autocmd FileType help nmap <buffer> q :q<CR>
-
-if has("win32")
-    nmap <M-{> :tabprevious<CR>
-    nmap <M-}> :tabnext<CR>
-endif
-
-if has("win32")
-    let g:GeeknoteScratchDirectory="D:\\temp"
-endif
+autocmd FileType python nmap <buffer> <F5> :VimuxRunCommand "python ".shellescape(@%, 1)<CR>
 
 "*****************************************************************************
 "" Abbreviations
@@ -291,6 +281,15 @@ inoremap <F11> <Esc>:call OpenConsole()<CR>
 let g:slimv_lisp = 'racket'
 let g:slimv_impl = 'racket'
 let g:slimv_swank_cmd = '!start racket "D:\home\desktop\swank-racket-master\server.rkt" '
+
+" Tmux navigation settings
+let g:tmux_navigator_no_mappings = 1
+
+nnoremap <silent> <M-h> :TmuxNavigateLeft<cr>
+nnoremap <silent> <M-j> :TmuxNavigateDown<cr>
+nnoremap <silent> <M-k> :TmuxNavigateUp<cr>
+nnoremap <silent> <M-l> :TmuxNavigateRight<cr>
+nnoremap <silent> <M-/> :TmuxNavigatePrevious<cr>
 
 "Vsim Functions
 "{{{
@@ -367,14 +366,11 @@ imap <C-backspace> <C-o>vbx
 " <C-W> (window) family
 nmap <C-w><C-s> :NERDTreeMirrorToggle<CR>
 imap <C-w><C-s> <Esc>:NERDTreeMirrorToggle<CR>
-let g:nerdtree_tabs_open_on_gui_startup     = 0
-let g:nerdtree_tabs_open_on_console_startup = 0
 
 nmap <C-w><C-o> :TagbarToggle<CR>
 imap <C-w><C-o> <Esc>:TagbarToggle<CR>
 
 nmap <C-w><C-e> :copen<CR>
-nmap ` :10split term://zsh<CR>a
 
 " <C-k> (kontrol) family
 vmap <C-k><C-c> <plug>NERDCommenterComment
