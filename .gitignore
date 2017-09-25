@@ -2,3 +2,4 @@
 bundle/*
 !bundle/Vundle.vim
 !bundle/.vundle
+plugged

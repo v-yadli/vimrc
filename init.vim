@@ -2,95 +2,71 @@
 " 
 " Yatao Li<yatao.li@live.com>
 
-" NeoBundle Scripts-----------------------------
-if has('vim_starting')  
-  set runtimepath+=~/.config/nvim/bundle/neobundle.vim/
-  set runtimepath+=~/.config/nvim/
-endif
+call plug#begin('~/.config/nvim/plugged')
 
-let neobundle_readme=expand('~/.config/nvim/bundle/neobundle.vim/README.md')
-
-if !filereadable(neobundle_readme)  
-  echo "Installing NeoBundle..."
-  echo ""
-  silent !mkdir -p ~/.config/nvim/bundle
-  silent !git clone https://github.com/Shougo/neobundle.vim ~/.config/nvim/bundle/neobundle.vim/
-  let g:not_finsh_neobundle = "yes"
-endif
-
-call neobundle#begin(expand('$HOME/.config/nvim/bundle'))  
-NeoBundleFetch 'Shougo/neobundle.vim'
-
-" ------------------------------------
-" THIS IS WHERE YOUR PLUGINS WILL COME
-" ------------------------------------
 " Basic
-NeoBundle 'scrooloose/nerdtree'
-NeoBundle 'jistr/vim-nerdtree-tabs'
-NeoBundle 'flazz/vim-colorschemes'
-NeoBundle 'godlygeek/csapprox'
-NeoBundle 'qualiabyte/vim-colorstepper'
-NeoBundle 'roxma/vim-tmux-clipboard'
-" NeoBundle 'tomasr/molokai'
-NeoBundle 'bling/vim-airline'
-NeoBundle 'vim-airline/vim-airline-themes'
-NeoBundle 'tpope/vim-fugitive'
-NeoBundle 'kien/ctrlp.vim'
-NeoBundle 'brooth/far.vim'
-NeoBundle 'rking/ag.vim'
-NeoBundle 'scrooloose/nerdcommenter'
-NeoBundle 'junegunn/vim-easy-align'
-NeoBundle 'christoomey/vim-tmux-navigator'
-NeoBundle 'benmills/vimux'
-NeoBundle 'tmux-plugins/vim-tmux-focus-events'
-NeoBundle 'cazador481/fakeclip.neovim'
+Plug 'scrooloose/nerdtree'
+Plug 'jistr/vim-nerdtree-tabs'
+Plug 'flazz/vim-colorschemes'
+Plug 'godlygeek/csapprox'
+Plug 'qualiabyte/vim-colorstepper'
+Plug 'roxma/vim-tmux-clipboard'
+" Plug 'tomasr/molokai'
+Plug 'bling/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'tpope/vim-fugitive'
+Plug 'kien/ctrlp.vim'
+Plug 'brooth/far.vim'
+Plug 'rking/ag.vim'
+Plug 'scrooloose/nerdcommenter'
+Plug 'junegunn/vim-easy-align'
+Plug 'christoomey/vim-tmux-navigator'
+Plug 'benmills/vimux'
+Plug 'tmux-plugins/vim-tmux-focus-events'
+Plug 'cazador481/fakeclip.neovim'
 
 " Programming languages
-NeoBundle 'majutsushi/tagbar'
-NeoBundle 'scrooloose/syntastic'
-NeoBundle 'sheerun/vim-polyglot'
-NeoBundle 'fsharp/vim-fsharp'
-NeoBundle 'derekwyatt/vim-scala'
-NeoBundle 'v-yadli/vim-tsl'
-NeoBundle 'pangloss/vim-javascript'
-NeoBundle 'kovisoft/slimv'
+Plug 'majutsushi/tagbar'
+Plug 'scrooloose/syntastic'
+Plug 'sheerun/vim-polyglot'
+Plug 'fsharp/vim-fsharp'
+Plug 'derekwyatt/vim-scala'
+Plug 'v-yadli/vim-tsl'
+Plug 'pangloss/vim-javascript'
+Plug 'kovisoft/slimv'
 
 " c
-NeoBundle 'vim-scripts/c.vim', {'for': ['c', 'cpp']}
-NeoBundle 'ludwig/split-manpage.vim'
+Plug 'vim-scripts/c.vim', {'for': ['c', 'cpp']}
+Plug 'ludwig/split-manpage.vim'
 
 " haskell
 "" Haskell Bundle
-NeoBundle 'eagletmt/neco-ghc'
-NeoBundle 'dag/vim2hs'
-NeoBundle 'pbrisbin/vim-syntax-shakespeare'
+Plug 'eagletmt/neco-ghc'
+Plug 'dag/vim2hs'
+Plug 'pbrisbin/vim-syntax-shakespeare'
 
 " python
 "" Python Bundle
-NeoBundle 'raimon49/requirements.txt.vim', {'for': 'requirements'}
-NeoBundle 'davidhalter/jedi-vim'
-NeoBundle 'python-mode/python-mode'
+Plug 'raimon49/requirements.txt.vim', {'for': 'requirements'}
+Plug 'davidhalter/jedi-vim'
+Plug 'python-mode/python-mode'
 " Writing tools
 " {{{
-NeoBundle 'reedes/vim-lexical'
-NeoBundle 'panozzaj/vim-autocorrect'
-NeoBundle 'reedes/vim-colors-pencil'
-NeoBundle 'reedes/vim-wordy'
-" NeoBundle 'v-yadli/vim-online-thesaurus'
-NeoBundle 'vim-scripts/LaTeX-Box'
-"NeoBundle 'neilagabriel/vim-geeknote'
-NeoBundle 'godlygeek/tabular'              " Required by vim-markdown
-NeoBundle 'plasticboy/vim-markdown'
+Plug 'reedes/vim-lexical'
+Plug 'panozzaj/vim-autocorrect'
+Plug 'reedes/vim-colors-pencil'
+Plug 'reedes/vim-wordy'
+" Plug 'v-yadli/vim-online-thesaurus'
+Plug 'vim-scripts/LaTeX-Box'
+"Plug 'neilagabriel/vim-geeknote'
+Plug 'godlygeek/tabular'              " Required by vim-markdown
+Plug 'plasticboy/vim-markdown'
 " }}}
 
+" Initialize plugin system
+call plug#end()
 
-call neobundle#end()  
 filetype plugin indent on
-
-" If there are uninstalled bundles found on startup,
-" this will conveniently prompt you to install them.
-NeoBundleCheck  
-"End NeoBundle Scripts-------------------------
 
 set cindent
 set shiftwidth=4
