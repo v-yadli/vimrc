@@ -30,18 +30,20 @@ NeoBundle 'jistr/vim-nerdtree-tabs'
 NeoBundle 'flazz/vim-colorschemes'
 NeoBundle 'godlygeek/csapprox'
 NeoBundle 'qualiabyte/vim-colorstepper'
-NeoBundle 'kana/vim-fakeclip'
+NeoBundle 'roxma/vim-tmux-clipboard'
 " NeoBundle 'tomasr/molokai'
 NeoBundle 'bling/vim-airline'
 NeoBundle 'vim-airline/vim-airline-themes'
 NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'kien/ctrlp.vim'
+NeoBundle 'brooth/far.vim'
 NeoBundle 'rking/ag.vim'
 NeoBundle 'scrooloose/nerdcommenter'
 NeoBundle 'junegunn/vim-easy-align'
 NeoBundle 'christoomey/vim-tmux-navigator'
 NeoBundle 'benmills/vimux'
 NeoBundle 'tmux-plugins/vim-tmux-focus-events'
+NeoBundle 'cazador481/fakeclip.neovim'
 
 " Programming languages
 NeoBundle 'majutsushi/tagbar'
@@ -119,9 +121,12 @@ set guioptions-=L
 set guioptions-=r
 " Bind ESC in normal mode to clear highlight search
 autocmd VimEnter * nnoremap <Esc> :nohlsearch<CR>
+" Necessity Evil Reloaded
+let g:vim_fakeclip_tmux_plus=1
+set clipboard=unnamedplus
 
 " Terminal color workaround
-" set t_Co=256
+set t_Co=256
 set t_ut=
 set termguicolors
 " Backspace workaround
@@ -304,7 +309,7 @@ function! VsimFindReferences()
 endfunction
 
 function! OpenConsole()
-    execute "VimShellPop"
+    execute "terminal"
 endfunction
 
 function! VimrcGetHelp()
@@ -389,7 +394,7 @@ call VsimToggleWrap()
 nnoremap <C-e><C-w> :call VsimToggleWrap()<CR>
 
 " Necessary Evil
-set clipboard=unnamed
+" set clipboard+=unnamedplus
 vmap <C-C> y
 vmap <C-V> gp
 imap <C-V> <S-insert>
