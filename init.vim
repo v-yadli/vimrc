@@ -9,13 +9,15 @@ Plug 'scrooloose/nerdtree'
 Plug 'jistr/vim-nerdtree-tabs'
 Plug 'flazz/vim-colorschemes'
 Plug 'godlygeek/csapprox'
-Plug 'qualiabyte/vim-colorstepper'
+" Plug 'qualiabyte/vim-colorstepper'
 Plug 'roxma/vim-tmux-clipboard'
 " Plug 'tomasr/molokai'
 Plug 'bling/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'tpope/vim-fugitive'
-Plug 'kien/ctrlp.vim'
+" Plug 'kien/ctrlp.vim'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
 Plug 'brooth/far.vim'
 Plug 'rking/ag.vim'
 Plug 'scrooloose/nerdcommenter'
@@ -23,7 +25,8 @@ Plug 'junegunn/vim-easy-align'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'benmills/vimux'
 Plug 'tmux-plugins/vim-tmux-focus-events'
-Plug 'cazador481/fakeclip.neovim'
+Plug 'mbbill/undotree'
+" Plug 'cazador481/fakeclip.neovim'
 
 " Programming languages
 Plug 'majutsushi/tagbar'
@@ -47,9 +50,10 @@ Plug 'pbrisbin/vim-syntax-shakespeare'
 
 " python
 "" Python Bundle
-Plug 'raimon49/requirements.txt.vim', {'for': 'requirements'}
-Plug 'davidhalter/jedi-vim'
-Plug 'python-mode/python-mode'
+" Plug 'raimon49/requirements.txt.vim', {'for': 'requirements'}
+" A slow jedi...
+" Plug 'davidhalter/jedi-vim'
+" Plug 'python-mode/python-mode'
 " Writing tools
 " {{{
 Plug 'reedes/vim-lexical'
@@ -126,11 +130,12 @@ function! WriterMode()
     let g:lexical#thesaurus = ['~/thesaurus/words.txt', '~/thesaurus/mthesaur.txt','~/thesaurus/roget13a.txt' ]
     let g:lexical#spell = 1
     call lexical#init()
-    colorscheme pencil
-    let g:airline_theme='pencil'
-    setlocal background=light
+    "colorscheme pencil
+    "let g:airline_theme='pencil'
+    "setlocal background=light
     nnoremap <buffer> <C-e><C-d> mZvapgq'Z
     setlocal smartindent
+    set wrap
 endfunction
 
 autocmd FileType tex call WriterMode()
@@ -271,6 +276,11 @@ nnoremap <silent> <M-j> :TmuxNavigateDown<cr>
 nnoremap <silent> <M-k> :TmuxNavigateUp<cr>
 nnoremap <silent> <M-l> :TmuxNavigateRight<cr>
 nnoremap <silent> <M-/> :TmuxNavigatePrevious<cr>
+
+if has("persistent_undo")
+    set undodir=~/.undodir/
+    set undofile
+endif
 
 "Vsim Functions
 "{{{
