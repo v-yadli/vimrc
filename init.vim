@@ -397,6 +397,8 @@ vmap <C-=> :EasyAlign =<CR>
 " <C-e> (view) family
 " call VsimToggleWrap()
 nnoremap <C-e><C-w> :call VsimToggleWrap()<CR>
+nnoremap <C-;> :FZF<CR>
+inoremap <C-;> <C-o>:FZF<CR>
 
 vnoremap <C-C> y
 vnoremap <C-X> x
@@ -404,10 +406,10 @@ vnoremap <C-V> gp
 inoremap <C-V> <C-O>p
 vnoremap <BS> d
 
-inoremap <S-Left> <Esc>v
-inoremap <S-Right> <Esc><Right>v
-inoremap <S-Up> <Esc>v<Up>
-inoremap <S-Down> <Esc><Right>v<Down>
+inoremap <S-Left> <C-o>v
+inoremap <S-Right> <Right><C-o>v
+inoremap <S-Up> <C-o>v<Up>
+inoremap <S-Down> <Right><C-o>v<Down>
 
 nnoremap <S-Left> <Left>v
 nnoremap <S-Right> v
@@ -423,6 +425,5 @@ vnoremap <Left> <Esc><Left>
 vnoremap <Right> <Esc><Right>
 vnoremap <Up> <Esc><Up>
 vnoremap <Down> <Esc><Down>
-
 
 "}}}
