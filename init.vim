@@ -2,13 +2,17 @@
 " 
 " Yatao Li<yatao.li@live.com>
 
-call plug#begin('~/.config/nvim/plugged')
+if has("win32")
+    call plug#begin('~/AppData/Local/nvim/plugged')
+else
+    call plug#begin('~/.config/nvim/plugged')
+endif
 
 " Basic
 Plug 'scrooloose/nerdtree'
 Plug 'jistr/vim-nerdtree-tabs'
 Plug 'flazz/vim-colorschemes'
-Plug 'godlygeek/csapprox'
+"Plug 'godlygeek/csapprox'
 " Plug 'qualiabyte/vim-colorstepper'
 Plug 'roxma/vim-tmux-clipboard'
 " Plug 'tomasr/molokai'
@@ -26,34 +30,27 @@ Plug 'christoomey/vim-tmux-navigator'
 Plug 'benmills/vimux'
 Plug 'tmux-plugins/vim-tmux-focus-events'
 Plug 'mbbill/undotree'
+Plug 'ludwig/split-manpage.vim'
 " Plug 'cazador481/fakeclip.neovim'
 
 " Programming languages
-Plug 'majutsushi/tagbar'
-Plug 'scrooloose/syntastic'
 Plug 'sheerun/vim-polyglot'
-Plug 'fsharp/vim-fsharp'
-Plug 'derekwyatt/vim-scala'
-Plug 'v-yadli/vim-tsl'
-Plug 'pangloss/vim-javascript'
-Plug 'kovisoft/slimv'
 
-" c
-Plug 'vim-scripts/c.vim', {'for': ['c', 'cpp']}
-Plug 'ludwig/split-manpage.vim'
+if has("win32")
+    Plug 'autozimu/LanguageClient-neovim', {
+        \ 'branch': 'next',
+        \ 'do': 'powershell install.ps1',
+        \ }
+else
+    Plug 'autozimu/LanguageClient-neovim', {
+        \ 'branch': 'next',
+        \ 'do': 'bash install.sh',
+        \ }
+endif
 
-" haskell
-"" Haskell Bundle
-Plug 'eagletmt/neco-ghc'
-Plug 'dag/vim2hs'
-Plug 'pbrisbin/vim-syntax-shakespeare'
+" (Completion plugin option 1)
+Plug 'roxma/nvim-completion-manager'
 
-" python
-"" Python Bundle
-" Plug 'raimon49/requirements.txt.vim', {'for': 'requirements'}
-" A slow jedi...
-" Plug 'davidhalter/jedi-vim'
-" Plug 'python-mode/python-mode'
 " Writing tools
 " {{{
 Plug 'reedes/vim-lexical'
@@ -102,7 +99,7 @@ set guioptions-=r
 " Bind ESC in normal mode to clear highlight search
 autocmd VimEnter * nnoremap <Esc> :nohlsearch<CR>
 " Necessity Evil Reloaded
-let g:vim_fakeclip_tmux_plus=1
+" let g:vim_fakeclip_tmux_plus=1
 set clipboard=unnamedplus
 
 " Terminal color workaround
@@ -189,7 +186,11 @@ imap <C-s> <Esc>:update<CR>a
 " Folding workaround
 set foldmethod=marker
 " Quick resource vim configuration
-nmap <Leader>ss :source ~/.config/nvim/init.vim<CR>
+if has("win32")
+    nmap <Leader>ss :source ~/AppData/Local/nvim/init.vim<CR>
+else
+    nmap <Leader>ss :source ~/.config/nvim/init.vim<CR>
+endif
 
 " Tab operations and buffer operations{{{
 nmap <A-t> :enew<CR>
@@ -208,7 +209,11 @@ nmap <A-a> ggVG
 "}}}
 
 " Quick edit vimrc!
-command! -nargs=0 Vimrc :e ~/.config/nvim/init.vim
+if has("win32")
+    command! -nargs=0 Vimrc :e ~/AppData/Local/nvim/init.vim
+else
+    command! -nargs=0 Vimrc :e ~/.config/nvim/init.vim
+endif
 
 set noswapfile
 
@@ -230,9 +235,10 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline_theme='pencil'
 set ttimeoutlen=50
 
-autocmd FileType vim nmap <buffer> <S-K> :call VimrcGetHelp()<CR>
-autocmd FileType help nmap <buffer> q :q<CR>
-autocmd FileType python nmap <buffer> <F5> :VimuxRunCommand "python ".shellescape(@%, 1)<CR>
+autocmd FileType vim nnoremap <buffer> <S-K> :call VimrcGetHelp()<CR>
+autocmd FileType help nnoremap <buffer> q :q<CR>
+autocmd FileType qf nnoremap <buffer> q :q<CR>
+autocmd FileType nerdtree nnoremap <buffer> q :NERDTreeToggle<CR>
 
 "*****************************************************************************
 "" Abbreviations
@@ -259,15 +265,6 @@ let g:NERDTreeMapOpenInTabSilent = '<RightMouse>'
 let g:NERDTreeWinSize = 30
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.db,*.sqlite
 
-" Shell settings
-nnoremap <F11> :call OpenConsole()<CR>
-inoremap <F11> <Esc>:call OpenConsole()<CR>
-
-" Lisp settings
-let g:slimv_lisp = 'racket'
-let g:slimv_impl = 'racket'
-let g:slimv_swank_cmd = '!start racket "D:\home\desktop\swank-racket-master\server.rkt" '
-
 " Tmux navigation settings
 let g:tmux_navigator_no_mappings = 1
 
@@ -292,10 +289,6 @@ function! VsimFindReferences()
     call VsimSetDirectoryToCurrentFile()
     let currentWord = expand("<cword>", 1)
     execute "Ag ".currentWord." ."
-endfunction
-
-function! OpenConsole()
-    execute "terminal"
 endfunction
 
 function! VimrcGetHelp()
@@ -346,6 +339,22 @@ endfunction
 
 "}}}
 
+"LanguageServerProtocol setup
+"required for operations modifying multiple buffers like rename.
+set hidden
+
+let g:LanguageClient_serverCommands = {
+    \ 'haskell': ['hie', '--lsp'],
+    \ 'ps1': ['powershell', '~\git\config\language-servers\powershell\Start-EditorServices.ps1'],
+    \ 'python': ['pyls'],
+    \ 'cs': ['~\.omnisharp\OmniSharp.exe'],
+    \ }
+
+autocmd FileType cs call VsimEnableLanguageServerKeys()
+" autocmd FileType ps1 call VsimEnableLanguageServerKeys()
+autocmd FileType hs call VsimEnableLanguageServerKeys()
+autocmd FileType py call VsimEnableLanguageServerKeys()
+
 "Visual Studio key bindings
 "{{{
 
@@ -358,10 +367,21 @@ imap <C-backspace> <C-o>vbx
 nmap <C-w><C-s> :NERDTreeMirrorToggle<CR>
 imap <C-w><C-s> <Esc>:NERDTreeMirrorToggle<CR>
 
-nmap <C-w><C-o> :TagbarToggle<CR>
-imap <C-w><C-o> <Esc>:TagbarToggle<CR>
-
 nmap <C-w><C-e> :copen<CR>
+nmap <C-k><C-r> :call VsimFindReferences()<CR>
+
+function! VsimEnableLanguageServerKeys()
+    " TODO hover with timer
+    nnoremap <silent> <S-K> :call LanguageClient_textDocument_hover()<CR>
+    nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
+    nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
+    nnoremap <silent> <F12> :call LanguageClient_textDocument_definition()<CR>
+    set formatexpr=LanguageClient_textDocument_rangeFormatting()
+    vnoremap = :call LanguageClient_textDocument_rangeFormatting()<CR>
+    nnoremap <C-k><C-r> :call LanguageClient_textDocument_references()<CR>
+    nnoremap <C-e><C-d> :call LanguageClient_textDocument_formatting()<CR>
+endfunction
+
 
 " <C-k> (kontrol) family
 vmap <C-k><C-c> <plug>NERDCommenterComment
@@ -371,18 +391,38 @@ nnoremap <C-c> <silent> <C-c>
 nnoremap <C-k><C-c> <S-v>:call NERDComment("x", "Comment")<CR>
 nnoremap <C-k><C-u> <S-v>:call NERDComment("x", "Uncomment")<CR>
 
-nmap <C-k><C-r> :call VsimFindReferences()<CR>
 
-vmap <C-k><C-a> :EasyAlign =<CR>
+vmap <C-=> :EasyAlign =<CR>
 
 " <C-e> (view) family
-call VsimToggleWrap()
+" call VsimToggleWrap()
 nnoremap <C-e><C-w> :call VsimToggleWrap()<CR>
 
-" Necessary Evil
-" set clipboard+=unnamedplus
-vmap <C-C> y
-vmap <C-V> gp
-imap <C-V> <S-insert>
+vnoremap <C-C> y
+vnoremap <C-X> x
+vnoremap <C-V> gp
+inoremap <C-V> <C-O>p
+vnoremap <BS> d
+
+inoremap <S-Left> <Esc>v
+inoremap <S-Right> <Esc><Right>v
+inoremap <S-Up> <Esc>v<Up>
+inoremap <S-Down> <Esc><Right>v<Down>
+
+nnoremap <S-Left> <Left>v
+nnoremap <S-Right> v
+nnoremap <S-Up> v<Up>
+nnoremap <S-Down> v<Down>
+
+vnoremap <S-Left> <Left>
+vnoremap <S-Right> <Right>
+vnoremap <S-Up> <Up>
+vnoremap <S-Down> <Down>
+
+vnoremap <Left> <Esc><Left>
+vnoremap <Right> <Esc><Right>
+vnoremap <Up> <Esc><Up>
+vnoremap <Down> <Esc><Down>
+
 
 "}}}
