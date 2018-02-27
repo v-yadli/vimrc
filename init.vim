@@ -314,10 +314,10 @@ function! VsimToggleWrap()
         setlocal wrap
         setlocal colorcolumn=0
         silent! echo "Wrap on"
-        nmap j gj
-        nmap k gk
-        nmap 0 g0
-        nmap $ g$
+        nmap silent j gj
+        nmap silent k gk
+        nmap silent 0 g0
+        nmap silent $ g$
     endif
 endfunction
 
@@ -347,10 +347,11 @@ set hidden
 
 let g:LanguageClient_serverCommands = {
     \ 'haskell': ['hie', '--lsp'],
-    \ 'ps1': ['powershell', '~\git\config\language-servers\powershell\Start-EditorServices.ps1', '-HostName', 'nvim', '-HostProfileId', '0', '-HostVersion', '1.0.0', '-LogPath', '.', '-LogLevel', 'Normal', '-BundledModulesPath', '.'],
     \ 'python': ['pyls'],
     \ 'cs': ['~\.omnisharp\OmniSharp.exe'],
+    \ 'ps1': ['powershell', '~\git\PowerShellEditorServices\module\Start-EditorServices.ps1', '-HostName', 'nvim', '-HostProfileId', '0', '-HostVersion', '1.0.0', '-EditorServicesVersion', '1.6.0', '-LogPath', 'pses.log.txt', '-LogLevel', 'Normal', '-BundledModulesPath', '~\git\PowerShellEditorServices\module', '-Stdio'],
     \ }
+
 
 autocmd FileType cs call VsimEnableLanguageServerKeys()
 autocmd FileType ps1 call VsimEnableLanguageServerKeys()
