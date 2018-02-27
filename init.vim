@@ -69,6 +69,7 @@ call plug#end()
 
 filetype plugin indent on
 
+set nowrap
 set cindent
 set shiftwidth=4
 set tabstop=4
@@ -132,6 +133,7 @@ function! WriterMode()
     "setlocal background=light
     nnoremap <buffer> <C-e><C-d> mZvapgq'Z
     setlocal smartindent
+    let g:vsim_wrap_state = 0
     set wrap
 endfunction
 
@@ -296,7 +298,7 @@ function! VimrcGetHelp()
     execute "help ".currentWord
 endfunction
 
-let g:vsim_wrap_state = 1
+let g:vsim_wrap_state = 0
 function! VsimToggleWrap()
     if g:vsim_wrap_state
         " When I don't like wrap
@@ -345,13 +347,13 @@ set hidden
 
 let g:LanguageClient_serverCommands = {
     \ 'haskell': ['hie', '--lsp'],
-    \ 'ps1': ['powershell', '~\git\config\language-servers\powershell\Start-EditorServices.ps1'],
+    \ 'ps1': ['powershell', '~\git\config\language-servers\powershell\Start-EditorServices.ps1', '-HostName', 'nvim', '-HostProfileId', '0', '-HostVersion', '1.0.0', '-LogPath', '.', '-LogLevel', 'Normal', '-BundledModulesPath', '.'],
     \ 'python': ['pyls'],
     \ 'cs': ['~\.omnisharp\OmniSharp.exe'],
     \ }
 
 autocmd FileType cs call VsimEnableLanguageServerKeys()
-" autocmd FileType ps1 call VsimEnableLanguageServerKeys()
+autocmd FileType ps1 call VsimEnableLanguageServerKeys()
 autocmd FileType hs call VsimEnableLanguageServerKeys()
 autocmd FileType py call VsimEnableLanguageServerKeys()
 
@@ -395,7 +397,7 @@ nnoremap <C-k><C-u> <S-v>:call NERDComment("x", "Uncomment")<CR>
 vmap <C-=> :EasyAlign =<CR>
 
 " <C-e> (view) family
-" call VsimToggleWrap()
+call VsimToggleWrap()
 nnoremap <C-e><C-w> :call VsimToggleWrap()<CR>
 nnoremap <C-;> :FZF<CR>
 inoremap <C-;> <C-o>:FZF<CR>
