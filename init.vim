@@ -4,37 +4,48 @@
 
 if has("win32")
     call plug#begin('~/AppData/Local/nvim/plugged')
+    " http://vim.wikia.com/wiki/Adding_Vim_to_MS-Windows_File_Explorer_Menu
+    " see second approach -- no shellext dll needed
 else
     call plug#begin('~/.config/nvim/plugged')
 endif
 
-" Basic
+" Solidworks -- Passive plugins/burned into the brain, fire and forget
 Plug 'scrooloose/nerdtree'
 Plug 'jistr/vim-nerdtree-tabs'
 Plug 'flazz/vim-colorschemes'
-"Plug 'godlygeek/csapprox'
-" Plug 'qualiabyte/vim-colorstepper'
 Plug 'roxma/vim-tmux-clipboard'
-" Plug 'tomasr/molokai'
 Plug 'bling/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'tpope/vim-fugitive'
-" Plug 'kien/ctrlp.vim'
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'junegunn/fzf.vim'
-Plug 'brooth/far.vim'
-Plug 'rking/ag.vim'
-Plug 'scrooloose/nerdcommenter'
-Plug 'junegunn/vim-easy-align'
-Plug 'christoomey/vim-tmux-navigator'
-Plug 'benmills/vimux'
 Plug 'tmux-plugins/vim-tmux-focus-events'
-Plug 'mbbill/undotree'
-Plug 'ludwig/split-manpage.vim'
-" Plug 'cazador481/fakeclip.neovim'
+Plug 'christoomey/vim-tmux-navigator'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'scrooloose/nerdcommenter'
 
-" Programming languages
+" Utilities -- Things that I do love to issue Ex commands to utilize
+Plug 'mbbill/undotree'
+Plug 'tpope/vim-fugitive'
+Plug 'rking/ag.vim'
+Plug 'junegunn/vim-easy-align'
+Plug 'junegunn/fzf.vim'
+
+" Laborotary -- Things I'd love to know more about
+Plug 'kassio/neoterm'
+Plug 'tpope/vim-surround'
+Plug 'kana/vim-smartinput'
+
+" Junkyard -- things that do not work for me, or never found useful.
+" Plug 'cazador481/fakeclip.neovim' <--- not working
+" Plug 'kien/ctrlp.vim'             <--- replaced by fzf
+" Plug 'benmills/vimux'             <--- never used
+" Plug 'ludwig/split-manpage.vim'   <--- don't even remember how it gets here...
+" Plug 'brooth/far.vim'             <--- replaced by language protocol servers
+
+
+
+" Programming languages and environment
 Plug 'sheerun/vim-polyglot'
+Plug 'v-yadli/vim-tsl'
 
 if has("win32")
     Plug 'autozimu/LanguageClient-neovim', {
@@ -59,7 +70,6 @@ Plug 'reedes/vim-colors-pencil'
 Plug 'reedes/vim-wordy'
 " Plug 'v-yadli/vim-online-thesaurus'
 Plug 'vim-scripts/LaTeX-Box'
-"Plug 'neilagabriel/vim-geeknote'
 Plug 'godlygeek/tabular'              " Required by vim-markdown
 Plug 'plasticboy/vim-markdown'
 " }}}
@@ -407,7 +417,8 @@ vnoremap <C-C> y
 vnoremap <C-X> x
 vnoremap <C-V> gp
 inoremap <C-V> <C-O>p
-vnoremap <BS> d
+vnoremap <BS> "_d
+vnoremap <Del> "_x
 
 inoremap <S-Left> <C-o>v
 inoremap <S-Right> <Right><C-o>v
