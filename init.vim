@@ -32,7 +32,6 @@ Plug 'junegunn/fzf.vim'
 " Laborotary -- Things I'd love to know more about
 Plug 'kassio/neoterm'
 Plug 'tpope/vim-surround'
-Plug 'kana/vim-smartinput'
 
 " Junkyard -- things that do not work for me, or never found useful.
 " Plug 'cazador481/fakeclip.neovim' <--- not working
@@ -40,6 +39,7 @@ Plug 'kana/vim-smartinput'
 " Plug 'benmills/vimux'             <--- never used
 " Plug 'ludwig/split-manpage.vim'   <--- don't even remember how it gets here...
 " Plug 'brooth/far.vim'             <--- replaced by language protocol servers
+" Plug 'kana/vim-smartinput'        <--- too noisy, bad quotes
 
 
 
@@ -158,11 +158,12 @@ autocmd FileType mkd call WriterMode()
 "colorscheme colorzone
 "colorscheme solarized
 "colorscheme Tomorrow-Night-Blue
-colorscheme Tomorrow-Night
+"colorscheme Tomorrow-Night
 "colorscheme beauty256
 "colorscheme bluez
 "colorscheme C64
 "colorscheme bubblegum-256-light
+colorscheme sonofobsidian
 set cursorline
 set laststatus=2
 
