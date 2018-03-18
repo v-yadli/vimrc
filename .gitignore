@@ -4,3 +4,4 @@ bundle/*
 !bundle/.vundle
 plugged
 rplugin.vim
+.netrwhist
