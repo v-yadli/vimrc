@@ -245,7 +245,10 @@ nmap <C-S-tab> :bp<CR>
 " Enable airline fonts
 let g:airline_powerline_fonts=1
 let g:airline#extensions#tabline#enabled = 1
-let g:airline_theme='pencil'
+let g:airline_inactive_collapse=1
+let g:airline#extensions#fugitiveline#enabled = 1
+let g:airline#extensions#branch#enabled = 1
+"let g:airline_theme='sonofobsidian'
 set ttimeoutlen=50
 
 autocmd FileType vim nnoremap <buffer> <S-K> :call VimrcGetHelp()<CR>
