@@ -1,0 +1,10 @@
+Windows Registry Editor Version 5.00
+
+[HKEY_CLASSES_ROOT\*\Shell\Vim]
+@="Edit with &Vim"
+"Icon"="\"C:\\Program Files\\Vim\\vim80\\gvim.exe\""
+"Icon"="\"C:\\Tools\\neovim\\Neovim\\bin\\nvim-qt.exe\""
+
+[HKEY_CLASSES_ROOT\*\Shell\Vim\command]
+@="\"C:\\Tools\\neovim\\Neovim\\bin\\nvim-qt.exe\" \"%1\""
+"ThreadingModel"="Apartment"

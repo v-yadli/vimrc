@@ -32,7 +32,6 @@ Plug 'junegunn/fzf.vim'
 " Laborotary -- Things I'd love to know more about
 Plug 'kassio/neoterm'
 Plug 'tpope/vim-surround'
-Plug 'kana/vim-smartinput'
 
 " Junkyard -- things that do not work for me, or never found useful.
 " Plug 'cazador481/fakeclip.neovim' <--- not working
@@ -40,6 +39,7 @@ Plug 'kana/vim-smartinput'
 " Plug 'benmills/vimux'             <--- never used
 " Plug 'ludwig/split-manpage.vim'   <--- don't even remember how it gets here...
 " Plug 'brooth/far.vim'             <--- replaced by language protocol servers
+" Plug 'kana/vim-smartinput'        <--- too noisy, bad quotes
 
 
 
@@ -244,7 +244,10 @@ nmap <C-S-tab> :bp<CR>
 " Enable airline fonts
 let g:airline_powerline_fonts=1
 let g:airline#extensions#tabline#enabled = 1
-let g:airline_theme='pencil'
+let g:airline_inactive_collapse=1
+let g:airline#extensions#fugitiveline#enabled = 1
+let g:airline#extensions#branch#enabled = 1
+"let g:airline_theme='sonofobsidian'
 set ttimeoutlen=50
 
 autocmd FileType vim nnoremap <buffer> <S-K> :call VimrcGetHelp()<CR>
@@ -451,6 +454,7 @@ endif
 function! VsimTestEnterTerminal()
     if &buftype == 'terminal'
         setlocal nobuflisted
+        colorscheme sonofobsidian
         if mode() != 'i'
             normal i
         endif
