@@ -154,15 +154,15 @@ autocmd FileType mkd call WriterMode()
 "colorscheme default
 "let g:molokai_original = 1
 "colorscheme molokai
-"colorscheme darkZ
-"colorscheme colorzone
+colorscheme colorzone
 "colorscheme solarized
 "colorscheme Tomorrow-Night-Blue
-colorscheme Tomorrow-Night
+"colorscheme Tomorrow-Night
 "colorscheme beauty256
 "colorscheme bluez
 "colorscheme C64
 "colorscheme bubblegum-256-light
+"colorscheme sonofobsidian
 set cursorline
 set laststatus=2
 
@@ -206,7 +206,7 @@ endif
 
 " Tab operations and buffer operations{{{
 nmap <A-t> :enew<CR>
-nmap <A-w> :bd<CR>
+nmap <A-w> :bp<bar>sp<bar>bn<bar>bd<CR>
 nmap <A-n> :bn<CR>
 nmap <A-p> :bp<CR>
 nmap <A-b> :bp<CR>
@@ -384,7 +384,7 @@ nmap <C-w><C-e> :copen<CR>
 nmap <C-k><C-r> :call VsimFindReferences()<CR>
 
 function! VsimEnableLanguageServerKeys()
-    " TODO hover with timer
+    "autocmd! CursorHold * call LanguageClient_textDocument_hover()
     nnoremap <silent> <S-K> :call LanguageClient_textDocument_hover()<CR>
     nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
     nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
@@ -439,5 +439,43 @@ vnoremap <Left> <Esc><Left>
 vnoremap <Right> <Esc><Right>
 vnoremap <Up> <Esc><Up>
 vnoremap <Down> <Esc><Down>
+
+" REPL and Neoterm
+let g:neoterm_open_in_all_tabs = 0
+let g:neoterm_autoinsert = 1
+if has("win32")
+    let g:neoterm_eof = "\r\n"
+    " let g:neoterm_shell = "C:\Windows\system32\WindowsPowerShell\v1.0\powershell.exe" "doesn't work..
+endif
+
+function! VsimTestEnterTerminal()
+    if &buftype == 'terminal'
+        setlocal nobuflisted
+        if mode() != 'i'
+            normal i
+        endif
+    endif
+endfunction
+
+
+inoremap <F5> <C-O>:TREPLSendLine<CR>
+inoremap <C-F5> <C-O>:TREPLSendFile<CR>
+nnoremap <F5> :TREPLSendLine<CR>
+nnoremap <C-F5> :TREPLSendFile<CR>
+vnoremap <F5> <C-O>:TREPLSendSelection<CR>
+
+inoremap <F11> <C-O>:Ttoggle<CR>
+vnoremap <F11> <C-O>:Ttoggle<CR>
+nnoremap <F11> :Ttoggle<CR>
+
+tnoremap <A-Space> <C-\><C-n>
+tnoremap <A-v> <C-\><C-n>v
+tnoremap <A-PageUp> <C-\><C-n><PageUp>
+tnoremap <A-PageDown> <C-\><C-n><PageDown>
+tnoremap <PageUp> <C-\><C-n><PageUp>
+tnoremap <PageDown> <C-\><C-n><PageDown>
+tnoremap <F11> <C-\><C-n>:Ttoggle<CR>
+
+autocmd BufEnter * call VsimTestEnterTerminal()
 
 "}}}
