@@ -3,6 +3,8 @@
 " Yatao Li<yatao.li@live.com>
 
 if has("win32")
+    " python2 for OmniSharp
+    let g:python_host_prog='C:/Python27amd64/python.exe'
     call plug#begin('~/AppData/Local/nvim/plugged')
     " http://vim.wikia.com/wiki/Adding_Vim_to_MS-Windows_File_Explorer_Menu
     " see second approach -- no shellext dll needed
@@ -13,10 +15,9 @@ endif
 " Solidworks -- Passive plugins/burned into the brain, fire and forget
 Plug 'scrooloose/nerdtree'
 Plug 'jistr/vim-nerdtree-tabs'
-Plug 'flazz/vim-colorschemes'
 Plug 'roxma/vim-tmux-clipboard'
+Plug 'rakr/vim-one'
 Plug 'bling/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
 Plug 'tmux-plugins/vim-tmux-focus-events'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -34,6 +35,8 @@ Plug 'kassio/neoterm'
 Plug 'tpope/vim-surround'
 let g:polyglot_disabled = ['latex']
 Plug 'lervag/vimtex'
+Plug 'godlygeek/tabular'              " Required by vim-markdown
+Plug 'plasticboy/vim-markdown'
 
 " Junkyard -- things that do not work for me, or never found useful.
 " Plug 'cazador481/fakeclip.neovim' <--- not working
@@ -42,14 +45,20 @@ Plug 'lervag/vimtex'
 " Plug 'ludwig/split-manpage.vim'   <--- don't even remember how it gets here...
 " Plug 'brooth/far.vim'             <--- replaced by language protocol servers
 " Plug 'kana/vim-smartinput'        <--- too noisy, bad quotes
-" Plug 'vim-scripts/LaTeX-Box'
+" Plug 'vim-scripts/LaTeX-Box'      <--- replaced by vimtex
 " Plug 'v-yadli/vim-online-thesaurus'
+" Plug 'flazz/vim-colorschemes'     <--- need to customize some of the colors
+" Plug 'vim-airline/vim-airline-themes'
 
 
 
 " Programming languages and environment
 Plug 'sheerun/vim-polyglot'
 Plug 'v-yadli/vim-tsl'
+
+if has("python")
+    Plug 'OmniSharp/omnisharp-vim'
+endif
 
 if has("win32")
     Plug 'autozimu/LanguageClient-neovim', {
@@ -70,10 +79,7 @@ Plug 'roxma/nvim-completion-manager'
 " {{{
 Plug 'reedes/vim-lexical'
 Plug 'panozzaj/vim-autocorrect'
-Plug 'reedes/vim-colors-pencil'
 Plug 'reedes/vim-wordy'
-Plug 'godlygeek/tabular'              " Required by vim-markdown
-Plug 'plasticboy/vim-markdown'
 " }}}
 
 " Initialize plugin system
@@ -118,7 +124,9 @@ set clipboard=unnamedplus
 " Terminal color workaround
 set t_Co=256
 set t_ut=
-set termguicolors
+if has("termguicolors")
+    set termguicolors
+endif
 " Backspace workaround
 set backspace=indent,eol,start
 "{{{ Latex & markdown Settings
@@ -138,8 +146,6 @@ function! WriterMode()
     let g:lexical#thesaurus = ['~/thesaurus/words.txt', '~/thesaurus/mthesaur.txt','~/thesaurus/roget13a.txt' ]
     let g:lexical#spell = 1
     call lexical#init()
-    "colorscheme pencil
-    "let g:airline_theme='pencil'
     "setlocal background=light
     nnoremap <buffer> <C-e><C-d> mZvapgq'Z
     setlocal smartindent
@@ -151,18 +157,14 @@ autocmd FileType tex call WriterMode()
 autocmd FileType mkd call WriterMode()
 
 "}}}
-"colorscheme default
-"let g:molokai_original = 1
-"colorscheme molokai
-colorscheme colorzone
-"colorscheme solarized
-"colorscheme Tomorrow-Night-Blue
-"colorscheme Tomorrow-Night
-"colorscheme beauty256
-"colorscheme bluez
-"colorscheme C64
-"colorscheme bubblegum-256-light
-"colorscheme sonofobsidian
+
+set background=dark
+colorscheme one
+
+highlight TermCursor gui=standout
+highlight TermCursor guibg=auto
+highlight TermCursor guifg=#ef2929
+
 set cursorline
 set laststatus=2
 
@@ -247,7 +249,7 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline_inactive_collapse=1
 let g:airline#extensions#fugitiveline#enabled = 1
 let g:airline#extensions#branch#enabled = 1
-"let g:airline_theme='sonofobsidian'
+let g:airline_theme='one'
 set ttimeoutlen=50
 
 autocmd FileType vim nnoremap <buffer> <S-K> :call VimrcGetHelp()<CR>
@@ -358,15 +360,28 @@ endfunction
 "required for operations modifying multiple buffers like rename.
 set hidden
 
+" PSES sample startup code from VSCode:
+"
+"Start-EditorServices.ps1 -EditorServicesVersion '1.6.0'
+"    -HostName 'Visual Studio Code Host'
+"    -HostProfileId 'Microsoft.VSCode'
+"    -HostVersion '1.6.0'
+"    -AdditionalModules @('PowerShellEditorServices.VSCode') 
+"    -BundledModulesPath '/Users/tylerleonhardt/.vscode-insiders/extensions/ms-vscode.powershell-1.6.0/modules' 
+"    -EnableConsoleRepl 
+"    -WaitForDebugger 
+"    -LogLevel 'Verbose' 
+"    -LogPath '/Users/tylerleonhardt/.vscode-insiders/extensions/ms-vscode.powershell-1.6.0/logs/1522110227-30bae385-70f5-4dbe-a322-88629604468f1522110215400/EditorServices.log' 
+"    -SessionDetailsPath '/Users/tylerleonhardt/.vscode-insiders/extensions/ms-vscode.powershell-1.6.0/sessions/PSES-VSCode-1278-344124' 
+"    -FeatureFlags @()
+
 let g:LanguageClient_serverCommands = {
     \ 'haskell': ['hie', '--lsp'],
     \ 'python': ['pyls'],
-    \ 'cs': ['~\.omnisharp\OmniSharp.exe'],
-    \ 'ps1': ['powershell', '~\git\PowerShellEditorServices\module\Start-EditorServices.ps1', '-HostName', 'nvim', '-HostProfileId', '0', '-HostVersion', '1.0.0', '-EditorServicesVersion', '1.6.0', '-LogPath', 'pses.log.txt', '-LogLevel', 'Normal', '-BundledModulesPath', '~\git\PowerShellEditorServices\module', '-Stdio'],
+    \ 'ps1': ['powershell', '~\git\PowerShellEditorServices\module\Start-EditorServices.ps1', '-HostName', 'nvim', '-HostProfileId', '0', '-HostVersion', '1.0.0', '-EditorServicesVersion', '1.6.0', '-LogPath', '~\pses.log.txt', '-LogLevel', 'Diagnostic', '-BundledModulesPath', '~\git\PowerShellEditorServices\module', '-Stdio', '-SessionDetailsPath', '~\.pses_session'],
     \ }
 
 
-autocmd FileType cs call VsimEnableLanguageServerKeys()
 autocmd FileType ps1 call VsimEnableLanguageServerKeys()
 autocmd FileType hs call VsimEnableLanguageServerKeys()
 autocmd FileType py call VsimEnableLanguageServerKeys()
@@ -387,7 +402,7 @@ nmap <C-w><C-e> :copen<CR>
 nmap <C-k><C-r> :call VsimFindReferences()<CR>
 
 function! VsimEnableLanguageServerKeys()
-    "autocmd! CursorHold * call LanguageClient_textDocument_hover()
+    autocmd! CursorHold * call LanguageClient_textDocument_hover()
     nnoremap <silent> <S-K> :call LanguageClient_textDocument_hover()<CR>
     nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
     nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
@@ -451,14 +466,36 @@ if has("win32")
     " let g:neoterm_shell = "C:\Windows\system32\WindowsPowerShell\v1.0\powershell.exe" "doesn't work..
 endif
 
-function! VsimTestEnterTerminal()
+let g:vsim_dark = 0
+function! VsimSetDark()
+    let g:vsim_dark = 1
+    " colorscheme Tomorrow-Night-Blue
+    " set background=dark
+endfunction
+
+function! VsimToggleColor()
+    if g:vsim_dark
+        let g:vsim_dark = 0
+        set background=light
+        " colorscheme one
+    else
+        let g:vsim_dark = 1
+        set background=dark
+        " colorscheme Tomorrow-Night-Blue
+    endif
+endfunction
+
+function! VsimOnTermEnter()
     if &buftype == 'terminal'
-        setlocal nobuflisted
-        colorscheme sonofobsidian
         if mode() != 'i'
             normal i
         endif
     endif
+endfunction
+
+function! VsimOnTermOpen()
+    setlocal nobuflisted
+    call VsimSetDark()
 endfunction
 
 
@@ -472,6 +509,10 @@ inoremap <F11> <C-O>:Ttoggle<CR>
 vnoremap <F11> <C-O>:Ttoggle<CR>
 nnoremap <F11> :Ttoggle<CR>
 
+inoremap <F9> <C-O>:call VsimToggleColor()<CR>
+vnoremap <F9> <C-O>:call VsimToggleColor()<CR>
+nnoremap <F9> :call VsimToggleColor()<CR>
+
 tnoremap <A-Space> <C-\><C-n>
 tnoremap <A-v> <C-\><C-n>v
 tnoremap <A-PageUp> <C-\><C-n><PageUp>
@@ -480,6 +521,7 @@ tnoremap <PageUp> <C-\><C-n><PageUp>
 tnoremap <PageDown> <C-\><C-n><PageDown>
 tnoremap <F11> <C-\><C-n>:Ttoggle<CR>
 
-autocmd BufEnter * call VsimTestEnterTerminal()
+autocmd TermOpen * call VsimOnTermOpen()
+autocmd BufEnter * call VsimOnTermEnter()
 
 "}}}
