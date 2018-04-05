@@ -32,6 +32,8 @@ Plug 'junegunn/fzf.vim'
 " Laborotary -- Things I'd love to know more about
 Plug 'kassio/neoterm'
 Plug 'tpope/vim-surround'
+let g:polyglot_disabled = ['latex']
+Plug 'lervag/vimtex'
 
 " Junkyard -- things that do not work for me, or never found useful.
 " Plug 'cazador481/fakeclip.neovim' <--- not working
@@ -40,6 +42,8 @@ Plug 'tpope/vim-surround'
 " Plug 'ludwig/split-manpage.vim'   <--- don't even remember how it gets here...
 " Plug 'brooth/far.vim'             <--- replaced by language protocol servers
 " Plug 'kana/vim-smartinput'        <--- too noisy, bad quotes
+" Plug 'vim-scripts/LaTeX-Box'
+" Plug 'v-yadli/vim-online-thesaurus'
 
 
 
@@ -68,8 +72,6 @@ Plug 'reedes/vim-lexical'
 Plug 'panozzaj/vim-autocorrect'
 Plug 'reedes/vim-colors-pencil'
 Plug 'reedes/vim-wordy'
-" Plug 'v-yadli/vim-online-thesaurus'
-Plug 'vim-scripts/LaTeX-Box'
 Plug 'godlygeek/tabular'              " Required by vim-markdown
 Plug 'plasticboy/vim-markdown'
 " }}}
@@ -120,21 +122,19 @@ set termguicolors
 " Backspace workaround
 set backspace=indent,eol,start
 "{{{ Latex & markdown Settings
-" Let TeX file always be recognized
-" http://weichen.wordpress.com/2007/01/09/howto-make-vim-latex-suite-always-recognise-tex-file/
 
-let g:tex_flavor = "latex"
-let g:LatexBox_autojump = 0
-let g:online_thesaurus_map_keys = 0
+let g:vimtex_view_general_viewer = 'SumatraPDF'
+let g:vimtex_view_general_options
+    \ = '-reuse-instance -forward-search @tex @line @pdf'
+let g:vimtex_view_general_options_latexmk = '-reuse-instance'
+
 " For LaTeX files, activate "long line break" feature
 " Note that a(english) word won't be broken into two lines
 " And, add a color margin line for LaTeX mode!
 "
 
 function! WriterMode()
-    nnoremap <buffer> <C-F5> :make<CR>
     nnoremap <buffer> <F5> :silent! NextWordy<CR>
-    nnoremap <buffer> <S-K> :OnlineThesaurusCurrentWord<CR>
     let g:lexical#thesaurus = ['~/thesaurus/words.txt', '~/thesaurus/mthesaur.txt','~/thesaurus/roget13a.txt' ]
     let g:lexical#spell = 1
     call lexical#init()
