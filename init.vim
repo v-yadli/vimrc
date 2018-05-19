@@ -4,7 +4,13 @@
 
 if has("win32")
     " python2 for OmniSharp
-    let g:python_host_prog='C:/Python27amd64/python.exe'
+    if filereadable('C:/Python27Amd64/python.exe')
+        let g:python_host_prog='C:/Python27Amd64/python.exe'
+    endif
+    if filereadable('C:/Python27/python.exe')
+        let g:python_host_prog='C:/Python27/python.exe'
+    endif
+    let g:OmniSharp_server_path = 'C:\Tools\omnisharp\OmniSharp.exe'
     call plug#begin('~/AppData/Local/nvim/plugged')
     " http://vim.wikia.com/wiki/Adding_Vim_to_MS-Windows_File_Explorer_Menu
     " see second approach -- no shellext dll needed
@@ -237,7 +243,7 @@ vmap <tab> >gv
 vmap <s-tab> <gv
 
 " auto complete drop list.
-set completeopt=menu,longest,preview
+set completeopt=longest,menuone,preview
 
 " Quicker navigation in tabs
 nmap <C-tab> :bn<CR>
@@ -356,6 +362,31 @@ endfunction
 
 "}}}
 
+" fun with F8
+function! PS1OutputHandle(output) abort
+        echomsg json_encode(a:output)
+endfunction
+
+" fun with F8
+function! s:get_visual_selection()
+    " Why is this not a built-in Vim script function?!
+    let [line_start, column_start] = getpos("'<")[1:2]
+    let [line_end, column_end] = getpos("'>")[1:2]
+    let lines = getline(line_start, line_end)
+    if len(lines) == 0
+        return ''
+    endif
+    let lines[-1] = lines[-1][: column_end - (&selection == 'inclusive' ? 1 : 2)]
+    let lines[0] = lines[0][column_start - 1:]
+    return join(lines, "\n")
+endfunction
+
+" fun with F8
+function PSESRunCode()
+    let codeString = s:get_visual_selection()
+    :call LanguageClient#Call("evaluate", { 'expression': s:get_visual_selection() }, function("PS1OutputHandle"))
+endfunction
+
 "LanguageServerProtocol setup
 "required for operations modifying multiple buffers like rename.
 set hidden
@@ -383,6 +414,7 @@ let g:LanguageClient_serverCommands = {
 
 
 autocmd FileType ps1 call VsimEnableLanguageServerKeys()
+autocmd FileType ps1 call VsimEnablePSES_REPL()
 autocmd FileType hs call VsimEnableLanguageServerKeys()
 autocmd FileType py call VsimEnableLanguageServerKeys()
 
@@ -400,6 +432,11 @@ imap <C-w><C-s> <Esc>:NERDTreeMirrorToggle<CR>
 
 nmap <C-w><C-e> :copen<CR>
 nmap <C-k><C-r> :call VsimFindReferences()<CR>
+
+function! VsimEnablePSES_REPL()
+    call LanguageClient#registerHandlers({'output': 'PS1OutputHandle'})
+    vnoremap <silent> <F8> :call PSESRunCode()<CR>
+endfunction
 
 function! VsimEnableLanguageServerKeys()
     autocmd! CursorHold * call LanguageClient_textDocument_hover()
