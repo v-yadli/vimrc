@@ -10,7 +10,6 @@ if has("win32")
     if filereadable('C:/Python27/python.exe')
         let g:python_host_prog='C:/Python27/python.exe'
     endif
-    let g:OmniSharp_server_path = 'C:\Tools\omnisharp\OmniSharp.exe'
     call plug#begin('~/AppData/Local/nvim/plugged')
     " http://vim.wikia.com/wiki/Adding_Vim_to_MS-Windows_File_Explorer_Menu
     " see second approach -- no shellext dll needed
@@ -80,6 +79,9 @@ endif
 
 " (Completion plugin option 1)
 Plug 'roxma/nvim-completion-manager'
+Plug 'vim-syntastic/syntastic'
+let g:OmniSharp_server_path = 'C:\Tools\omnisharp\OmniSharp.exe'
+let g:syntastic_cs_checkers = ['code_checker']
 
 " Writing tools
 " {{{
@@ -406,10 +408,17 @@ set hidden
 "    -SessionDetailsPath '/Users/tylerleonhardt/.vscode-insiders/extensions/ms-vscode.powershell-1.6.0/sessions/PSES-VSCode-1278-344124' 
 "    -FeatureFlags @()
 
+let g:LanguageClient_rootMarkers = {
+    \ 'c': ['*.vcxproj'],
+    \ 'cpp': ['*.vcxproj'],
+    \}
+
 let g:LanguageClient_serverCommands = {
     \ 'haskell': ['hie', '--lsp'],
     \ 'python': ['pyls'],
     \ 'ps1': ['powershell', '~\git\PowerShellEditorServices\module\Start-EditorServices.ps1', '-HostName', 'nvim', '-HostProfileId', '0', '-HostVersion', '1.0.0', '-EditorServicesVersion', '1.6.0', '-LogPath', '~\pses.log.txt', '-LogLevel', 'Diagnostic', '-BundledModulesPath', '~\git\PowerShellEditorServices\module', '-Stdio', '-SessionDetailsPath', '~\.pses_session'],
+    \ 'cpp': ['C:\Tools\cquery\bin\cquery.exe', '--log-file=~\.log\cq.log'],
+    \ 'c': ['C:\Tools\cquery\bin\cquery.exe', '--log-file=~\.log\cq.log'],
     \ }
 
 
@@ -417,6 +426,8 @@ autocmd FileType ps1 call VsimEnableLanguageServerKeys()
 autocmd FileType ps1 call VsimEnablePSES_REPL()
 autocmd FileType hs call VsimEnableLanguageServerKeys()
 autocmd FileType py call VsimEnableLanguageServerKeys()
+autocmd FileType c call VsimEnableLanguageServerKeys()
+autocmd FileType cpp call VsimEnableLanguageServerKeys()
 
 "Visual Studio key bindings
 "{{{
@@ -440,6 +451,7 @@ endfunction
 
 function! VsimEnableLanguageServerKeys()
     autocmd! CursorHold * call LanguageClient_textDocument_hover()
+    set signcolumn=yes
     nnoremap <silent> <S-K> :call LanguageClient_textDocument_hover()<CR>
     nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
     nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
@@ -496,7 +508,7 @@ vnoremap <Up> <Esc><Up>
 vnoremap <Down> <Esc><Down>
 
 " REPL and Neoterm
-let g:neoterm_open_in_all_tabs = 0
+let g:neoterm_open_in_all_tabs = 1
 let g:neoterm_autoinsert = 1
 if has("win32")
     let g:neoterm_eof = "\r\n"
@@ -542,9 +554,9 @@ nnoremap <F5> :TREPLSendLine<CR>
 nnoremap <C-F5> :TREPLSendFile<CR>
 vnoremap <F5> <C-O>:TREPLSendSelection<CR>
 
-inoremap <F11> <C-O>:Ttoggle<CR>
-vnoremap <F11> <C-O>:Ttoggle<CR>
-nnoremap <F11> :Ttoggle<CR>
+inoremap <F11> <C-O>:below Ttoggle<CR>
+vnoremap <F11> <C-O>:below Ttoggle<CR>
+nnoremap <F11> :below Ttoggle<CR>
 
 inoremap <F9> <C-O>:call VsimToggleColor()<CR>
 vnoremap <F9> <C-O>:call VsimToggleColor()<CR>
