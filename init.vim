@@ -2,20 +2,34 @@
 " 
 " Yatao Li<yatao.li@live.com>
 
+
+
+" Platform-specific variables
 if has("win32")
+    let g:OmniSharp_server_path = 'C:\Tools\omnisharp\OmniSharp.exe'
     " python2 for OmniSharp
     if filereadable('C:/Python27Amd64/python.exe')
-        let g:python_host_prog='C:/Python27Amd64/python.exe'
+        let g:python_host_prog  = 'C:/Python27Amd64/python.exe'
+    elseif filereadable('C:/Python27/python.exe')
+        let g:python_host_prog  = 'C:/Python27/python.exe'
     endif
-    if filereadable('C:/Python27/python.exe')
-        let g:python_host_prog='C:/Python27/python.exe'
-    endif
-    call plug#begin('~/AppData/Local/nvim/plugged')
+    let g:plugged_dir           = '~/AppData/Local/nvim/plugged'
+    let g:languageClient_install =  'powershell install.ps1'
+    let g:nvim_config_file = '~/AppData/Local/nvim/init.vim'
+    let g:neoterm_eof = "\r\n"
+    " let g:neoterm_shell = "C:\Windows\system32\WindowsPowerShell\v1.0\powershell.exe" "doesn't work..
+
     " http://vim.wikia.com/wiki/Adding_Vim_to_MS-Windows_File_Explorer_Menu
     " see second approach -- no shellext dll needed
 else
-    call plug#begin('~/.config/nvim/plugged')
+    let g:OmniSharp_server_path = '~/bin/omnisharp/OmniSharp'
+    let g:plugged_dir           = '~/.config/nvim/plugged'
+    let g:languageClient_install =  'bash install.sh'
+    let g:nvim_config_file = '~/.config/nvim/init.vim'
 endif
+
+" Initialize plugin system
+call plug#begin(g:plugged_dir)
 
 " Solidworks -- Passive plugins/burned into the brain, fire and forget
 Plug 'scrooloose/nerdtree'
@@ -65,22 +79,14 @@ if has("python")
     Plug 'OmniSharp/omnisharp-vim'
 endif
 
-if has("win32")
-    Plug 'autozimu/LanguageClient-neovim', {
-        \ 'branch': 'next',
-        \ 'do': 'powershell install.ps1',
-        \ }
-else
-    Plug 'autozimu/LanguageClient-neovim', {
-        \ 'branch': 'next',
-        \ 'do': 'bash install.sh',
-        \ }
-endif
+Plug 'autozimu/LanguageClient-neovim', {
+    \ 'branch': 'next',
+    \ 'do': g:languageClient_install,
+    \ }
 
 " (Completion plugin option 1)
 Plug 'roxma/nvim-completion-manager'
 Plug 'vim-syntastic/syntastic'
-let g:OmniSharp_server_path = 'C:\Tools\omnisharp\OmniSharp.exe'
 let g:syntastic_cs_checkers = ['code_checker']
 
 " Writing tools
@@ -90,8 +96,9 @@ Plug 'panozzaj/vim-autocorrect'
 Plug 'reedes/vim-wordy'
 " }}}
 
-" Initialize plugin system
+" Initialize plugin system finish
 call plug#end()
+
 
 filetype plugin indent on
 
@@ -510,10 +517,6 @@ vnoremap <Down> <Esc><Down>
 " REPL and Neoterm
 let g:neoterm_open_in_all_tabs = 1
 let g:neoterm_autoinsert = 1
-if has("win32")
-    let g:neoterm_eof = "\r\n"
-    " let g:neoterm_shell = "C:\Windows\system32\WindowsPowerShell\v1.0\powershell.exe" "doesn't work..
-endif
 
 let g:vsim_dark = 0
 function! VsimSetDark()
