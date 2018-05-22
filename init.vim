@@ -75,6 +75,7 @@ Plug 'plasticboy/vim-markdown'
 
 " Programming languages and environment
 Plug 'sheerun/vim-polyglot'
+Plug 'guns/vim-sexp'
 Plug 'v-yadli/vim-tsl'
 Plug 'vim-syntastic/syntastic'
 if has("win32")
@@ -238,7 +239,8 @@ endif
 
 " Tab operations and buffer operations{{{
 nmap <A-t> :enew<CR>
-nmap <A-w> :bp<bar>sp<bar>bn<bar>bd<CR>
+nmap <A-w> :bd<CR>
+" nmap <A-w> :bp<bar>sp<bar>bn<bar>bd<CR>
 nmap <A-n> :bn<CR>
 nmap <A-p> :bp<CR>
 nmap <A-b> :bp<CR>
@@ -466,6 +468,10 @@ imap <C-w><C-s> <Esc>:NERDTreeMirrorToggle<CR>
 nmap <C-w><C-e> :copen<CR>
 nmap <C-k><C-r> :call VsimFindReferences()<CR>
 
+" <C-=> for calling EasyAlign
+nmap <C-=> ^O:EasyAlign<CR>
+vmap <C-=> :EasyAlign<CR>
+
 function! VsimEnablePSES_REPL()
     call LanguageClient#registerHandlers({'output': 'PS1OutputHandle'})
     vnoremap <silent> <F8> :call PSESRunCode()<CR>
@@ -492,9 +498,6 @@ vmap <C-k><C-u> <plug>NERDCommenterUncomment
 nnoremap <C-c> <silent> <C-c>
 nnoremap <C-k><C-c> <S-v>:call NERDComment("x", "Comment")<CR>
 nnoremap <C-k><C-u> <S-v>:call NERDComment("x", "Uncomment")<CR>
-
-
-vmap <C-=> :EasyAlign =<CR>
 
 " <C-e> (view) family
 call VsimToggleWrap()
