@@ -13,6 +13,9 @@ if has("win32")
     elseif filereadable('C:/Python27/python.exe')
         let g:python_host_prog  = 'C:/Python27/python.exe'
     endif
+    if filereadable('C:/ProgramData/Anaconda3/python.exe')
+        let g:python3_host_prog='C:/ProgramData/Anaconda3/python.exe'
+    endif
     let g:plugged_dir           = '~/AppData/Local/nvim/plugged'
     let g:languageClient_install =  'powershell install.ps1'
     let g:nvim_config_file = '~/AppData/Local/nvim/init.vim'
@@ -52,7 +55,7 @@ Plug 'junegunn/fzf.vim'
 " Laborotary -- Things I'd love to know more about
 Plug 'kassio/neoterm'
 Plug 'tpope/vim-surround'
-let g:polyglot_disabled = ['latex']
+let g:polyglot_disabled = ['latex', 'fsharp']
 Plug 'lervag/vimtex'
 Plug 'godlygeek/tabular'              " Required by vim-markdown
 Plug 'plasticboy/vim-markdown'
@@ -68,12 +71,23 @@ Plug 'plasticboy/vim-markdown'
 " Plug 'v-yadli/vim-online-thesaurus'
 " Plug 'flazz/vim-colorschemes'     <--- need to customize some of the colors
 " Plug 'vim-airline/vim-airline-themes'
-
-
+" Plug 'roxma/nvim-completion-manager' < trying alternatives..
 
 " Programming languages and environment
 Plug 'sheerun/vim-polyglot'
 Plug 'v-yadli/vim-tsl'
+Plug 'vim-syntastic/syntastic'
+if has("win32")
+    Plug 'fsharp/vim-fsharp', {
+                \ 'for': 'fsharp',
+                \ 'do' : 'install.cmd',
+                \}
+else
+    Plug 'fsharp/vim-fsharp', {
+                \ 'for': 'fsharp',
+                \ 'do' : 'make fsautocomplete',
+                \}
+endif
 
 if has("python")
     Plug 'OmniSharp/omnisharp-vim'
@@ -84,8 +98,10 @@ Plug 'autozimu/LanguageClient-neovim', {
     \ 'do': g:languageClient_install,
     \ }
 
-" (Completion plugin option 1)
-Plug 'roxma/nvim-completion-manager'
+" Use deoplete.
+let g:deoplete#enable_at_startup = 1
+" (Completion plugin option 2)
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'vim-syntastic/syntastic'
 let g:syntastic_cs_checkers = ['code_checker']
 
@@ -137,8 +153,6 @@ autocmd VimEnter * nnoremap <Esc> :nohlsearch<CR>
 set clipboard=unnamedplus
 
 " Terminal color workaround
-set t_Co=256
-set t_ut=
 if has("termguicolors")
     set termguicolors
 endif
@@ -146,6 +160,7 @@ endif
 set backspace=indent,eol,start
 "{{{ Latex & markdown Settings
 
+let g:vimtex_compiler_progname   = 'nvr'
 let g:vimtex_view_general_viewer = 'SumatraPDF'
 let g:vimtex_view_general_options
     \ = '-reuse-instance -forward-search @tex @line @pdf'
@@ -173,12 +188,12 @@ autocmd FileType mkd call WriterMode()
 
 "}}}
 
-set background=dark
+set background=light
 colorscheme one
 
-highlight TermCursor gui=standout
-highlight TermCursor guibg=auto
-highlight TermCursor guifg=#ef2929
+" highlight TermCursor gui=standout
+" highlight TermCursor guibg=auto
+" highlight TermCursor guifg=#ef2929
 
 set cursorline
 set laststatus=2
