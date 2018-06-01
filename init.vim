@@ -44,6 +44,7 @@ Plug 'tmux-plugins/vim-tmux-focus-events'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'scrooloose/nerdcommenter'
+Plug 'qpkorr/vim-bufkill'
 
 " Utilities -- Things that I do love to issue Ex commands to utilize
 Plug 'mbbill/undotree'
@@ -239,13 +240,12 @@ endif
 
 " Tab operations and buffer operations{{{
 nmap <A-t> :enew<CR>
-nmap <A-w> :bd<CR>
-" nmap <A-w> :bp<bar>sp<bar>bn<bar>bd<CR>
+nmap <A-w> :BD<CR>
 nmap <A-n> :bn<CR>
 nmap <A-p> :bp<CR>
 nmap <A-b> :bp<CR>
 nmap <A-f> :bn<CR>
-nmap <A-d> :bd<CR>
+nmap <A-d> :BD<CR>
 nmap <A-1> :b1<CR>
 nmap <A-2> :b2<CR>
 nmap <A-3> :b3<CR>
@@ -407,12 +407,6 @@ function! s:get_visual_selection()
     return join(lines, "\n")
 endfunction
 
-" fun with F8
-function PSESRunCode()
-    let codeString = s:get_visual_selection()
-    :call LanguageClient#Call("evaluate", { 'expression': s:get_visual_selection() }, function("PS1OutputHandle"))
-endfunction
-
 "LanguageServerProtocol setup
 "required for operations modifying multiple buffers like rename.
 set hidden
@@ -447,9 +441,8 @@ let g:LanguageClient_serverCommands = {
 
 
 autocmd FileType ps1 call VsimEnableLanguageServerKeys()
-autocmd FileType ps1 call VsimEnablePSES_REPL()
 autocmd FileType hs call VsimEnableLanguageServerKeys()
-autocmd FileType py call VsimEnableLanguageServerKeys()
+autocmd FileType python call VsimEnableLanguageServerKeys()
 autocmd FileType c call VsimEnableLanguageServerKeys()
 autocmd FileType cpp call VsimEnableLanguageServerKeys()
 
@@ -471,11 +464,6 @@ nmap <C-k><C-r> :call VsimFindReferences()<CR>
 " <C-=> for calling EasyAlign
 nmap <C-=> ^O:EasyAlign<CR>
 vmap <C-=> :EasyAlign<CR>
-
-function! VsimEnablePSES_REPL()
-    call LanguageClient#registerHandlers({'output': 'PS1OutputHandle'})
-    vnoremap <silent> <F8> :call PSESRunCode()<CR>
-endfunction
 
 function! VsimEnableLanguageServerKeys()
     autocmd! CursorHold * call LanguageClient_textDocument_hover()
