@@ -15,6 +15,8 @@ if has("win32")
     endif
     if filereadable('C:/ProgramData/Anaconda3/python.exe')
         let g:python3_host_prog='C:/ProgramData/Anaconda3/python.exe'
+    elseif filereadable('C:\Program Files (x86)\Microsoft Visual Studio\Shared\Anaconda3_64\python.exe')
+        let g:python3_host_prog='C:\Program Files (x86)\Microsoft Visual Studio\Shared\Anaconda3_64\python.exe'
     endif
     let g:plugged_dir           = '~/AppData/Local/nvim/plugged'
     let g:languageClient_install =  'powershell install.ps1'
