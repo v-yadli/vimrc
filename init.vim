@@ -431,6 +431,8 @@ set hidden
 let g:LanguageClient_rootMarkers = {
     \ 'c': ['*.vcxproj'],
     \ 'cpp': ['*.vcxproj'],
+    \ 'python': ['*.csproj'],
+    \ 'csharp': ['*.csproj'],
     \}
 
 let g:LanguageClient_serverCommands = {
