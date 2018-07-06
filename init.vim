@@ -80,7 +80,6 @@ Plug 'plasticboy/vim-markdown'
 Plug 'sheerun/vim-polyglot'
 Plug 'guns/vim-sexp'
 Plug 'v-yadli/vim-tsl'
-Plug 'vim-syntastic/syntastic'
 if has("win32")
     Plug 'fsharp/vim-fsharp', {
                 \ 'for': 'fsharp',
@@ -106,14 +105,15 @@ Plug 'autozimu/LanguageClient-neovim', {
 let g:deoplete#enable_at_startup = 1
 " (Completion plugin option 2)
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'vim-syntastic/syntastic'
-let g:syntastic_cs_checkers = ['code_checker']
+"Plug 'vim-syntastic/syntastic'
+"let g:syntastic_cs_checkers = ['code_checker']
 
 " Writing tools
 " {{{
 Plug 'reedes/vim-lexical'
-Plug 'panozzaj/vim-autocorrect'
 Plug 'reedes/vim-wordy'
+Plug 'reedes/vim-pencil'
+Plug 'panozzaj/vim-autocorrect'
 " }}}
 
 " Initialize plugin system finish
@@ -177,11 +177,13 @@ let g:vimtex_view_general_options_latexmk = '-reuse-instance'
 
 function! WriterMode()
     nnoremap <buffer> <F5> :silent! NextWordy<CR>
+    nnoremap <buffer> <F6> :silent! TogglePencil<CR>
     let g:lexical#thesaurus = ['~/thesaurus/words.txt', '~/thesaurus/mthesaur.txt','~/thesaurus/roget13a.txt' ]
     let g:lexical#spell = 1
     call lexical#init()
+    call pencil#init()
     "setlocal background=light
-    nnoremap <buffer> <C-e><C-d> mZvapgq'Z
+    "nnoremap <buffer> <C-e><C-d> mZvapgq'Z
     setlocal smartindent
     let g:vsim_wrap_state = 0
     set wrap
@@ -189,6 +191,7 @@ endfunction
 
 autocmd FileType tex call WriterMode()
 autocmd FileType mkd call WriterMode()
+autocmd FileType markdown call WriterMode()
 
 "}}}
 
@@ -436,7 +439,7 @@ let g:LanguageClient_rootMarkers = {
 let g:LanguageClient_serverCommands = {
     \ 'haskell': ['hie', '--lsp'],
     \ 'python': ['pyls'],
-    \ 'ps1': ['powershell', '~\git\PowerShellEditorServices\module\Start-EditorServices.ps1', '-HostName', 'nvim', '-HostProfileId', '0', '-HostVersion', '1.0.0', '-EditorServicesVersion', '1.6.0', '-LogPath', '~\pses.log.txt', '-LogLevel', 'Diagnostic', '-BundledModulesPath', '~\git\PowerShellEditorServices\module', '-Stdio', '-SessionDetailsPath', '~\.pses_session'],
+    \ 'ps1': ['powershell', '~\git\PowerShellEditorServices\module\PowerShellEditorServices\Start-EditorServices.ps1', '-HostName', 'nvim', '-HostProfileId', '0', '-HostVersion', '1.0.0', '-LogPath', '~\pses.log.txt', '-LogLevel', 'Diagnostic', '-BundledModulesPath', '~\git\PowerShellEditorServices\module', '-Stdio', '-SessionDetailsPath', '~\.pses_session'],
     \ 'cpp': ['C:\Tools\cquery\bin\cquery.exe', '--log-file=~\.log\cq.log'],
     \ 'c': ['C:\Tools\cquery\bin\cquery.exe', '--log-file=~\.log\cq.log'],
     \ }
