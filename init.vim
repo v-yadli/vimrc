@@ -212,10 +212,11 @@ nmap <C-Down> <C-w>-
 nmap <C-Left> <C-w><
 nmap <C-Right> <C-w>>
 " To use `ALT+{h,j,k,l}` to navigate windows from any mode: >
-tnoremap <A-h> <C-\><C-N><C-w>h
-tnoremap <A-j> <C-\><C-N><C-w>j
-tnoremap <A-k> <C-\><C-N><C-w>k
-tnoremap <A-l> <C-\><C-N><C-w>l
+tnoremap <A-h> <C-\><C-N>:let g:vsim_termstate = 1 <CR><C-w>h
+tnoremap <A-j> <C-\><C-N>:let g:vsim_termstate = 1 <CR><C-w>j
+tnoremap <A-k> <C-\><C-N>:let g:vsim_termstate = 1 <CR><C-w>k
+tnoremap <A-l> <C-\><C-N>:let g:vsim_termstate = 1 <CR><C-w>l
+
 inoremap <A-h> <C-\><C-N><C-w>h
 inoremap <A-j> <C-\><C-N><C-w>j
 inoremap <A-k> <C-\><C-N><C-w>k
@@ -528,13 +529,8 @@ vnoremap <Down> <Esc><Down>
 " REPL and Neoterm
 let g:neoterm_open_in_all_tabs = 1
 let g:neoterm_autoinsert = 1
-
 let g:vsim_dark = 0
-function! VsimSetDark()
-    let g:vsim_dark = 1
-    " colorscheme Tomorrow-Night-Blue
-    " set background=dark
-endfunction
+let g:vsim_termstate = 1
 
 function! VsimToggleColor()
     if g:vsim_dark
@@ -548,17 +544,23 @@ function! VsimToggleColor()
     endif
 endfunction
 
-function! VsimOnTermEnter()
+function! VsimOnBufEnter()
     if &buftype == 'terminal'
-        if mode() != 'i'
+        if g:vsim_termstate
             normal i
         endif
+        let g:vsim_termstate = 0
+    elseif &previewwindow
+        nnoremap <buffer> q :q<CR>
     endif
+endfunction
+
+function! VsimOnBufLeave()
+    " TODO nothing siginificant here atm
 endfunction
 
 function! VsimOnTermOpen()
     setlocal nobuflisted
-    call VsimSetDark()
 endfunction
 
 
@@ -578,13 +580,12 @@ nnoremap <F9> :call VsimToggleColor()<CR>
 
 tnoremap <A-Space> <C-\><C-n>
 tnoremap <A-v> <C-\><C-n>v
-tnoremap <A-PageUp> <C-\><C-n><PageUp>
-tnoremap <A-PageDown> <C-\><C-n><PageDown>
 tnoremap <PageUp> <C-\><C-n><PageUp>
 tnoremap <PageDown> <C-\><C-n><PageDown>
 tnoremap <F11> <C-\><C-n>:Ttoggle<CR>
 
 autocmd TermOpen * call VsimOnTermOpen()
-autocmd BufEnter * call VsimOnTermEnter()
+autocmd BufEnter * call VsimOnBufEnter()
+autocmd BufLeave * call VsimOnBufLeave()
 
 "}}}
