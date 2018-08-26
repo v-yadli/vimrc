@@ -47,6 +47,7 @@ Plug 'christoomey/vim-tmux-navigator'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'scrooloose/nerdcommenter'
 Plug 'qpkorr/vim-bufkill'
+Plug 'vim-scripts/LargeFile'
 
 " Utilities -- Things that I do love to issue Ex commands to utilize
 Plug 'mbbill/undotree'
@@ -193,7 +194,7 @@ autocmd FileType mkd call WriterMode()
 "}}}
 
 set background=light
-colorscheme one
+colorscheme Tomorrow-Night-Blue
 
 " highlight TermCursor gui=standout
 " highlight TermCursor guibg=auto
@@ -470,7 +471,7 @@ nmap <C-=> ^O:EasyAlign<CR>
 vmap <C-=> :EasyAlign<CR>
 
 function! VsimEnableLanguageServerKeys()
-    autocmd! CursorHold * call LanguageClient_textDocument_hover()
+    " autocmd! CursorHold * call LanguageClient_textDocument_hover()
     set signcolumn=yes
     nnoremap <silent> <S-K> :call LanguageClient_textDocument_hover()<CR>
     nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
