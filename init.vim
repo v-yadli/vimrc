@@ -47,21 +47,22 @@ Plug 'christoomey/vim-tmux-navigator'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'scrooloose/nerdcommenter'
 Plug 'qpkorr/vim-bufkill'
+Plug 'lervag/vimtex'
+Plug 'junegunn/vim-easy-align'
 
 " Utilities -- Things that I do love to issue Ex commands to utilize
 Plug 'mbbill/undotree'
 Plug 'tpope/vim-fugitive'
 Plug 'rking/ag.vim'
-Plug 'junegunn/vim-easy-align'
 Plug 'junegunn/fzf.vim'
 
 " Laborotary -- Things I'd love to know more about
 Plug 'kassio/neoterm'
 Plug 'tpope/vim-surround'
 let g:polyglot_disabled = ['latex', 'fsharp']
-Plug 'lervag/vimtex'
 Plug 'godlygeek/tabular'              " Required by vim-markdown
 Plug 'plasticboy/vim-markdown'
+Plug 'KabbAmine/zeavim.vim'
 
 " Junkyard -- things that do not work for me, or never found useful.
 " Plug 'cazador481/fakeclip.neovim' <--- not working
