@@ -51,7 +51,6 @@ Plug 'qpkorr/vim-bufkill'
 " Utilities -- Things that I do love to issue Ex commands to utilize
 Plug 'mbbill/undotree'
 Plug 'tpope/vim-fugitive'
-Plug 'rking/ag.vim'
 Plug 'junegunn/vim-easy-align'
 Plug 'junegunn/fzf.vim'
 
@@ -75,12 +74,13 @@ Plug 'plasticboy/vim-markdown'
 " Plug 'flazz/vim-colorschemes'     <--- need to customize some of the colors
 " Plug 'vim-airline/vim-airline-themes'
 " Plug 'roxma/nvim-completion-manager' < trying alternatives..
+" Plug 'rking/ag.vim'               <---- fzf has this(!)
 
 " Programming languages and environment
-Plug 'sheerun/vim-polyglot'
+" Plug 'sheerun/vim-polyglot'
 Plug 'guns/vim-sexp'
 Plug 'v-yadli/vim-tsl'
-Plug 'vim-syntastic/syntastic'
+" Plug 'vim-syntastic/syntastic'
 if has("win32")
     Plug 'fsharp/vim-fsharp', {
                 \ 'for': 'fsharp',
@@ -429,17 +429,17 @@ set hidden
 "    -FeatureFlags @()
 
 let g:LanguageClient_rootMarkers = {
-    \ 'c': ['*.vcxproj'],
-    \ 'cpp': ['*.vcxproj'],
-    \ 'python': ['*.csproj'],
-    \ 'csharp': ['*.csproj'],
+    \ 'c': ['*.vcxproj', 'CMakeLists.txt'],
+    \ 'cpp': ['*.vcxproj', 'CMakeLists.txt'],
+    \ 'python': ['CMakeLists.txt'],
+    \ 'csharp': ['*.csproj', 'CMakeLists.txt'],
     \}
 
 let g:LanguageClient_serverCommands = {
     \ 'haskell': ['hie', '--lsp'],
     \ 'python': ['pyls'],
     \ 'ps1': ['powershell', '~\git\PowerShellEditorServices\module\Start-EditorServices.ps1', '-HostName', 'nvim', '-HostProfileId', '0', '-HostVersion', '1.0.0', '-EditorServicesVersion', '1.6.0', '-LogPath', '~\pses.log.txt', '-LogLevel', 'Diagnostic', '-BundledModulesPath', '~\git\PowerShellEditorServices\module', '-Stdio', '-SessionDetailsPath', '~\.pses_session'],
-    \ 'cpp': ['C:\Tools\cquery\bin\cquery.exe', '--log-file=~\.log\cq.log'],
+    \ 'cpp': ['C:\Tools\cquery\bin\cquery.exe', '--log-file=~\.log\cq.log', '--init={"cacheDirectory": "~/.cache/cq"}'],
     \ 'c': ['C:\Tools\cquery\bin\cquery.exe', '--log-file=~\.log\cq.log'],
     \ }
 
@@ -470,7 +470,8 @@ nmap <C-=> ^O:EasyAlign<CR>
 vmap <C-=> :EasyAlign<CR>
 
 function! VsimEnableLanguageServerKeys()
-    autocmd! CursorHold * call LanguageClient_textDocument_hover()
+    " autocmd! CursorHold * call LanguageClient_textDocument_hover()
+    " ^^^ more annoying than useful.
     set signcolumn=yes
     nnoremap <silent> <S-K> :call LanguageClient_textDocument_hover()<CR>
     nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
