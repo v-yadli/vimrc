@@ -47,22 +47,22 @@ Plug 'christoomey/vim-tmux-navigator'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'scrooloose/nerdcommenter'
 Plug 'qpkorr/vim-bufkill'
+Plug 'lervag/vimtex'
+Plug 'junegunn/vim-easy-align'
 Plug 'vim-scripts/LargeFile'
 
 " Utilities -- Things that I do love to issue Ex commands to utilize
 Plug 'mbbill/undotree'
 Plug 'tpope/vim-fugitive'
-Plug 'rking/ag.vim'
-Plug 'junegunn/vim-easy-align'
 Plug 'junegunn/fzf.vim'
 
 " Laborotary -- Things I'd love to know more about
 Plug 'kassio/neoterm'
 Plug 'tpope/vim-surround'
 let g:polyglot_disabled = ['latex', 'fsharp', 'python']
-Plug 'lervag/vimtex'
 Plug 'godlygeek/tabular'              " Required by vim-markdown
 Plug 'plasticboy/vim-markdown'
+Plug 'KabbAmine/zeavim.vim'
 
 " Junkyard -- things that do not work for me, or never found useful.
 " Plug 'cazador481/fakeclip.neovim' <--- not working
@@ -76,12 +76,12 @@ Plug 'plasticboy/vim-markdown'
 " Plug 'flazz/vim-colorschemes'     <--- need to customize some of the colors
 " Plug 'vim-airline/vim-airline-themes'
 " Plug 'roxma/nvim-completion-manager' < trying alternatives..
+" Plug 'rking/ag.vim'               <---- fzf has this(!)
 
 " Programming languages and environment
-Plug 'sheerun/vim-polyglot'
+" Plug 'sheerun/vim-polyglot'
 Plug 'guns/vim-sexp'
 Plug 'v-yadli/vim-tsl'
-Plug 'vim-syntastic/syntastic'
 if has("win32")
     Plug 'fsharp/vim-fsharp', {
                 \ 'for': 'fsharp',
@@ -107,14 +107,13 @@ Plug 'autozimu/LanguageClient-neovim', {
 let g:deoplete#enable_at_startup = 1
 " (Completion plugin option 2)
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'vim-syntastic/syntastic'
-let g:syntastic_cs_checkers = ['code_checker']
 
 " Writing tools
 " {{{
 Plug 'reedes/vim-lexical'
-Plug 'panozzaj/vim-autocorrect'
 Plug 'reedes/vim-wordy'
+Plug 'reedes/vim-pencil'
+Plug 'panozzaj/vim-autocorrect'
 " }}}
 
 " Initialize plugin system finish
@@ -178,11 +177,13 @@ let g:vimtex_view_general_options_latexmk = '-reuse-instance'
 
 function! WriterMode()
     nnoremap <buffer> <F5> :silent! NextWordy<CR>
+    nnoremap <buffer> <F6> :silent! TogglePencil<CR>
     let g:lexical#thesaurus = ['~/thesaurus/words.txt', '~/thesaurus/mthesaur.txt','~/thesaurus/roget13a.txt' ]
     let g:lexical#spell = 1
     call lexical#init()
+    call pencil#init()
     "setlocal background=light
-    nnoremap <buffer> <C-e><C-d> mZvapgq'Z
+    "nnoremap <buffer> <C-e><C-d> mZvapgq'Z
     setlocal smartindent
     let g:vsim_wrap_state = 0
     set wrap
@@ -190,6 +191,7 @@ endfunction
 
 autocmd FileType tex call WriterMode()
 autocmd FileType mkd call WriterMode()
+autocmd FileType markdown call WriterMode()
 
 "}}}
 
@@ -210,10 +212,11 @@ nmap <C-Down> <C-w>-
 nmap <C-Left> <C-w><
 nmap <C-Right> <C-w>>
 " To use `ALT+{h,j,k,l}` to navigate windows from any mode: >
-tnoremap <A-h> <C-\><C-N><C-w>h
-tnoremap <A-j> <C-\><C-N><C-w>j
-tnoremap <A-k> <C-\><C-N><C-w>k
-tnoremap <A-l> <C-\><C-N><C-w>l
+tnoremap <A-h> <C-\><C-N>:let g:vsim_termstate = 1 <CR><C-w>h
+tnoremap <A-j> <C-\><C-N>:let g:vsim_termstate = 1 <CR><C-w>j
+tnoremap <A-k> <C-\><C-N>:let g:vsim_termstate = 1 <CR><C-w>k
+tnoremap <A-l> <C-\><C-N>:let g:vsim_termstate = 1 <CR><C-w>l
+
 inoremap <A-h> <C-\><C-N><C-w>h
 inoremap <A-j> <C-\><C-N><C-w>j
 inoremap <A-k> <C-\><C-N><C-w>k
@@ -430,17 +433,17 @@ set hidden
 "    -FeatureFlags @()
 
 let g:LanguageClient_rootMarkers = {
-    \ 'c': ['*.vcxproj'],
-    \ 'cpp': ['*.vcxproj'],
-    \ 'python': ['*.csproj'],
-    \ 'csharp': ['*.csproj'],
+    \ 'c': ['*.vcxproj', 'CMakeLists.txt'],
+    \ 'cpp': ['*.vcxproj', 'CMakeLists.txt'],
+    \ 'python': ['CMakeLists.txt'],
+    \ 'csharp': ['*.csproj', 'CMakeLists.txt'],
     \}
 
 let g:LanguageClient_serverCommands = {
     \ 'haskell': ['hie', '--lsp'],
     \ 'python': ['pyls'],
-    \ 'ps1': ['powershell', '~\git\PowerShellEditorServices\module\Start-EditorServices.ps1', '-HostName', 'nvim', '-HostProfileId', '0', '-HostVersion', '1.0.0', '-EditorServicesVersion', '1.6.0', '-LogPath', '~\pses.log.txt', '-LogLevel', 'Diagnostic', '-BundledModulesPath', '~\git\PowerShellEditorServices\module', '-Stdio', '-SessionDetailsPath', '~\.pses_session'],
-    \ 'cpp': ['C:\Tools\cquery\bin\cquery.exe', '--log-file=~\.log\cq.log'],
+    \ 'cpp': ['C:\Tools\cquery\bin\cquery.exe', '--log-file=~\.log\cq.log', '--init={"cacheDirectory": "~/.cache/cq"}'],
+    \ 'ps1': ['powershell', '~\git\PowerShellEditorServices\module\PowerShellEditorServices\Start-EditorServices.ps1', '-HostName', 'nvim', '-HostProfileId', '0', '-HostVersion', '1.0.0', '-LogPath', '~\pses.log.txt', '-LogLevel', 'Diagnostic', '-BundledModulesPath', '~\git\PowerShellEditorServices\module', '-Stdio', '-SessionDetailsPath', '~\.pses_session'],
     \ 'c': ['C:\Tools\cquery\bin\cquery.exe', '--log-file=~\.log\cq.log'],
     \ }
 
@@ -530,13 +533,8 @@ vnoremap <Down> <Esc><Down>
 " REPL and Neoterm
 let g:neoterm_open_in_all_tabs = 1
 let g:neoterm_autoinsert = 1
-
 let g:vsim_dark = 0
-function! VsimSetDark()
-    let g:vsim_dark = 1
-    " colorscheme Tomorrow-Night-Blue
-    " set background=dark
-endfunction
+let g:vsim_termstate = 1
 
 function! VsimToggleColor()
     if g:vsim_dark
@@ -551,17 +549,23 @@ function! VsimToggleColor()
     endif
 endfunction
 
-function! VsimOnTermEnter()
+function! VsimOnBufEnter()
     if &buftype == 'terminal'
-        if mode() != 'i'
+        if g:vsim_termstate
             normal i
         endif
+        let g:vsim_termstate = 0
+    elseif &previewwindow
+        nnoremap <buffer> q :q<CR>
     endif
+endfunction
+
+function! VsimOnBufLeave()
+    " TODO nothing siginificant here atm
 endfunction
 
 function! VsimOnTermOpen()
     setlocal nobuflisted
-    " call VsimSetDark()
 endfunction
 
 
@@ -581,13 +585,12 @@ nnoremap <F9> :call VsimToggleColor()<CR>
 
 tnoremap <A-Space> <C-\><C-n>
 tnoremap <A-v> <C-\><C-n>v
-tnoremap <A-PageUp> <C-\><C-n><PageUp>
-tnoremap <A-PageDown> <C-\><C-n><PageDown>
 tnoremap <PageUp> <C-\><C-n><PageUp>
 tnoremap <PageDown> <C-\><C-n><PageDown>
 tnoremap <F11> <C-\><C-n>:Ttoggle<CR>
 
 autocmd TermOpen * call VsimOnTermOpen()
-autocmd BufEnter * call VsimOnTermEnter()
+autocmd BufEnter * call VsimOnBufEnter()
+autocmd BufLeave * call VsimOnBufLeave()
 
 "}}}
