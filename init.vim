@@ -549,14 +549,19 @@ function! VsimToggleColor()
     endif
 endfunction
 
+function! VsimOnBufAdd()
+    if &previewwindow || &buftype == 'nofile' || &buftype == 'quickfix' || &buftype == 'nofile'
+        nnoremap <buffer> q :q<CR>
+        setlocal nobuflisted
+    endif
+endfunction
+
 function! VsimOnBufEnter()
     if &buftype == 'terminal'
         if g:vsim_termstate
             normal i
         endif
         let g:vsim_termstate = 0
-    elseif &previewwindow
-        nnoremap <buffer> q :q<CR>
     endif
 endfunction
 
@@ -573,7 +578,7 @@ inoremap <F5> <C-O>:TREPLSendLine<CR>
 inoremap <C-F5> <C-O>:TREPLSendFile<CR>
 nnoremap <F5> :TREPLSendLine<CR>
 nnoremap <C-F5> :TREPLSendFile<CR>
-vnoremap <F5> <C-O>:TREPLSendSelection<CR>
+vnoremap <F5> :<BS><BS><BS><BS><BS>TREPLSendSelection<CR>
 
 inoremap <F11> <C-O>:below Ttoggle<CR>
 vnoremap <F11> <C-O>:below Ttoggle<CR>
@@ -591,6 +596,7 @@ tnoremap <F11> <C-\><C-n>:Ttoggle<CR>
 
 autocmd TermOpen * call VsimOnTermOpen()
 autocmd BufEnter * call VsimOnBufEnter()
+autocmd BufAdd   * call VsimOnBufAdd()
 autocmd BufLeave * call VsimOnBufLeave()
 
 "}}}
