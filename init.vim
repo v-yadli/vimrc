@@ -59,7 +59,7 @@ Plug 'junegunn/fzf.vim'
 " Laborotary -- Things I'd love to know more about
 Plug 'kassio/neoterm'
 Plug 'tpope/vim-surround'
-let g:polyglot_disabled = ['latex', 'fsharp']
+let g:polyglot_disabled = ['latex', 'fsharp', 'python']
 Plug 'godlygeek/tabular'              " Required by vim-markdown
 Plug 'plasticboy/vim-markdown'
 Plug 'KabbAmine/zeavim.vim'
@@ -475,17 +475,18 @@ nmap <C-=> ^O:EasyAlign<CR>
 vmap <C-=> :EasyAlign<CR>
 
 function! VsimEnableLanguageServerKeys()
-    " autocmd! CursorHold * call LanguageClient_textDocument_hover()
-    " ^^^ more annoying than useful.
+    autocmd! CursorHold * call LanguageClient_textDocument_documentHighlight()
     set signcolumn=yes
-    nnoremap <silent> <S-K> :call LanguageClient_textDocument_hover()<CR>
-    nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
-    nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
-    nnoremap <silent> <F12> :call LanguageClient_textDocument_definition()<CR>
-    set formatexpr=LanguageClient_textDocument_rangeFormatting()
-    vnoremap = :call LanguageClient_textDocument_rangeFormatting()<CR>
-    nnoremap <C-k><C-r> :call LanguageClient_textDocument_references()<CR>
-    nnoremap <C-e><C-d> :call LanguageClient_textDocument_formatting()<CR>
+    nnoremap <buffer> <silent> <F1> :call LanguageClient#explainErrorAtPoint()<CR>
+    nnoremap <buffer> <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
+    nnoremap <buffer> <silent> <F3> :call LanguageClient_contextMenu()<CR>
+    nnoremap <buffer> <silent> <S-K> :call LanguageClient_textDocument_hover()<CR>
+    nnoremap <buffer> <silent> gd :call LanguageClient_textDocument_definition()<CR>
+    nnoremap <buffer> <silent> <F12> :call LanguageClient_textDocument_definition()<CR>
+    setlocal formatexpr=LanguageClient_textDocument_rangeFormatting()
+    vnoremap <buffer> = :call LanguageClient_textDocument_rangeFormatting()<CR>
+    nnoremap <buffer> <C-k><C-r> :call LanguageClient_textDocument_references()<CR>
+    nnoremap <buffer> <C-e><C-d> :call LanguageClient_textDocument_formatting()<CR>
 endfunction
 
 
@@ -539,12 +540,20 @@ let g:vsim_termstate = 1
 function! VsimToggleColor()
     if g:vsim_dark
         let g:vsim_dark = 0
-        set background=light
+        colorscheme Tomorrow-Night
+        " set background=light
         " colorscheme one
     else
         let g:vsim_dark = 1
-        set background=dark
-        " colorscheme Tomorrow-Night-Blue
+        " set background=dark
+        colorscheme Tomorrow-Night-Blue
+    endif
+endfunction
+
+function! VsimOnBufAdd()
+    if &previewwindow || &buftype == 'nofile' || &buftype == 'quickfix' || &buftype == 'nofile'
+        nnoremap <buffer> q :q<CR>
+        setlocal nobuflisted
     endif
 endfunction
 
@@ -554,8 +563,6 @@ function! VsimOnBufEnter()
             normal i
         endif
         let g:vsim_termstate = 0
-    elseif &previewwindow
-        nnoremap <buffer> q :q<CR>
     endif
 endfunction
 
@@ -572,7 +579,7 @@ inoremap <F5> <C-O>:TREPLSendLine<CR>
 inoremap <C-F5> <C-O>:TREPLSendFile<CR>
 nnoremap <F5> :TREPLSendLine<CR>
 nnoremap <C-F5> :TREPLSendFile<CR>
-vnoremap <F5> <C-O>:TREPLSendSelection<CR>
+vnoremap <F5> :<BS><BS><BS><BS><BS>TREPLSendSelection<CR>
 
 inoremap <F11> <C-O>:below Ttoggle<CR>
 vnoremap <F11> <C-O>:below Ttoggle<CR>
@@ -590,6 +597,7 @@ tnoremap <F11> <C-\><C-n>:Ttoggle<CR>
 
 autocmd TermOpen * call VsimOnTermOpen()
 autocmd BufEnter * call VsimOnBufEnter()
+autocmd BufAdd   * call VsimOnBufAdd()
 autocmd BufLeave * call VsimOnBufLeave()
 
 "}}}
