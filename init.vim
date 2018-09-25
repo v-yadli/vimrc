@@ -81,6 +81,7 @@ Plug 'KabbAmine/zeavim.vim'
 " Programming languages and environment
 " Plug 'sheerun/vim-polyglot'
 Plug 'guns/vim-sexp'
+Plug 'bohlender/vim-smt2'
 Plug 'v-yadli/vim-tsl'
 if has("win32")
     Plug 'fsharp/vim-fsharp', {
@@ -442,7 +443,7 @@ let g:LanguageClient_rootMarkers = {
 let g:LanguageClient_serverCommands = {
     \ 'haskell': ['hie', '--lsp'],
     \ 'python': ['pyls'],
-    \ 'cpp': ['C:\Tools\cquery\bin\cquery.exe', '--log-file=~\.log\cq.log', '--init={"cacheDirectory": "~/.cache/cq"}'],
+    \ 'cpp': ['C:\Tools\cquery\bin\cquery.exe', '--log-file=.vim\.log\cq.log', '--init={"cacheDirectory": ".vim/.cache/cq"}'],
     \ 'ps1': ['powershell', '~\git\PowerShellEditorServices\module\PowerShellEditorServices\Start-EditorServices.ps1', '-HostName', 'nvim', '-HostProfileId', '0', '-HostVersion', '1.0.0', '-LogPath', '~\pses.log.txt', '-LogLevel', 'Diagnostic', '-BundledModulesPath', '~\git\PowerShellEditorServices\module', '-Stdio', '-SessionDetailsPath', '~\.pses_session'],
     \ 'c': ['C:\Tools\cquery\bin\cquery.exe', '--log-file=~\.log\cq.log'],
     \ }
