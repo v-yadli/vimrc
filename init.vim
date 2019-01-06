@@ -182,7 +182,7 @@ function! WriterMode()
     let g:lexical#thesaurus = ['~/thesaurus/words.txt', '~/thesaurus/mthesaur.txt','~/thesaurus/roget13a.txt' ]
     let g:lexical#spell = 1
     call lexical#init()
-    call pencil#init()
+    " call pencil#init()
     "setlocal background=light
     "nnoremap <buffer> <C-e><C-d> mZvapgq'Z
     setlocal smartindent

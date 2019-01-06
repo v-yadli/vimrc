@@ -15,3 +15,7 @@ if exists('g:GuiLoaded')
     nnoremap <silent> <M-CR> :call VsimToggleFullScreen()<CR>
     inoremap <silent> <M-CR> <C-O>:call VsimToggleFullScreen()<CR>
 endif
+
+if exists('g:GtkGuiLoaded')
+    call rpcnotify(1, 'Gui', 'Font', 'Iosevka Yadori Slab 12')
+endif
