@@ -15,9 +15,13 @@ if has("win32")
     endif
     if filereadable('C:/ProgramData/Anaconda3/python.exe')
         let g:python3_host_prog='C:/ProgramData/Anaconda3/python.exe'
+    elseif filereadable('C:/tools/Anaconda3/python.exe')
+        let g:python3_host_prog='C:/tools/Anaconda3/python.exe'
     elseif filereadable('C:\Program Files (x86)\Microsoft Visual Studio\Shared\Anaconda3_64\python.exe')
         let g:python3_host_prog='C:\Program Files (x86)\Microsoft Visual Studio\Shared\Anaconda3_64\python.exe'
     endif
+    " vim-fsharp: fsi.exe should be run with dotnet. let's hack a RunFsi.cmd
+    let g:fsharp_interactive_bin = 'C:\Program Files\dotnet\sdk\2.1.402\FSharp\RunFsi.cmd'
     let g:plugged_dir           = '~/AppData/Local/nvim/plugged'
     let g:languageClient_install =  'powershell install.ps1'
     let g:nvim_config_file = '~/AppData/Local/nvim/init.vim'
