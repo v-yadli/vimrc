@@ -19,7 +19,7 @@ if has("win32")
         let g:python3_host_prog='C:\Program Files (x86)\Microsoft Visual Studio\Shared\Anaconda3_64\python.exe'
     endif
     let g:plugged_dir           = '~/AppData/Local/nvim/plugged'
-    let g:languageClient_install =  'powershell install.ps1'
+    " let g:languageClient_install =  'powershell install.ps1'
     let g:nvim_config_file = '~/AppData/Local/nvim/init.vim'
     let g:neoterm_eof = "\r\n"
     " let g:neoterm_shell = "C:\Windows\system32\WindowsPowerShell\v1.0\powershell.exe" "doesn't work..
@@ -31,6 +31,9 @@ else
     let g:plugged_dir           = '~/.config/nvim/plugged'
     let g:languageClient_install =  'bash install.sh'
     let g:nvim_config_file = '~/.config/nvim/init.vim'
+    if filereadable(expand('~/anaconda3/bin/python3'))
+        let g:python3_host_prog = '~/anaconda3/bin/python3'
+    endif
 endif
 
 " Initialize plugin system
@@ -54,13 +57,12 @@ Plug 'vim-scripts/LargeFile'
 " Utilities -- Things that I do love to issue Ex commands to utilize
 Plug 'mbbill/undotree'
 Plug 'tpope/vim-fugitive'
-Plug 'rking/ag.vim'
 Plug 'junegunn/fzf.vim'
 
 " Laborotary -- Things I'd love to know more about
 Plug 'kassio/neoterm'
 Plug 'tpope/vim-surround'
-let g:polyglot_disabled = ['latex', 'fsharp']
+let g:polyglot_disabled = ['latex', 'fsharp', 'python']
 Plug 'godlygeek/tabular'              " Required by vim-markdown
 Plug 'plasticboy/vim-markdown'
 Plug 'KabbAmine/zeavim.vim'
@@ -78,10 +80,12 @@ Plug 'gyim/vim-boxdraw'
 " Plug 'flazz/vim-colorschemes'     <--- need to customize some of the colors
 " Plug 'vim-airline/vim-airline-themes'
 " Plug 'roxma/nvim-completion-manager' < trying alternatives..
+" Plug 'rking/ag.vim'               <---- fzf has this(!)
 
 " Programming languages and environment
-Plug 'sheerun/vim-polyglot'
+" Plug 'sheerun/vim-polyglot'
 Plug 'guns/vim-sexp'
+Plug 'bohlender/vim-smt2'
 Plug 'v-yadli/vim-tsl'
 if has("win32")
     Plug 'fsharp/vim-fsharp', {
@@ -108,8 +112,6 @@ Plug 'autozimu/LanguageClient-neovim', {
 let g:deoplete#enable_at_startup = 1
 " (Completion plugin option 2)
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-"Plug 'vim-syntastic/syntastic'
-"let g:syntastic_cs_checkers = ['code_checker']
 
 " Writing tools
 " {{{
@@ -184,7 +186,7 @@ function! WriterMode()
     let g:lexical#thesaurus = ['~/thesaurus/words.txt', '~/thesaurus/mthesaur.txt','~/thesaurus/roget13a.txt' ]
     let g:lexical#spell = 1
     call lexical#init()
-    call pencil#init()
+    " call pencil#init()
     "setlocal background=light
     "nnoremap <buffer> <C-e><C-d> mZvapgq'Z
     setlocal smartindent
@@ -436,17 +438,17 @@ set hidden
 "    -FeatureFlags @()
 
 let g:LanguageClient_rootMarkers = {
-    \ 'c': ['*.vcxproj'],
-    \ 'cpp': ['*.vcxproj'],
-    \ 'python': ['*.csproj'],
-    \ 'csharp': ['*.csproj'],
+    \ 'c': ['*.vcxproj', 'CMakeLists.txt'],
+    \ 'cpp': ['*.vcxproj', 'CMakeLists.txt'],
+    \ 'python': ['CMakeLists.txt'],
+    \ 'csharp': ['*.csproj', 'CMakeLists.txt'],
     \}
 
 let g:LanguageClient_serverCommands = {
     \ 'haskell': ['hie', '--lsp'],
     \ 'python': ['pyls'],
+    \ 'cpp': ['C:\Tools\cquery\bin\cquery.exe', '--log-file=.vim\.log\cq.log', '--init={"cacheDirectory": ".vim/.cache/cq"}'],
     \ 'ps1': ['powershell', '~\git\PowerShellEditorServices\module\PowerShellEditorServices\Start-EditorServices.ps1', '-HostName', 'nvim', '-HostProfileId', '0', '-HostVersion', '1.0.0', '-LogPath', '~\pses.log.txt', '-LogLevel', 'Diagnostic', '-BundledModulesPath', '~\git\PowerShellEditorServices\module', '-Stdio', '-SessionDetailsPath', '~\.pses_session'],
-    \ 'cpp': ['C:\Tools\cquery\bin\cquery.exe', '--log-file=~\.log\cq.log'],
     \ 'c': ['C:\Tools\cquery\bin\cquery.exe', '--log-file=~\.log\cq.log'],
     \ }
 
@@ -477,16 +479,18 @@ nmap <C-=> ^O:EasyAlign<CR>
 vmap <C-=> :EasyAlign<CR>
 
 function! VsimEnableLanguageServerKeys()
-    " autocmd! CursorHold * call LanguageClient_textDocument_hover()
+    autocmd! CursorHold * call LanguageClient_textDocument_documentHighlight()
     set signcolumn=yes
-    nnoremap <silent> <S-K> :call LanguageClient_textDocument_hover()<CR>
-    nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
-    nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
-    nnoremap <silent> <F12> :call LanguageClient_textDocument_definition()<CR>
-    set formatexpr=LanguageClient_textDocument_rangeFormatting()
-    vnoremap = :call LanguageClient_textDocument_rangeFormatting()<CR>
-    nnoremap <C-k><C-r> :call LanguageClient_textDocument_references()<CR>
-    nnoremap <C-e><C-d> :call LanguageClient_textDocument_formatting()<CR>
+    nnoremap <buffer> <silent> <F1> :call LanguageClient#explainErrorAtPoint()<CR>
+    nnoremap <buffer> <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
+    nnoremap <buffer> <silent> <F3> :call LanguageClient_contextMenu()<CR>
+    nnoremap <buffer> <silent> <S-K> :call LanguageClient_textDocument_hover()<CR>
+    nnoremap <buffer> <silent> gd :call LanguageClient_textDocument_definition()<CR>
+    nnoremap <buffer> <silent> <F12> :call LanguageClient_textDocument_definition()<CR>
+    setlocal formatexpr=LanguageClient_textDocument_rangeFormatting()
+    vnoremap <buffer> = :call LanguageClient_textDocument_rangeFormatting()<CR>
+    nnoremap <buffer> <C-k><C-r> :call LanguageClient_textDocument_references()<CR>
+    nnoremap <buffer> <C-e><C-d> :call LanguageClient_textDocument_formatting()<CR>
 endfunction
 
 
@@ -540,12 +544,20 @@ let g:vsim_termstate = 1
 function! VsimToggleColor()
     if g:vsim_dark
         let g:vsim_dark = 0
-        set background=light
+        colorscheme Tomorrow-Night
+        " set background=light
         " colorscheme one
     else
         let g:vsim_dark = 1
-        set background=dark
-        " colorscheme Tomorrow-Night-Blue
+        " set background=dark
+        colorscheme Tomorrow-Night-Blue
+    endif
+endfunction
+
+function! VsimOnBufAdd()
+    if &previewwindow || &buftype == 'nofile' || &buftype == 'quickfix' || &buftype == 'nofile'
+        nnoremap <buffer> q :q<CR>
+        setlocal nobuflisted
     endif
 endfunction
 
@@ -555,8 +567,6 @@ function! VsimOnBufEnter()
             normal i
         endif
         let g:vsim_termstate = 0
-    elseif &previewwindow
-        nnoremap <buffer> q :q<CR>
     endif
 endfunction
 
@@ -573,7 +583,7 @@ inoremap <F5> <C-O>:TREPLSendLine<CR>
 inoremap <C-F5> <C-O>:TREPLSendFile<CR>
 nnoremap <F5> :TREPLSendLine<CR>
 nnoremap <C-F5> :TREPLSendFile<CR>
-vnoremap <F5> <C-O>:TREPLSendSelection<CR>
+vnoremap <F5> :<BS><BS><BS><BS><BS>TREPLSendSelection<CR>
 
 inoremap <F11> <C-O>:below Ttoggle<CR>
 vnoremap <F11> <C-O>:below Ttoggle<CR>
@@ -591,6 +601,7 @@ tnoremap <F11> <C-\><C-n>:Ttoggle<CR>
 
 autocmd TermOpen * call VsimOnTermOpen()
 autocmd BufEnter * call VsimOnBufEnter()
+autocmd BufAdd   * call VsimOnBufAdd()
 autocmd BufLeave * call VsimOnBufLeave()
 
 "}}}

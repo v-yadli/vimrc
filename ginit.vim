@@ -1,6 +1,5 @@
 if exists('g:GuiLoaded')
     GuiFont! Iosevka Term Slab:h12
-    winsize 640 480
 
     let g:vsim_fullscreen = 0
 
@@ -15,4 +14,8 @@ if exists('g:GuiLoaded')
 
     nnoremap <silent> <M-CR> :call VsimToggleFullScreen()<CR>
     inoremap <silent> <M-CR> <C-O>:call VsimToggleFullScreen()<CR>
+endif
+
+if exists('g:GtkGuiLoaded')
+    call rpcnotify(1, 'Gui', 'Font', 'Iosevka Yadori Slab 12')
 endif
