@@ -19,7 +19,7 @@ if has("win32")
         let g:python3_host_prog='C:\Program Files (x86)\Microsoft Visual Studio\Shared\Anaconda3_64\python.exe'
     endif
     let g:plugged_dir           = '~/AppData/Local/nvim/plugged'
-    " let g:languageClient_install =  'powershell install.ps1'
+    let g:languageClient_install =  'powershell install.ps1'
     let g:nvim_config_file = '~/AppData/Local/nvim/init.vim'
     let g:neoterm_eof = "\r\n"
     " let g:neoterm_shell = "C:\Windows\system32\WindowsPowerShell\v1.0\powershell.exe" "doesn't work..
