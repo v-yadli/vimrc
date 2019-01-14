@@ -64,6 +64,7 @@ let g:polyglot_disabled = ['latex', 'fsharp']
 Plug 'godlygeek/tabular'              " Required by vim-markdown
 Plug 'plasticboy/vim-markdown'
 Plug 'KabbAmine/zeavim.vim'
+Plug 'gyim/vim-boxdraw'
 
 " Junkyard -- things that do not work for me, or never found useful.
 " Plug 'cazador481/fakeclip.neovim' <--- not working
