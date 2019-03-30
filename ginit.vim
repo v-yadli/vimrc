@@ -1,5 +1,6 @@
 if exists('g:GuiLoaded')
     GuiFont! Iosevka Term Slab:h12
+    GuiTabline 0
 
     let g:vsim_fullscreen = 0
 

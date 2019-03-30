@@ -6,7 +6,6 @@
 
 " Platform-specific variables
 if has("win32")
-    let g:OmniSharp_server_path = 'C:\Tools\omnisharp\OmniSharp.exe'
     " python2 for OmniSharp
     if filereadable('C:/Python27Amd64/python.exe')
         let g:python_host_prog  = 'C:/Python27Amd64/python.exe'
@@ -19,7 +18,7 @@ if has("win32")
         let g:python3_host_prog='C:\Program Files (x86)\Microsoft Visual Studio\Shared\Anaconda3_64\python.exe'
     endif
     let g:plugged_dir           = '~/AppData/Local/nvim/plugged'
-    " let g:languageClient_install =  'powershell install.ps1'
+    let g:languageClient_install =  'powershell ./install.ps1'
     let g:nvim_config_file = '~/AppData/Local/nvim/init.vim'
     let g:neoterm_eof = "\r\n"
     " let g:neoterm_shell = "C:\Windows\system32\WindowsPowerShell\v1.0\powershell.exe" "doesn't work..
@@ -27,7 +26,6 @@ if has("win32")
     " http://vim.wikia.com/wiki/Adding_Vim_to_MS-Windows_File_Explorer_Menu
     " see second approach -- no shellext dll needed
 else
-    let g:OmniSharp_server_path = '~/bin/omnisharp/OmniSharp'
     let g:plugged_dir           = '~/.config/nvim/plugged'
     let g:languageClient_install =  'bash install.sh'
     let g:nvim_config_file = '~/.config/nvim/init.vim'
@@ -140,7 +138,7 @@ set ignorecase
 set smartcase
 " Menu options
 set wildmenu
-set wildmode=full
+set wildmode=longest,full
 " Auto mouse
 set mouse=a
 " Line number
@@ -159,6 +157,8 @@ autocmd VimEnter * nnoremap <Esc> :nohlsearch<CR>
 " Necessity Evil Reloaded
 " let g:vim_fakeclip_tmux_plus=1
 set clipboard=unnamedplus
+set completeopt=longest,menuone,preview
+set previewheight=5
 
 " Terminal color workaround
 if has("termguicolors")
@@ -251,6 +251,7 @@ endif
 " Tab operations and buffer operations{{{
 nmap <A-t> :enew<CR>
 nmap <A-w> :BD<CR>
+nmap <A-q> <C-w>c
 nmap <A-n> :bn<CR>
 nmap <A-p> :bp<CR>
 nmap <A-b> :bp<CR>
@@ -491,6 +492,44 @@ function! VsimEnableLanguageServerKeys()
     nnoremap <buffer> <C-k><C-r> :call LanguageClient_textDocument_references()<CR>
     nnoremap <buffer> <C-e><C-d> :call LanguageClient_textDocument_formatting()<CR>
 endfunction
+
+augroup omnisharp_commands
+    " Show type information automatically when the cursor stops moving
+    autocmd CursorHold *.cs call OmniSharp#TypeLookupWithoutDocumentation()
+
+    " Update the highlighting whenever leaving insert mode
+    autocmd InsertLeave *.cs call OmniSharp#HighlightBuffer()
+
+    " Alternatively, use a mapping to refresh highlighting for the current buffer
+    autocmd FileType cs nnoremap <buffer> <C-k><C-l> :OmniSharpHighlightTypes<CR>
+
+    " The following commands are contextual, based on the cursor position.
+    autocmd FileType cs nnoremap <buffer> gd :OmniSharpGotoDefinition<CR>
+    autocmd FileType cs nnoremap <buffer> <C-k><C-i> :OmniSharpFindImplementations<CR>
+    autocmd FileType cs nnoremap <buffer> <C-k><C-s> :OmniSharpFindSymbol<CR>
+    autocmd FileType cs nnoremap <buffer> <C-k><C-r> :OmniSharpFindUsages<CR>
+    autocmd FileType cs nnoremap <buffer> <C-k><C-x> :OmniSharpFixUsings<CR>
+    autocmd FileType cs nnoremap <buffer> <C-k><C-t> :OmniSharpTypeLookup<CR>
+    autocmd FileType cs nnoremap <buffer> <S-K>      :call OmniSharp#TypeLookupWithoutDocumentation()<CR>
+
+    autocmd FileType cs nnoremap <buffer> <C-.>      :OmniSharpGetCodeActions<CR>
+    autocmd FileType cs inoremap <buffer> <C-.>      <C-o>:OmniSharpGetCodeActions<CR>
+    autocmd FileType cs nnoremap <buffer> <C-e><C-d> :OmniSharpCodeFormat<CR>
+    autocmd FileType cs inoremap <buffer> <C-e><C-d> <C-o>:OmniSharpCodeFormat<CR>
+
+
+    autocmd FileType cs inoremap <buffer> <F1>       :OmniSharpSignatureHelp<CR>
+    autocmd FileType cs nnoremap <buffer> <F1>       :OmniSharpDocumentation<CR>
+    autocmd FileType cs nnoremap <buffer> <F2>       :OmniSharpFindUsages<CR>
+    autocmd FileType cs nnoremap <buffer> <F12> :OmniSharpGotoDefinition<CR>
+
+    " Finds members in the current buffer
+    autocmd FileType cs nnoremap <buffer> <C-k><C-m> :OmniSharpFindMembers<CR>
+
+    " Navigate up and down by method/property/field
+    "autocmd FileType cs nnoremap <buffer> <C-k> :OmniSharpNavigateUp<CR>
+    "autocmd FileType cs nnoremap <buffer> <C-j> :OmniSharpNavigateDown<CR>
+augroup END
 
 
 " <C-k> (kontrol) family
