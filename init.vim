@@ -6,7 +6,6 @@
 
 " Platform-specific variables
 if has("win32")
-    let g:OmniSharp_server_path = 'C:\Tools\omnisharp\OmniSharp.exe'
     " python2 for OmniSharp
     if filereadable('C:/Python27Amd64/python.exe')
         let g:python_host_prog  = 'C:/Python27Amd64/python.exe'
@@ -23,7 +22,6 @@ if has("win32")
     " vim-fsharp: fsi.exe should be run with dotnet. let's hack a RunFsi.cmd
     let g:fsharp_interactive_bin = 'C:\Program Files\dotnet\sdk\2.1.402\FSharp\RunFsi.cmd'
     let g:plugged_dir           = '~/AppData/Local/nvim/plugged'
-    let g:languageClient_install =  'powershell install.ps1'
     let g:nvim_config_file = '~/AppData/Local/nvim/init.vim'
     let g:neoterm_eof = "\r\n"
     " let g:neoterm_shell = "C:\Windows\system32\WindowsPowerShell\v1.0\powershell.exe" "doesn't work..
@@ -31,21 +29,20 @@ if has("win32")
     " http://vim.wikia.com/wiki/Adding_Vim_to_MS-Windows_File_Explorer_Menu
     " see second approach -- no shellext dll needed
 else
-    let g:OmniSharp_server_path = '~/bin/omnisharp/OmniSharp'
     let g:plugged_dir           = '~/.config/nvim/plugged'
-    let g:languageClient_install =  'bash install.sh'
     let g:nvim_config_file = '~/.config/nvim/init.vim'
+    if filereadable(expand('~/anaconda3/bin/python3'))
+        let g:python3_host_prog = '~/anaconda3/bin/python3'
+    endif
 endif
 
 " Initialize plugin system
 call plug#begin(g:plugged_dir)
 
 " Solidworks -- Passive plugins/burned into the brain, fire and forget
-Plug 'scrooloose/nerdtree'
-Plug 'jistr/vim-nerdtree-tabs'
-Plug 'roxma/vim-tmux-clipboard'
-Plug 'rakr/vim-one'
+Plug 'vim-airline/vim-airline-themes'
 Plug 'bling/vim-airline'
+Plug 'roxma/vim-tmux-clipboard'
 Plug 'tmux-plugins/vim-tmux-focus-events'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -63,12 +60,20 @@ Plug 'junegunn/fzf.vim'
 " Laborotary -- Things I'd love to know more about
 Plug 'kassio/neoterm'
 Plug 'tpope/vim-surround'
-let g:polyglot_disabled = ['latex', 'fsharp', 'python']
 Plug 'godlygeek/tabular'              " Required by vim-markdown
 Plug 'plasticboy/vim-markdown'
-Plug 'KabbAmine/zeavim.vim'
+Plug 'gyim/vim-boxdraw'
+Plug 'tweekmonster/startuptime.vim'
+" hopefully this time it gets things right
+Plug 'Shougo/neco-vim'
+Plug 'neoclide/coc-neco'
+Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}} 
 
 " Junkyard -- things that do not work for me, or never found useful.
+" Plug 'rakr/vim-one'               <--- very slow on start!!
+" Plug 'scrooloose/nerdtree'        <--- slow!
+" Plug 'jistr/vim-nerdtree-tabs'    <--- slow!
+" Plug 'itchyny/lightline.vim'      <--- no tabline....
 " Plug 'cazador481/fakeclip.neovim' <--- not working
 " Plug 'kien/ctrlp.vim'             <--- replaced by fzf
 " Plug 'benmills/vimux'             <--- never used
@@ -78,40 +83,23 @@ Plug 'KabbAmine/zeavim.vim'
 " Plug 'vim-scripts/LaTeX-Box'      <--- replaced by vimtex
 " Plug 'v-yadli/vim-online-thesaurus'
 " Plug 'flazz/vim-colorschemes'     <--- need to customize some of the colors
-" Plug 'vim-airline/vim-airline-themes'
 " Plug 'roxma/nvim-completion-manager' < trying alternatives..
 " Plug 'rking/ag.vim'               <---- fzf has this(!)
+" Plug 'KabbAmine/zeavim.vim'       <---- never calls Zeal actually...
+"
+" -------------- BEGIN legacy programming environment.. ----------------
+"  They never pulled it together well.. Really.
+" Plug 'fsharp/vim-fsharp'
+" Plug 'OmniSharp/omnisharp-vim'
+" Plug 'autozimu/LanguageClient-neovim'
+" Plug 'sheerun/vim-polyglot'
+" Plug 'Shougo/deoplete.nvim'
+" -------------- END legacy programming environment.. ----------------
 
 " Programming languages and environment
-" Plug 'sheerun/vim-polyglot'
 Plug 'guns/vim-sexp'
 Plug 'bohlender/vim-smt2'
 Plug 'v-yadli/vim-tsl'
-if has("win32")
-    Plug 'fsharp/vim-fsharp', {
-                \ 'for': 'fsharp',
-                \ 'do' : 'install.cmd',
-                \}
-else
-    Plug 'fsharp/vim-fsharp', {
-                \ 'for': 'fsharp',
-                \ 'do' : 'make fsautocomplete',
-                \}
-endif
-
-if has("python")
-    Plug 'OmniSharp/omnisharp-vim'
-endif
-
-Plug 'autozimu/LanguageClient-neovim', {
-    \ 'branch': 'next',
-    \ 'do': g:languageClient_install,
-    \ }
-
-" Use deoplete.
-let g:deoplete#enable_at_startup = 1
-" (Completion plugin option 2)
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 
 " Writing tools
 " {{{
@@ -141,7 +129,7 @@ set ignorecase
 set smartcase
 " Menu options
 set wildmenu
-set wildmode=full
+set wildmode=longest,full
 " Auto mouse
 set mouse=a
 " Line number
@@ -160,6 +148,8 @@ autocmd VimEnter * nnoremap <Esc> :nohlsearch<CR>
 " Necessity Evil Reloaded
 " let g:vim_fakeclip_tmux_plus=1
 set clipboard=unnamedplus
+set completeopt=longest,menuone,preview
+set previewheight=5
 
 " Terminal color workaround
 if has("termguicolors")
@@ -186,7 +176,7 @@ function! WriterMode()
     let g:lexical#thesaurus = ['~/thesaurus/words.txt', '~/thesaurus/mthesaur.txt','~/thesaurus/roget13a.txt' ]
     let g:lexical#spell = 1
     call lexical#init()
-    call pencil#init()
+    " call pencil#init()
     "setlocal background=light
     "nnoremap <buffer> <C-e><C-d> mZvapgq'Z
     setlocal smartindent
@@ -200,8 +190,8 @@ autocmd FileType markdown call WriterMode()
 
 "}}}
 
-set background=light
-colorscheme Tomorrow-Night-Blue
+set background=dark
+colorscheme Tomorrow-Night
 
 " highlight TermCursor gui=standout
 " highlight TermCursor guibg=auto
@@ -252,6 +242,7 @@ endif
 " Tab operations and buffer operations{{{
 nmap <A-t> :enew<CR>
 nmap <A-w> :BD<CR>
+nmap <A-q> <C-w>c
 nmap <A-n> :bn<CR>
 nmap <A-p> :bp<CR>
 nmap <A-b> :bp<CR>
@@ -282,23 +273,41 @@ vmap <s-tab> <gv
 " auto complete drop list.
 set completeopt=longest,menuone,preview
 
-" Quicker navigation in tabs
+" Coc settings
+" -- use <c-space>for trigger completion
+inoremap <silent><expr> <c-space> coc#refresh()
+" -- use <Tab> and <S-Tab> for navigate completion list:
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+" -- use <cr> to confirm complete
+inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+" -- close preview window when completion is done.
+autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
+" invoke on first run:
+" :CocInstall coc-vimtex
+" :CocInstall coc-json
+" :CocInstall coc-python
+" :CocInstall coc-svg
+" :CocInstall coc-html
+" :CocInstall coc-ccls
+" :CocInstall coc-neco
+
+" Quicker navigation in tabs^H^H^H^Hbuffers...
 nmap <C-tab> :bn<CR>
 nmap <C-S-tab> :bp<CR>
 
-" Enable airline fonts
+" airline settings
 let g:airline_powerline_fonts=1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_inactive_collapse=1
 let g:airline#extensions#fugitiveline#enabled = 1
 let g:airline#extensions#branch#enabled = 1
-let g:airline_theme='one'
+let g:airline_theme='tomorrow'
 set ttimeoutlen=50
 
 autocmd FileType vim nnoremap <buffer> <S-K> :call VimrcGetHelp()<CR>
 autocmd FileType help nnoremap <buffer> q :q<CR>
 autocmd FileType qf nnoremap <buffer> q :q<CR>
-autocmd FileType nerdtree nnoremap <buffer> q :NERDTreeToggle<CR>
 
 "*****************************************************************************
 "" Abbreviations
@@ -315,14 +324,6 @@ cnoreabbrev W w
 cnoreabbrev Q q
 cnoreabbrev Qall qall
 
-"" NERDTree configuration
-let g:NERDTreeChDirMode=2
-let g:NERDTreeIgnore=['\.rbc$', '\~$', '\.pyc$', '\.db$', '\.sqlite$', '__pycache__']
-let g:NERDTreeSortOrder=['^__\.py$', '\/$', '*', '\.swp$', '\.bak$', '\~$']
-let g:NERDTreeShowBookmarks=1
-let g:nerdtree_tabs_focus_on_files=1
-let g:NERDTreeMapOpenInTabSilent = '<RightMouse>'
-let g:NERDTreeWinSize = 30
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.db,*.sqlite
 
 " Tmux navigation settings
@@ -379,97 +380,19 @@ function! VsimToggleWrap()
     endif
 endfunction
 
-function! VsimEditMarkdown()
-    e! \\10.190.174.55\share\trinity-web\blog\test.md
-endfunction
-
-function! VsimEncodeMarkdown()
-    new!
-    r \\10.190.174.55\share\trinity-web\_site\blog\test.html
-    set ft=html
-    normal V35ggxGV5kxggdd0
-    silent! execute "s/language-//g"
-    normal "ad3f>
-    normal G"bddgg
-    silent! execute "%g/^ */s/ /\\&nbsp;/g"
-    silent! execute "%s/\\n/<br\\/>/g"
-    normal "aP$"bpggy2y
-    silent! execute "bd!"
-endfunction
-
 "}}}
-
-" fun with F8
-function! PS1OutputHandle(output) abort
-        echomsg json_encode(a:output)
-endfunction
-
-" fun with F8
-function! s:get_visual_selection()
-    " Why is this not a built-in Vim script function?!
-    let [line_start, column_start] = getpos("'<")[1:2]
-    let [line_end, column_end] = getpos("'>")[1:2]
-    let lines = getline(line_start, line_end)
-    if len(lines) == 0
-        return ''
-    endif
-    let lines[-1] = lines[-1][: column_end - (&selection == 'inclusive' ? 1 : 2)]
-    let lines[0] = lines[0][column_start - 1:]
-    return join(lines, "\n")
-endfunction
-
-"LanguageServerProtocol setup
-"required for operations modifying multiple buffers like rename.
-set hidden
-
-" PSES sample startup code from VSCode:
-"
-"Start-EditorServices.ps1 -EditorServicesVersion '1.6.0'
-"    -HostName 'Visual Studio Code Host'
-"    -HostProfileId 'Microsoft.VSCode'
-"    -HostVersion '1.6.0'
-"    -AdditionalModules @('PowerShellEditorServices.VSCode') 
-"    -BundledModulesPath '/Users/tylerleonhardt/.vscode-insiders/extensions/ms-vscode.powershell-1.6.0/modules' 
-"    -EnableConsoleRepl 
-"    -WaitForDebugger 
-"    -LogLevel 'Verbose' 
-"    -LogPath '/Users/tylerleonhardt/.vscode-insiders/extensions/ms-vscode.powershell-1.6.0/logs/1522110227-30bae385-70f5-4dbe-a322-88629604468f1522110215400/EditorServices.log' 
-"    -SessionDetailsPath '/Users/tylerleonhardt/.vscode-insiders/extensions/ms-vscode.powershell-1.6.0/sessions/PSES-VSCode-1278-344124' 
-"    -FeatureFlags @()
-
-let g:LanguageClient_rootMarkers = {
-    \ 'c': ['*.vcxproj', 'CMakeLists.txt'],
-    \ 'cpp': ['*.vcxproj', 'CMakeLists.txt'],
-    \ 'python': ['CMakeLists.txt'],
-    \ 'csharp': ['*.csproj', 'CMakeLists.txt'],
-    \}
-
-let g:LanguageClient_serverCommands = {
-    \ 'haskell': ['hie', '--lsp'],
-    \ 'python': ['pyls'],
-    \ 'cpp': ['C:\Tools\cquery\bin\cquery.exe', '--log-file=.vim\.log\cq.log', '--init={"cacheDirectory": ".vim/.cache/cq"}'],
-    \ 'ps1': ['powershell', '~\git\PowerShellEditorServices\module\PowerShellEditorServices\Start-EditorServices.ps1', '-HostName', 'nvim', '-HostProfileId', '0', '-HostVersion', '1.0.0', '-LogPath', '~\pses.log.txt', '-LogLevel', 'Diagnostic', '-BundledModulesPath', '~\git\PowerShellEditorServices\module', '-Stdio', '-SessionDetailsPath', '~\.pses_session'],
-    \ 'c': ['C:\Tools\cquery\bin\cquery.exe', '--log-file=~\.log\cq.log'],
-    \ }
-
-
-autocmd FileType ps1 call VsimEnableLanguageServerKeys()
-autocmd FileType hs call VsimEnableLanguageServerKeys()
-autocmd FileType python call VsimEnableLanguageServerKeys()
-autocmd FileType c call VsimEnableLanguageServerKeys()
-autocmd FileType cpp call VsimEnableLanguageServerKeys()
 
 "Visual Studio key bindings
 "{{{
 
 " <C-backspace> binding
-imap <C-backspace> <C-o>vbx
+imap <C-BS> <C-o>vbx
 
 " nmap <F6> :make<CR>
 
 " <C-W> (window) family
-nmap <C-w><C-s> :NERDTreeMirrorToggle<CR>
-imap <C-w><C-s> <Esc>:NERDTreeMirrorToggle<CR>
+nmap <C-w><C-s> :Vexplore<CR>
+imap <C-w><C-s> <Esc>:Vexplore<CR>
 
 nmap <C-w><C-e> :copen<CR>
 nmap <C-k><C-r> :call VsimFindReferences()<CR>
@@ -477,22 +400,6 @@ nmap <C-k><C-r> :call VsimFindReferences()<CR>
 " <C-=> for calling EasyAlign
 nmap <C-=> ^O:EasyAlign<CR>
 vmap <C-=> :EasyAlign<CR>
-
-function! VsimEnableLanguageServerKeys()
-    autocmd! CursorHold * call LanguageClient_textDocument_documentHighlight()
-    set signcolumn=yes
-    nnoremap <buffer> <silent> <F1> :call LanguageClient#explainErrorAtPoint()<CR>
-    nnoremap <buffer> <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
-    nnoremap <buffer> <silent> <F3> :call LanguageClient_contextMenu()<CR>
-    nnoremap <buffer> <silent> <S-K> :call LanguageClient_textDocument_hover()<CR>
-    nnoremap <buffer> <silent> gd :call LanguageClient_textDocument_definition()<CR>
-    nnoremap <buffer> <silent> <F12> :call LanguageClient_textDocument_definition()<CR>
-    setlocal formatexpr=LanguageClient_textDocument_rangeFormatting()
-    vnoremap <buffer> = :call LanguageClient_textDocument_rangeFormatting()<CR>
-    nnoremap <buffer> <C-k><C-r> :call LanguageClient_textDocument_references()<CR>
-    nnoremap <buffer> <C-e><C-d> :call LanguageClient_textDocument_formatting()<CR>
-endfunction
-
 
 " <C-k> (kontrol) family
 vmap <C-k><C-c> <plug>NERDCommenterComment
