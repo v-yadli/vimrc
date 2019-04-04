@@ -157,7 +157,6 @@ endif
 set backspace=indent,eol,start
 "{{{ Latex & markdown Settings
 
-let g:vimtex_compiler_progname   = 'nvr'
 let g:vimtex_view_general_viewer = 'SumatraPDF'
 let g:vimtex_view_general_options
     \ = '-reuse-instance -forward-search @tex @line @pdf'
@@ -182,6 +181,7 @@ function! WriterMode()
     set wrap
 endfunction
 
+let g:tex_flavor = "latex"
 autocmd FileType tex call WriterMode()
 autocmd FileType mkd call WriterMode()
 autocmd FileType markdown call WriterMode()
