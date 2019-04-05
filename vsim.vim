@@ -23,6 +23,8 @@ else
     endif
 endif
 
+let g:vsim_init = 0
+
 " Initialize plugin system
 call plug#begin(g:plugged_dir)
 
@@ -38,6 +40,9 @@ Plug 'qpkorr/vim-bufkill'
 Plug 'lervag/vimtex'
 Plug 'junegunn/vim-easy-align'
 Plug 'vim-scripts/LargeFile'
+Plug 'guns/vim-sexp'
+Plug 'bohlender/vim-smt2'
+Plug 'v-yadli/vim-tsl'
 
 " Utilities -- Things that I do love to issue Ex commands to utilize
 Plug 'mbbill/undotree'
@@ -60,6 +65,7 @@ Plug 'neoclide/coc-neco'
 Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}} 
 
 " Junkyard -- things that do not work for me, or never found useful.
+" Plug 'reedes/vim-pencil'          <--- not working anymore
 " Plug 'rakr/vim-one'               <--- very slow on start!!
 " Plug 'scrooloose/nerdtree'        <--- slow!
 " Plug 'jistr/vim-nerdtree-tabs'    <--- slow!
@@ -83,19 +89,13 @@ Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
 " Plug 'OmniSharp/omnisharp-vim'
 " Plug 'autozimu/LanguageClient-neovim'
 " Plug 'sheerun/vim-polyglot'
-" Plug 'Shougo/deoplete.nvim'
+" Plug 'Shougo/deoplete.nvim' 
 " -------------- END legacy programming environment.. ----------------
-
-" Programming languages and environment
-Plug 'guns/vim-sexp'
-Plug 'bohlender/vim-smt2'
-Plug 'v-yadli/vim-tsl'
 
 " Writing tools
 " {{{
 Plug 'reedes/vim-lexical'
 Plug 'reedes/vim-wordy'
-Plug 'reedes/vim-pencil'
 Plug 'panozzaj/vim-autocorrect'
 " }}}
 
@@ -158,23 +158,15 @@ let g:vimtex_view_general_options
     \ = '-reuse-instance -forward-search @tex @line @pdf'
 let g:vimtex_view_general_options_latexmk = '-reuse-instance'
 
-" For LaTeX files, activate "long line break" feature
-" Note that a(english) word won't be broken into two lines
-" And, add a color margin line for LaTeX mode!
-"
-
 function! WriterMode()
     nnoremap <buffer> <F5> :silent! NextWordy<CR>
-    nnoremap <buffer> <F6> :silent! TogglePencil<CR>
     let g:lexical#thesaurus = ['~/thesaurus/words.txt', '~/thesaurus/mthesaur.txt','~/thesaurus/roget13a.txt' ]
     let g:lexical#spell = 1
     call lexical#init()
-    " call pencil#init()
-    "setlocal background=light
-    "nnoremap <buffer> <C-e><C-d> mZvapgq'Z
     setlocal smartindent
     let g:vsim_wrap_state = 0
-    set wrap
+    call VsimToggleWrap()
+    set formatoptions+=a
 endfunction
 
 let g:tex_flavor = "latex"
@@ -184,8 +176,10 @@ autocmd FileType markdown call WriterMode()
 
 "}}}
 
-set background=dark
-colorscheme Tomorrow-Night
+" set background=dark
+" colorscheme Tomorrow-Night
+set background=light
+colorscheme pencil
 
 " highlight TermCursor gui=standout
 " highlight TermCursor guibg=auto
@@ -343,26 +337,42 @@ function! VimrcGetHelp()
     execute "help ".currentWord
 endfunction
 
+function! VsimEcho(msg)
+    if g:vsim_environment == "neovim" && g:vsim_init
+        echo a:msg
+    else
+        silent! echo a:msg
+    endif
+endfunction
+
 let g:vsim_wrap_state = 0
 function! VsimToggleWrap()
-    if g:vsim_wrap_state
-        " When I don't like wrap
-        let g:vsim_wrap_state = 0
-        setlocal colorcolumn=72
-        setlocal formatoptions+=tcroqlmM
-        setlocal nowrap
-        setlocal textwidth=70
-        silent! echo "Wrap off"
-    else
+    if g:vsim_wrap_state == 0
         let g:vsim_wrap_state = 1
-        setlocal formatoptions-=tc
+        setlocal formatoptions=jtcroqmMn
+        setlocal nowrap
+        setlocal colorcolumn=80
+        setlocal textwidth=80
+        call VsimEcho("Wrap=HARD")
+    elseif g:vsim_wrap_state == 1
+        let g:vsim_wrap_state = 2
+        setlocal formatoptions=roqlmM
         setlocal wrap
         setlocal colorcolumn=0
-        silent! echo "Wrap on"
+        setlocal textwidth=80
+        call VsimEcho("Wrap=SOFT")
         nmap silent j gj
         nmap silent k gk
         nmap silent 0 g0
         nmap silent $ g$
+    else
+        " When I don't like wrap
+        let g:vsim_wrap_state = 0
+        setlocal colorcolumn=0
+        setlocal formatoptions=tcroqlmM
+        setlocal nowrap
+        setlocal textwidth=0
+        call VsimEcho("Wrap=OFF")
     endif
 endfunction
 
@@ -396,7 +406,10 @@ nnoremap <C-k><C-c> <S-v>:call NERDComment("x", "Comment")<CR>
 nnoremap <C-k><C-u> <S-v>:call NERDComment("x", "Uncomment")<CR>
 
 " <C-e> (view) family
+" set Wrap=OFF upon start
+let g:vsim_wrap_state = 2
 call VsimToggleWrap()
+
 nnoremap <C-e><C-w> :call VsimToggleWrap()<CR>
 nnoremap <C-;> :FZF<CR>
 inoremap <C-;> <C-o>:FZF<CR>
@@ -501,3 +514,5 @@ autocmd BufAdd   * call VsimOnBufAdd()
 autocmd BufLeave * call VsimOnBufLeave()
 
 "}}}
+
+let g:vsim_init = 1

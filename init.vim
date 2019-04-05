@@ -20,5 +20,4 @@ else
 endif
 
 let g:vsim_environment = "neovim"
-
-source vsim.vim
+execute "source " . g:vsim_config_file
