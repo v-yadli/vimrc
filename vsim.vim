@@ -53,7 +53,6 @@ Plug 'junegunn/fzf.vim'
 if g:vsim_environment=="neovim"
     Plug 'kassio/neoterm'
 endif
-
 Plug 'tpope/vim-surround'
 Plug 'godlygeek/tabular'              " Required by vim-markdown
 Plug 'plasticboy/vim-markdown'
@@ -119,7 +118,7 @@ set ignorecase
 set smartcase
 " Menu options
 set wildmenu
-set wildmode=longest,full
+set wildmode=list:longest,full
 " Auto mouse
 set mouse=a
 " Line number
@@ -282,7 +281,6 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline_inactive_collapse=1
 let g:airline#extensions#fugitiveline#enabled = 1
 let g:airline#extensions#branch#enabled = 1
-let g:airline_theme='tomorrow'
 set ttimeoutlen=50
 
 autocmd FileType vim nnoremap <buffer> <S-K> :call VimrcGetHelp()<CR>
