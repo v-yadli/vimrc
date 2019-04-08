@@ -164,9 +164,6 @@ function! WriterMode()
     let g:lexical#spell = 1
     call lexical#init()
     setlocal smartindent
-    let g:vsim_wrap_state = 0
-    call VsimToggleWrap()
-    set formatoptions+=a
 endfunction
 
 let g:tex_flavor = "latex"
@@ -349,13 +346,6 @@ let g:vsim_wrap_state = 0
 function! VsimToggleWrap()
     if g:vsim_wrap_state == 0
         let g:vsim_wrap_state = 1
-        setlocal formatoptions=jtcroqmMn
-        setlocal nowrap
-        setlocal colorcolumn=80
-        setlocal textwidth=80
-        call VsimEcho("Wrap=HARD")
-    elseif g:vsim_wrap_state == 1
-        let g:vsim_wrap_state = 2
         setlocal formatoptions=roqlmM
         setlocal wrap
         setlocal colorcolumn=0
@@ -365,6 +355,20 @@ function! VsimToggleWrap()
         nmap silent k gk
         nmap silent 0 g0
         nmap silent $ g$
+    elseif g:vsim_wrap_state == 1
+        let g:vsim_wrap_state = 2
+        setlocal formatoptions=jtcroqmMn
+        setlocal nowrap
+        setlocal colorcolumn=80
+        setlocal textwidth=80
+        call VsimEcho("Wrap=HARD")
+    elseif g:vsim_wrap_state == 2
+        let g:vsim_wrap_state = 3
+        setlocal formatoptions=ajtcroqmMn
+        setlocal nowrap
+        setlocal colorcolumn=80
+        setlocal textwidth=80
+        call VsimEcho("Wrap=AUTO")
     else
         " When I don't like wrap
         let g:vsim_wrap_state = 0
@@ -407,7 +411,7 @@ nnoremap <C-k><C-u> <S-v>:call NERDComment("x", "Uncomment")<CR>
 
 " <C-e> (view) family
 " set Wrap=OFF upon start
-let g:vsim_wrap_state = 2
+let g:vsim_wrap_state = 3
 call VsimToggleWrap()
 
 nnoremap <C-e><C-w> :call VsimToggleWrap()<CR>
