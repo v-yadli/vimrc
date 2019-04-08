@@ -260,14 +260,17 @@ inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 " -- close preview window when completion is done.
 autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
-" invoke on first run:
-" :CocInstall coc-vimtex
-" :CocInstall coc-json
-" :CocInstall coc-python
-" :CocInstall coc-svg
-" :CocInstall coc-html
-" :CocInstall coc-ccls
-" :CocInstall coc-neco
+
+function! VsimInitCoc()
+"invoke on first run:
+ CocInstall coc-vimtex
+ CocInstall coc-json
+ CocInstall coc-python
+ CocInstall coc-svg
+ CocInstall coc-html
+ CocInstall coc-ccls
+ CocInstall coc-neco
+endfunction
 
 " Quicker navigation in tabs^H^H^H^Hbuffers...
 nmap <C-tab> :bn<CR>
@@ -448,20 +451,20 @@ vnoremap <Down> <Esc><Down>
 " REPL and Neoterm
 let g:neoterm_open_in_all_tabs = 1
 let g:neoterm_autoinsert = 1
-let g:vsim_dark = 0
 let g:vsim_termstate = 1
+let g:vsim_theme_idx = 0
+let g:vsim_theme_name = ['Tomorrow', 'Tomorrow-Night', 'Tomorrow-Night-Blue', 'pencil', 'pencil', 'colorzone']
+let g:vsim_theme_bg   = ['light', 'dark', 'dark', 'light', 'dark', 'light']
 
 function! VsimToggleColor()
-    if g:vsim_dark
-        let g:vsim_dark = 0
-        colorscheme Tomorrow-Night
-        " set background=light
-        " colorscheme one
-    else
-        let g:vsim_dark = 1
-        " set background=dark
-        colorscheme Tomorrow-Night-Blue
+    let g:vsim_theme_idx = g:vsim_theme_idx + 1
+    if g:vsim_theme_idx == 6
+        let g:vsim_theme_idx = 0
     endif
+    let l:theme = g:vsim_theme_name[g:vsim_theme_idx]
+    execute "colorscheme "    . l:theme
+    execute "set background=" . g:vsim_theme_bg[g:vsim_theme_idx]
+    call VsimEcho("Current theme: ". l:theme)
 endfunction
 
 function! VsimOnBufAdd()
