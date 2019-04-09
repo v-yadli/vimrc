@@ -166,9 +166,7 @@ function! WriterMode()
 endfunction
 
 let g:tex_flavor = "latex"
-autocmd FileType tex call WriterMode()
-autocmd FileType mkd call WriterMode()
-autocmd FileType markdown call WriterMode()
+autocmd FileType tex,mkd,markdown call WriterMode()
 
 "}}}
 
@@ -179,7 +177,7 @@ colorscheme pencil
 
 " highlight TermCursor gui=standout
 " highlight TermCursor guibg=auto
-" highlight TermCursor guifg=#ef2929
+" highlight TermCursor guifg=#ef1810
 
 set cursorline
 set laststatus=2
@@ -260,6 +258,37 @@ inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 " -- close preview window when completion is done.
 autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
 
+function! VsimProgrammerMode()
+    set updatetime=300
+    set signcolumn=yes
+    autocmd! CursorHold  * silent call CocActionAsync('highlight')
+    autocmd! CursorHoldI * silent call CocActionAsync('showSignatureHelp')
+    autocmd! User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+
+    setl formatexpr=CocAction('formmatSelection')
+    vmap <buffer> <C-e><C-d> <Plug>(coc-format-selected)
+    imap <buffer> <C-e><C-d> <Plug>(coc-format-selected)
+    nmap <buffer> <C-e><C-d> :call CocAction('format')<CR>
+
+    nmap <buffer> <C-.>      <Plug>(coc-codeaction)
+    vmap <buffer> <C-.>      <Plug>(coc-codeaction-selected)
+    nmap <buffer> <F3>       <Plug>(coc-codeaction)
+    vmap <buffer> <F3>       <Plug>(coc-codeaction-selected)
+
+    nmap <silent> <buffer> <S-K>      :call CocActionAsync('doHover')<CR>
+    nmap <silent> <buffer> <F1>       :call CocActionAsync('doHover')<CR>
+
+    nmap <buffer> <F2>                <Plug>(coc-rename)
+    nmap <silent> <buffer> <F12>      <Plug>(coc-definition)
+    nmap <silent> <buffer> <C-]>      <Plug>(coc-definition)
+    nmap <silent> <buffer> <C-k><C-r> <Plug>(coc-references)
+
+    nmap <silent> <buffer> gd         <Plug>(coc-definition)
+    nmap <silent> <buffer> gy         <Plug>(coc-type-definition)
+    nmap <silent> <buffer> gi         <Plug>(coc-implementation)
+    nmap <silent> <buffer> gr         <Plug>(coc-references)
+endfunction
+
 function! VsimInitCoc()
 "invoke on first run:
  CocInstall coc-vimtex
@@ -268,7 +297,7 @@ function! VsimInitCoc()
  CocInstall coc-svg
  CocInstall coc-html
  CocInstall coc-ccls
- CocInstall coc-neco
+ CocInstall coc-highlight
 endfunction
 
 " Quicker navigation in tabs^H^H^H^Hbuffers...
@@ -286,6 +315,7 @@ set ttimeoutlen=50
 autocmd FileType vim nnoremap <buffer> <S-K> :call VimrcGetHelp()<CR>
 autocmd FileType help nnoremap <buffer> q :q<CR>
 autocmd FileType qf nnoremap <buffer> q :q<CR>
+autocmd FileType c,cpp,typescript,json call VsimProgrammerMode()
 
 "*****************************************************************************
 "" Abbreviations
