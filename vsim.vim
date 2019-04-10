@@ -328,9 +328,12 @@ nmap <C-S-tab> :bp<CR>
 " airline settings
 let g:airline_powerline_fonts=1
 let g:airline#extensions#tabline#enabled = 1
-let g:airline_inactive_collapse=1
-let g:airline#extensions#fugitiveline#enabled = 1
-let g:airline#extensions#branch#enabled = 1
+let g:airline_inactive_collapse=0
+let g:airline#extensions#fugitiveline#enabled = 0
+let g:airline#extensions#branch#enabled = 0
+let g:airline_detect_spell=0
+let g:airline_detect_spelllang=0
+let g:airline_exclude_preview = 1
 set ttimeoutlen=50
 
 autocmd FileType vim nnoremap <buffer> <S-K> :call VimrcGetHelp()<CR>
