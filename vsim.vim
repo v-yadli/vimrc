@@ -152,10 +152,31 @@ endif
 set backspace=indent,eol,start
 "{{{ Latex & markdown Settings
 
+if g:vsim_environment == 'neovim'
+    let g:vsim_latexmk_backend = 'nvim'
+else
+    let g:vsim_latexmk_backend = 'jobs'
+endif
+
 let g:vimtex_view_general_viewer = 'SumatraPDF'
 let g:vimtex_view_general_options
     \ = '-reuse-instance -forward-search @tex @line @pdf'
 let g:vimtex_view_general_options_latexmk = '-reuse-instance'
+let g:vimtex_compiler_latexmk = {
+    \ 'backend' : g:vsim_latexmk_backend,
+    \ 'background' : 1,
+    \ 'build_dir' : '',
+    \ 'callback' : 1,
+    \ 'continuous' : 1,
+    \ 'executable' : 'latexmk',
+    \ 'options' : [
+    \   '-shell-escape',
+    \   '-verbose',
+    \   '-file-line-error',
+    \   '-synctex=1',
+    \   '-interaction=nonstopmode',
+    \ ],
+    \}
 
 function! WriterMode()
     nnoremap <buffer> <F5> :silent! NextWordy<CR>
@@ -235,7 +256,7 @@ nmap <A-a> ggVG
 "}}}
 
 " Quick edit vimrc!
-execute "command! -nargs=0 Vimrc :e " . g:vsim_config_file 
+execute "command! -nargs=0 Vimrc  :e " . g:vsim_config_file 
 
 set noswapfile
 
