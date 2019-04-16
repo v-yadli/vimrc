@@ -62,6 +62,7 @@ Plug 'tweekmonster/startuptime.vim'
 Plug 'Shougo/neco-vim'
 Plug 'neoclide/coc-neco'
 Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}} 
+Plug 'sheerun/vim-polyglot'
 
 " Junkyard -- things that do not work for me, or never found useful.
 " Plug 'reedes/vim-pencil'          <--- not working anymore
@@ -87,7 +88,6 @@ Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
 " Plug 'fsharp/vim-fsharp'
 " Plug 'OmniSharp/omnisharp-vim'
 " Plug 'autozimu/LanguageClient-neovim'
-" Plug 'sheerun/vim-polyglot'
 " Plug 'Shougo/deoplete.nvim' 
 " -------------- END legacy programming environment.. ----------------
 
