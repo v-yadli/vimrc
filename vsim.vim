@@ -61,6 +61,7 @@ Plug 'tweekmonster/startuptime.vim'
 " hopefully this time it gets things right
 Plug 'Shougo/neco-vim'
 Plug 'neoclide/coc-neco'
+Plug 'yatli/coc-pses', {'do': './install.cmd'}
 Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}} 
 Plug 'sheerun/vim-polyglot'
 
@@ -339,7 +340,7 @@ set ttimeoutlen=50
 autocmd FileType vim nnoremap <buffer> <S-K> :call VimrcGetHelp()<CR>
 autocmd FileType help nnoremap <buffer> q :q<CR>
 autocmd FileType qf nnoremap <buffer> q :q<CR>
-autocmd FileType c,cpp,typescript,json call VsimProgrammerMode()
+autocmd FileType c,cpp,typescript,json,ps1,psm1,psd1 call VsimProgrammerMode()
 
 "*****************************************************************************
 "" Abbreviations
