@@ -61,7 +61,7 @@ Plug 'tweekmonster/startuptime.vim'
 " hopefully this time it gets things right
 Plug 'Shougo/neco-vim'
 Plug 'neoclide/coc-neco'
-Plug 'yatli/coc-pses', {'do': './install.cmd'}
+Plug 'yatli/coc-pses', {'do': { -> coc#pses#install()}}
 Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}} 
 Plug 'sheerun/vim-polyglot'
 
