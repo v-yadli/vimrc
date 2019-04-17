@@ -16,7 +16,7 @@ else
     if filereadable(expand('~/anaconda3/bin/python3'))
         let g:python3_host_prog = '~/anaconda3/bin/python3'
     endif
-    let g:vsim_config_file ="~/.vim/vsim.vim"
+    let g:vsim_config_file ="~/.config/nvim/vsim.vim"
 endif
 
 let g:vsim_environment = "neovim"
