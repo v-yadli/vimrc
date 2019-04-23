@@ -61,15 +61,15 @@ Plug 'tweekmonster/startuptime.vim'
 " hopefully this time it gets things right
 Plug 'Shougo/neco-vim'
 Plug 'neoclide/coc-neco'
-Plug 'yatli/coc-pses', {'do': { -> coc#pses#install()}}
+Plug 'yatli/coc-powershell', {'do': { -> coc#powershell#install()}}
 Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}} 
 Plug 'sheerun/vim-polyglot'
+Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
+Plug 'jistr/vim-nerdtree-tabs', { 'on': 'NERDTreeToggle' }
 
 " Junkyard -- things that do not work for me, or never found useful.
 " Plug 'reedes/vim-pencil'          <--- not working anymore
 " Plug 'rakr/vim-one'               <--- very slow on start!!
-" Plug 'scrooloose/nerdtree'        <--- slow!
-" Plug 'jistr/vim-nerdtree-tabs'    <--- slow!
 " Plug 'itchyny/lightline.vim'      <--- no tabline....
 " Plug 'cazador481/fakeclip.neovim' <--- not working
 " Plug 'kien/ctrlp.vim'             <--- replaced by fzf
@@ -447,8 +447,8 @@ imap <C-BS> <C-o>vbx
 " nmap <F6> :make<CR>
 
 " <C-W> (window) family
-nmap <C-w><C-s> :Vexplore<CR>
-imap <C-w><C-s> <Esc>:Vexplore<CR>
+nmap <C-w><C-s> :NERDTreeToggle<CR>
+imap <C-w><C-s> <Esc>:NERDTreeToggle<CR>
 
 nmap <C-w><C-e> :copen<CR>
 nmap <C-k><C-r> :call VsimFindReferences()<CR>
