@@ -398,10 +398,10 @@ function! VsimEcho(msg)
     endif
 endfunction
 
-let g:vsim_wrap_state = 0
+let s:vsim_wrap_state = 0
 function! VsimToggleWrap()
-    if g:vsim_wrap_state == 0
-        let g:vsim_wrap_state = 1
+    if s:vsim_wrap_state == 0
+        let s:vsim_wrap_state = 1
         setlocal formatoptions=roqlmM
         setlocal wrap
         setlocal colorcolumn=0
@@ -411,15 +411,15 @@ function! VsimToggleWrap()
         nmap silent k gk
         nmap silent 0 g0
         nmap silent $ g$
-    elseif g:vsim_wrap_state == 1
-        let g:vsim_wrap_state = 2
+    elseif s:vsim_wrap_state == 1
+        let s:vsim_wrap_state = 2
         setlocal formatoptions=jtcroqmMn
         setlocal nowrap
         setlocal colorcolumn=80
         setlocal textwidth=80
         call VsimEcho("Wrap=HARD")
-    elseif g:vsim_wrap_state == 2
-        let g:vsim_wrap_state = 3
+    elseif s:vsim_wrap_state == 2
+        let s:vsim_wrap_state = 3
         setlocal formatoptions=ajtcroqmMn
         setlocal nowrap
         setlocal colorcolumn=80
@@ -427,7 +427,7 @@ function! VsimToggleWrap()
         call VsimEcho("Wrap=AUTO")
     else
         " When I don't like wrap
-        let g:vsim_wrap_state = 0
+        let s:vsim_wrap_state = 0
         setlocal colorcolumn=0
         setlocal formatoptions=tcroqlmM
         setlocal nowrap
@@ -467,7 +467,7 @@ nnoremap <C-k><C-u> <S-v>:call NERDComment("x", "Uncomment")<CR>
 
 " <C-e> (view) family
 " set Wrap=OFF upon start
-let g:vsim_wrap_state = 3
+let s:vsim_wrap_state = 3
 call VsimToggleWrap()
 
 nnoremap <C-e><C-w> :call VsimToggleWrap()<CR>
@@ -504,19 +504,33 @@ vnoremap <Down> <Esc><Down>
 " REPL and Neoterm
 let g:neoterm_open_in_all_tabs = 1
 let g:neoterm_autoinsert = 1
+
+if has("win32")
+    let g:neoterm_shell = "powershell"
+endif
+
 let g:vsim_termstate = 1
-let g:vsim_theme_idx = 0
-let g:vsim_theme_name = ['Tomorrow', 'Tomorrow-Night', 'Tomorrow-Night-Blue', 'pencil', 'pencil', 'colorzone']
-let g:vsim_theme_bg   = ['light', 'dark', 'dark', 'light', 'dark', 'light']
+let s:vsim_theme_idx = 0
+let s:vsim_theme_name = ['Tomorrow', 'Tomorrow-Night', 'Tomorrow-Night-Blue', 'pencil', 'pencil', 'colorzone']
+let s:vsim_theme_bg   = ['light', 'dark', 'dark', 'light', 'dark', 'light']
+" focused term
+highlight VsimTerminal           guibg=#000000 guifg=#EDEDED ctermbg=0 ctermfg=7
+" inactive cursor line
+highlight VsimTerminalCursorLine guibg=#101010 guifg=#EDEDED ctermbg=9 ctermfg=7
+" inactive
+highlight VsimTerminalNC         guibg=#101010 guifg=#EDEDED ctermbg=8 ctermfg=7
+" cursor
+highlight VsimTerminalCursor     guibg=#ED3015 guifg=#000000 ctermbg=12 ctermfg=0
+highlight VsimTerminalCursorNC   guibg=#404040 guifg=#EDEDED ctermbg=8 ctermfg=7
 
 function! VsimToggleColor()
-    let g:vsim_theme_idx = g:vsim_theme_idx + 1
-    if g:vsim_theme_idx == 6
-        let g:vsim_theme_idx = 0
+    let s:vsim_theme_idx = s:vsim_theme_idx + 1
+    if s:vsim_theme_idx == 6
+        let s:vsim_theme_idx = 0
     endif
-    let l:theme = g:vsim_theme_name[g:vsim_theme_idx]
+    let l:theme = s:vsim_theme_name[s:vsim_theme_idx]
     execute "colorscheme "    . l:theme
-    execute "set background=" . g:vsim_theme_bg[g:vsim_theme_idx]
+    execute "set background=" . s:vsim_theme_bg[s:vsim_theme_idx]
     call VsimEcho("Current theme: ". l:theme)
 endfunction
 
@@ -527,12 +541,25 @@ function! VsimOnBufAdd()
     endif
 endfunction
 
+function! VsimSetTerminalColor()
+    " much better...
+    set winhighlight=Normal:VsimTerminal,NonText:VsimTerminalCursorLine,NormalNC:VsimTerminalNC,CursorLine:VsimTerminalCursorLine,TermCursor:VsimTerminalCursor,TermCursorNC:VsimTerminalCursorNC
+    " disable the bright cursor line (I'm not sure how to set its color as of yet)
+    " see: https://github.com/neovim/neovim/issues/2259
+    setlocal nocursorline
+    " set the terminal color scheme now
+    " see: https://github.com/neovim/neovim/issues/4696
+    " TODO match the console color scheme
+    " let g:terminal_color_0 = 
+endfunction
+
 function! VsimOnBufEnter()
     if &buftype == 'terminal'
         if g:vsim_termstate
             normal i
+            let g:vsim_termstate = 0
         endif
-        let g:vsim_termstate = 0
+        call VsimSetTerminalColor()
     endif
 endfunction
 
@@ -542,6 +569,7 @@ endfunction
 
 function! VsimOnTermOpen()
     setlocal nobuflisted
+    call VsimSetTerminalColor()
 endfunction
 
 
