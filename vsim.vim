@@ -66,6 +66,7 @@ Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
 Plug 'sheerun/vim-polyglot'
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'jistr/vim-nerdtree-tabs', { 'on': 'NERDTreeToggle' }
+Plug 'yatli/vmux.vim'
 
 " Junkyard -- things that do not work for me, or never found useful.
 " Plug 'reedes/vim-pencil'          <--- not working anymore
@@ -200,28 +201,6 @@ colorscheme pencil
 set cursorline
 set laststatus=2
 
-" Quick movement between windows, and quick window adjustment
-" {{{
-nmap <C-Up> <C-w>+
-nmap <C-Down> <C-w>-
-nmap <C-Left> <C-w><
-nmap <C-Right> <C-w>>
-" To use `ALT+{h,j,k,l}` to navigate windows from any mode: >
-tnoremap <A-h> <C-\><C-N>:let g:vsim_termstate = 1 <CR><C-w>h
-tnoremap <A-j> <C-\><C-N>:let g:vsim_termstate = 1 <CR><C-w>j
-tnoremap <A-k> <C-\><C-N>:let g:vsim_termstate = 1 <CR><C-w>k
-tnoremap <A-l> <C-\><C-N>:let g:vsim_termstate = 1 <CR><C-w>l
-
-inoremap <A-h> <C-\><C-N><C-w>h
-inoremap <A-j> <C-\><C-N><C-w>j
-inoremap <A-k> <C-\><C-N><C-w>k
-inoremap <A-l> <C-\><C-N><C-w>l
-nnoremap <A-h> <C-w>h
-nnoremap <A-j> <C-w>j
-nnoremap <A-k> <C-w>k
-nnoremap <A-l> <C-w>l
-" }}}
-
 " Fire up file type detection!
 filetype on
 filetype plugin on
@@ -237,18 +216,6 @@ execute "nmap <Leader>ss :source" . g:vsim_config_file . "<CR>"
 
 " Tab operations and buffer operations{{{
 nmap <A-t> :enew<CR>
-nmap <A-w> :BD<CR>
-nmap <A-q> <C-w>c
-nmap <A-n> :bn<CR>
-nmap <A-p> :bp<CR>
-nmap <A-b> :bp<CR>
-nmap <A-f> :bn<CR>
-nmap <A-d> :BD<CR>
-nmap <A-1> :b1<CR>
-nmap <A-2> :b2<CR>
-nmap <A-3> :b3<CR>
-nmap <A-4> :b4<CR>
-
 nmap <A-a> ggVG
 "}}}
 
@@ -500,12 +467,13 @@ vnoremap <Down> <Esc><Down>
 " REPL and Neoterm
 let g:neoterm_open_in_all_tabs = 1
 let g:neoterm_autoinsert = 1
+let g:neoterm_keep_term_open = 1
 
 if has("win32")
     let g:neoterm_shell = "powershell"
+    let g:neoterm_eof   = "\r"
 endif
 
-let g:vsim_termstate = 1
 let s:vsim_theme_idx = 0
 let s:vsim_theme_name = ['Tomorrow', 'Tomorrow-Night', 'Tomorrow-Night-Blue', 'pencil', 'pencil', 'colorzone']
 let s:vsim_theme_bg   = ['light', 'dark', 'dark', 'light', 'dark', 'light']
@@ -532,75 +500,11 @@ function! VsimOnBufAdd()
     endif
 endfunction
 
-function! VsimSetTerminalColor()
-    " focused term
-    highlight VsimTerminal           guibg=#000000 guifg=#EDEDED ctermbg=0 ctermfg=7
-    " inactive cursor line
-    highlight VsimTerminalCursorLine guibg=#101010 guifg=#EDEDED ctermbg=9 ctermfg=7
-    " inactive
-    highlight VsimTerminalNC         guibg=#101010 guifg=#EDEDED ctermbg=8 ctermfg=7
-    " cursor
-    highlight VsimTerminalCursor     guibg=#ED3015 guifg=#000000 ctermbg=12 ctermfg=0
-    highlight VsimTerminalCursorNC   guibg=#404040 guifg=#EDEDED ctermbg=8 ctermfg=7
-
-    " window-local highlight
-    set winhighlight=Normal:VsimTerminal,NonText:VsimTerminalCursorLine,NormalNC:VsimTerminalNC,CursorLine:VsimTerminalCursorLine,TermCursor:VsimTerminalCursor,TermCursorNC:VsimTerminalCursorNC
-    " disable the bright cursor line (I'm not sure how to set its color as of yet)
-    " see: https://github.com/neovim/neovim/issues/2259
-    setlocal nocursorline
-    " set the terminal color scheme now
-    " see: https://github.com/neovim/neovim/issues/4696
-    " TODO match the console color scheme
-    " let g:terminal_color_0 = 
-endfunction
-
-function! VsimOnBufEnter()
-    if &buftype == 'terminal'
-        if g:vsim_termstate
-            normal i
-            let g:vsim_termstate = 0
-        endif
-        call VsimSetTerminalColor()
-    endif
-endfunction
-
-function! VsimOnBufLeave()
-    " TODO nothing siginificant here atm
-endfunction
-
-function! VsimOnTermOpen()
-    setlocal nobuflisted
-    call VsimSetTerminalColor()
-endfunction
-
-
-inoremap <F5> <C-O>:TREPLSendLine<CR>
-inoremap <C-F5> <C-O>:TREPLSendFile<CR>
-nnoremap <F5> :TREPLSendLine<CR>
-nnoremap <C-F5> :TREPLSendFile<CR>
-vnoremap <F5> :<BS><BS><BS><BS><BS>TREPLSendSelection<CR>
-
-inoremap <F11> <C-O>:below Ttoggle<CR>
-vnoremap <F11> <C-O>:below Ttoggle<CR>
-nnoremap <F11> :below Ttoggle<CR>
-
 inoremap <F9> <C-O>:call VsimToggleColor()<CR>
 vnoremap <F9> <C-O>:call VsimToggleColor()<CR>
 nnoremap <F9> :call VsimToggleColor()<CR>
 
-tnoremap <A-Space> <C-\><C-n>
-tnoremap <A-v> <C-\><C-n>v
-tnoremap <PageUp> <C-\><C-n><PageUp>
-tnoremap <PageDown> <C-\><C-n><PageDown>
-tnoremap <F11> <C-\><C-n>:Ttoggle<CR>
-
-if g:vsim_environment == "neovim"
-    autocmd TermOpen * call VsimOnTermOpen()
-endif
-
-autocmd BufEnter * call VsimOnBufEnter()
 autocmd BufAdd   * call VsimOnBufAdd()
-autocmd BufLeave * call VsimOnBufLeave()
 
 "}}}
 
