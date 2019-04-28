@@ -197,10 +197,6 @@ autocmd FileType tex,mkd,markdown call WriterMode()
 set background=light
 colorscheme pencil
 
-" highlight TermCursor gui=standout
-" highlight TermCursor guibg=auto
-" highlight TermCursor guifg=#ef1810
-
 set cursorline
 set laststatus=2
 
@@ -513,15 +509,10 @@ let g:vsim_termstate = 1
 let s:vsim_theme_idx = 0
 let s:vsim_theme_name = ['Tomorrow', 'Tomorrow-Night', 'Tomorrow-Night-Blue', 'pencil', 'pencil', 'colorzone']
 let s:vsim_theme_bg   = ['light', 'dark', 'dark', 'light', 'dark', 'light']
-" focused term
-highlight VsimTerminal           guibg=#000000 guifg=#EDEDED ctermbg=0 ctermfg=7
-" inactive cursor line
-highlight VsimTerminalCursorLine guibg=#101010 guifg=#EDEDED ctermbg=9 ctermfg=7
-" inactive
-highlight VsimTerminalNC         guibg=#101010 guifg=#EDEDED ctermbg=8 ctermfg=7
-" cursor
-highlight VsimTerminalCursor     guibg=#ED3015 guifg=#000000 ctermbg=12 ctermfg=0
-highlight VsimTerminalCursorNC   guibg=#404040 guifg=#EDEDED ctermbg=8 ctermfg=7
+
+" highlight TermCursor gui=standout
+" highlight TermCursor guibg=auto
+" highlight TermCursor guifg=#ef1810
 
 function! VsimToggleColor()
     let s:vsim_theme_idx = s:vsim_theme_idx + 1
@@ -542,7 +533,17 @@ function! VsimOnBufAdd()
 endfunction
 
 function! VsimSetTerminalColor()
-    " much better...
+    " focused term
+    highlight VsimTerminal           guibg=#000000 guifg=#EDEDED ctermbg=0 ctermfg=7
+    " inactive cursor line
+    highlight VsimTerminalCursorLine guibg=#101010 guifg=#EDEDED ctermbg=9 ctermfg=7
+    " inactive
+    highlight VsimTerminalNC         guibg=#101010 guifg=#EDEDED ctermbg=8 ctermfg=7
+    " cursor
+    highlight VsimTerminalCursor     guibg=#ED3015 guifg=#000000 ctermbg=12 ctermfg=0
+    highlight VsimTerminalCursorNC   guibg=#404040 guifg=#EDEDED ctermbg=8 ctermfg=7
+
+    " window-local highlight
     set winhighlight=Normal:VsimTerminal,NonText:VsimTerminalCursorLine,NormalNC:VsimTerminalNC,CursorLine:VsimTerminalCursorLine,TermCursor:VsimTerminalCursor,TermCursorNC:VsimTerminalCursorNC
     " disable the bright cursor line (I'm not sure how to set its color as of yet)
     " see: https://github.com/neovim/neovim/issues/2259
