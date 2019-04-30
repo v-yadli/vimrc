@@ -61,12 +61,13 @@ Plug 'tweekmonster/startuptime.vim'
 " hopefully this time it gets things right
 Plug 'Shougo/neco-vim'
 Plug 'neoclide/coc-neco'
-Plug 'yatli/coc-powershell', {'do': { -> coc#powershell#install()}}
-Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}} 
+Plug 'yatli/coc-powershell',            {'do': { -> coc#powershell#install()}}
+Plug 'neoclide/coc.nvim',               {'tag': '*', 'do': { -> coc#util#install()}} 
 Plug 'sheerun/vim-polyglot'
-Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
-Plug 'jistr/vim-nerdtree-tabs', { 'on': 'NERDTreeToggle' }
+Plug 'scrooloose/nerdtree',             { 'on': 'NERDTreeToggle' }
+Plug 'jistr/vim-nerdtree-tabs',         { 'on': 'NERDTreeToggle' }
 Plug 'yatli/vmux.vim'
+Plug 'mhinz/vim-signify'
 
 " Junkyard -- things that do not work for me, or never found useful.
 " Plug 'reedes/vim-pencil'          <--- not working anymore
