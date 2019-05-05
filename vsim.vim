@@ -198,6 +198,9 @@ autocmd FileType tex,mkd,markdown call WriterMode()
 " colorscheme Tomorrow-Night
 set background=light
 colorscheme pencil
+set guicursor=n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50
+  \,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor
+  \,sm:block-blinkwait175-blinkoff150-blinkon175
 
 set cursorline
 set laststatus=2
