@@ -13,6 +13,8 @@ elseif exists('g:GtkGuiLoaded')
     nnoremap <silent> <C-w><C-s> :call rpcnotify(1, 'Gui', 'Command', 'ToggleSidebar')<CR>
 elseif exists('g:fvim_loaded')
     set guifont=Iosevka\ Slab:h16
+    nnoremap <silent> <C-ScrollWheelUp> :set guifont=+<CR>
+    nnoremap <silent> <C-ScrollWheelDown> :set guifont=-<CR>
 endif
 
 let g:vsim_fullscreen = 0
