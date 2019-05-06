@@ -34,7 +34,6 @@ Plug 'bling/vim-airline'
 Plug 'roxma/vim-tmux-clipboard'
 Plug 'tmux-plugins/vim-tmux-focus-events'
 Plug 'christoomey/vim-tmux-navigator'
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'scrooloose/nerdcommenter'
 Plug 'qpkorr/vim-bufkill'
 Plug 'lervag/vimtex'
@@ -47,7 +46,7 @@ Plug 'v-yadli/vim-tsl'
 " Utilities -- Things that I do love to issue Ex commands to utilize
 Plug 'mbbill/undotree'
 Plug 'tpope/vim-fugitive'
-Plug 'junegunn/fzf.vim'
+Plug 'Shougo/denite.nvim'
 
 " Laborotary -- Things I'd love to know more about
 if g:vsim_environment=="neovim"
@@ -85,6 +84,8 @@ Plug 'mhinz/vim-signify'
 " Plug 'roxma/nvim-completion-manager' < trying alternatives..
 " Plug 'rking/ag.vim'               <---- fzf has this(!)
 " Plug 'KabbAmine/zeavim.vim'       <---- never calls Zeal actually...
+" Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } <--- replaced by denite
+" Plug 'junegunn/fzf.vim'
 "
 " -------------- BEGIN legacy programming environment.. ----------------
 "  They never pulled it together well.. Really.
@@ -278,16 +279,16 @@ function! VsimProgrammerMode()
     nmap <silent> <buffer> gr         <Plug>(coc-references)
 endfunction
 
-function! VsimInitCoc()
-"invoke on first run:
- CocInstall coc-vimtex
- CocInstall coc-json
- CocInstall coc-python
- CocInstall coc-svg
- CocInstall coc-html
- CocInstall coc-ccls
- CocInstall coc-highlight
-endfunction
+let g:coc_global_extensions=[
+            \ 'coc-vimtex',
+            \ 'coc-denite',
+            \ 'coc-json',
+            \ 'coc-python',
+            \ 'coc-svg',
+            \ 'coc-html',
+            \ 'coc-ccls',
+            \ 'coc-highlight',
+            \ ]
 
 " Quicker navigation in tabs^H^H^H^Hbuffers...
 nmap <C-tab> :bn<CR>
@@ -438,8 +439,8 @@ let s:vsim_wrap_state = 3
 call VsimToggleWrap()
 
 nnoremap <C-e><C-w> :call VsimToggleWrap()<CR>
-nnoremap <C-;> :FZF<CR>
-inoremap <C-;> <C-o>:FZF<CR>
+"nnoremap <C-;> :FZF<CR>
+"inoremap <C-;> <C-o>:FZF<CR>
 
 vnoremap <C-C> y
 vnoremap <C-X> x

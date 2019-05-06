@@ -2,8 +2,16 @@ if exists('g:GuiLoaded')
     GuiFont! Iosevka Slab:h12
     GuiTabline 0
 
-    function! _doVsimToggleFullScreen()
-        silent! call GuiWindowFullScreen(g:vsim_fullscreen)
+    let s:vsim_fullscreen = 0
+
+    function! VsimToggleFullScreen()
+        if s:vsim_fullscreen
+            let s:vsim_fullscreen = 0
+        else
+            let s:vsim_fullscreen = 1
+        endif
+        silent! call GuiWindowFullScreen(s:vsim_fullscreen)
+        call _doVsimToggleFullScreen()
     endfunction
 
 elseif exists('g:GtkGuiLoaded')
@@ -15,18 +23,11 @@ elseif exists('g:fvim_loaded')
     set guifont=Iosevka\ Slab:h16
     nnoremap <silent> <C-ScrollWheelUp> :set guifont=+<CR>
     nnoremap <silent> <C-ScrollWheelDown> :set guifont=-<CR>
+
+    function! VsimToggleFullScreen()
+        call rpcnotify(1, 'ToggleFullScreen', 1)
+    endfunction
 endif
-
-let g:vsim_fullscreen = 0
-
-function! VsimToggleFullScreen()
-    if g:vsim_fullscreen
-        let g:vsim_fullscreen = 0
-    else
-        let g:vsim_fullscreen = 1
-    endif
-    call _doVsimToggleFullScreen()
-endfunction
 
 nnoremap <silent> <M-CR> :call VsimToggleFullScreen()<CR>
 inoremap <silent> <M-CR> <C-O>:call VsimToggleFullScreen()<CR>
