@@ -6,5 +6,5 @@ Windows Registry Editor Version 5.00
 "Icon"="\"C:\\tools\\neovimgtk\\bin\\nvim-gtk.exe\""
 
 [HKEY_CLASSES_ROOT\*\Shell\Vim\command]
-@="\"C:\\tools\\neovimgtk\\bin\\nvim-gtk.exe\" \"%1\""
+@="\"C:\\tools\\fvim\\fvim.exe\" \"%1\""
 "ThreadingModel"="Apartment"
