@@ -47,6 +47,8 @@ Plug 'v-yadli/vim-tsl'
 Plug 'mbbill/undotree'
 Plug 'tpope/vim-fugitive'
 Plug 'Shougo/denite.nvim'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
 
 " Laborotary -- Things I'd love to know more about
 if g:vsim_environment=="neovim"
@@ -61,6 +63,7 @@ Plug 'tweekmonster/startuptime.vim'
 Plug 'Shougo/neco-vim'
 Plug 'neoclide/coc-neco'
 Plug 'yatli/coc-powershell',            {'do': { -> coc#powershell#install()}}
+Plug 'neoclide/coc-denite'
 Plug 'neoclide/coc.nvim',               {'tag': '*', 'do': { -> coc#util#install()}} 
 Plug 'sheerun/vim-polyglot'
 Plug 'scrooloose/nerdtree',             { 'on': 'NERDTreeToggle' }
@@ -84,8 +87,6 @@ Plug 'mhinz/vim-signify'
 " Plug 'roxma/nvim-completion-manager' < trying alternatives..
 " Plug 'rking/ag.vim'               <---- fzf has this(!)
 " Plug 'KabbAmine/zeavim.vim'       <---- never calls Zeal actually...
-" Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } <--- replaced by denite
-" Plug 'junegunn/fzf.vim'
 "
 " -------------- BEGIN legacy programming environment.. ----------------
 "  They never pulled it together well.. Really.
@@ -281,12 +282,11 @@ endfunction
 
 let g:coc_global_extensions=[
             \ 'coc-vimtex',
-            \ 'coc-denite',
             \ 'coc-json',
+            \ 'coc-tsserver',
             \ 'coc-python',
             \ 'coc-svg',
             \ 'coc-html',
-            \ 'coc-ccls',
             \ 'coc-highlight',
             \ ]
 
