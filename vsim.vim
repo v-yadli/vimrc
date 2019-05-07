@@ -64,7 +64,7 @@ Plug 'Shougo/neco-vim'
 Plug 'neoclide/coc-neco'
 Plug 'yatli/coc-powershell',            {'do': { -> coc#powershell#install()}}
 Plug 'neoclide/coc-denite'
-Plug 'neoclide/coc.nvim',               {'tag': '*', 'do': { -> coc#util#install()}} 
+Plug 'neoclide/coc.nvim',               {'do': { -> coc#util#install({'tag':1})}} 
 Plug 'sheerun/vim-polyglot'
 Plug 'scrooloose/nerdtree',             { 'on': 'NERDTreeToggle' }
 Plug 'jistr/vim-nerdtree-tabs',         { 'on': 'NERDTreeToggle' }
