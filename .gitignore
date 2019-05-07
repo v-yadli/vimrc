@@ -5,3 +5,4 @@ bundle/*
 plugged
 rplugin.vim
 .netrwhist
+test/*
