@@ -247,6 +247,23 @@ inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 " -- close preview window when completion is done.
 autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
 
+" use error & warning count of diagnostics form coc.nvim
+let g:airline_section_error = '%{airline#util#wrap(airline#extensions#coc#get_error(),0)}'
+let g:airline_section_warning = '%{airline#util#wrap(airline#extensions#coc#get_warning(),0)}'
+
+" create a part for server status.
+function! GetServerStatus()
+  return get(g:, 'coc_status', '')
+endfunction
+call airline#parts#define_function('coc', 'GetServerStatus')
+function! AirlineInit()
+  let g:airline_section_a = airline#section#create(['coc'])
+endfunction
+autocmd User AirlineAfterInit call AirlineInit()
+
+" exclude overwrite statusline of list filetype
+let g:airline_exclude_filetypes = ["list"]
+
 function! VsimProgrammerMode()
     set updatetime=300
     set signcolumn=yes
