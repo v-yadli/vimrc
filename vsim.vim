@@ -196,10 +196,8 @@ autocmd FileType tex,mkd,markdown call WriterMode()
 
 "}}}
 
-" set background=dark
-" colorscheme Tomorrow-Night
 set background=light
-colorscheme pencil
+colorscheme Tomorrow-Night-Blue
 set guicursor=n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50
   \,a:blinkwait100-blinkoff500-blinkon500-Cursor/lCursor
   \,sm:block-blinkwait175-blinkoff150-blinkon175
@@ -308,7 +306,7 @@ set ttimeoutlen=50
 autocmd FileType vim nnoremap <buffer> <S-K> :call VimrcGetHelp()<CR>
 autocmd FileType help nnoremap <buffer> q :q<CR>
 autocmd FileType qf nnoremap <buffer> q :q<CR>
-autocmd FileType c,cpp,typescript,json,ps1,psm1,psd1 call VsimProgrammerMode()
+autocmd FileType c,cpp,typescript,json,ps1,psm1,psd1,fsharp call VsimProgrammerMode()
 
 "*****************************************************************************
 "" Abbreviations
