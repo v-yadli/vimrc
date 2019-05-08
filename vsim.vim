@@ -303,6 +303,7 @@ let g:coc_global_extensions=[
             \ 'coc-svg',
             \ 'coc-html',
             \ 'coc-highlight',
+            \ 'coc-fsharp',
             \ ]
 
 " Quicker navigation in tabs^H^H^H^Hbuffers...
