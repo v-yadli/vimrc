@@ -35,7 +35,6 @@ Plug 'roxma/vim-tmux-clipboard'
 Plug 'tmux-plugins/vim-tmux-focus-events'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'scrooloose/nerdcommenter'
-Plug 'qpkorr/vim-bufkill'
 Plug 'lervag/vimtex'
 Plug 'junegunn/vim-easy-align'
 Plug 'vim-scripts/LargeFile'
@@ -87,6 +86,7 @@ Plug 'mhinz/vim-signify'
 " Plug 'roxma/nvim-completion-manager' < trying alternatives..
 " Plug 'rking/ag.vim'               <---- fzf has this(!)
 " Plug 'KabbAmine/zeavim.vim'       <---- never calls Zeal actually...
+" Plug 'qpkorr/vim-bufkill'         <---- replaced by vmux.vim
 "
 " -------------- BEGIN legacy programming environment.. ----------------
 "  They never pulled it together well.. Really.
