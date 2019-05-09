@@ -69,6 +69,8 @@ Plug 'scrooloose/nerdtree',             { 'on': 'NERDTreeToggle' }
 Plug 'jistr/vim-nerdtree-tabs',         { 'on': 'NERDTreeToggle' }
 Plug 'yatli/vmux.vim'
 Plug 'mhinz/vim-signify'
+Plug 'ryanoasis/vim-devicons'
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 
 " Junkyard -- things that do not work for me, or never found useful.
 " Plug 'reedes/vim-pencil'          <--- not working anymore
@@ -263,6 +265,18 @@ autocmd User AirlineAfterInit call AirlineInit()
 
 " exclude overwrite statusline of list filetype
 let g:airline_exclude_filetypes = ["list"]
+
+" set folder open/close glyphs
+let NERDTreeDirArrowExpandable="▸"
+let NERDTreeDirArrowCollapsible="▾"
+" do not alter cursorline for NERDTree
+let g:NERDTreeHighlightCursorline = 0
+" show glyphs for NERDTree
+let g:webdevicons_enable_nerdtree = 1
+" don't show brackets around NERDTree glyphs
+"let g:webdevicons_conceal_nerdtree_brackets = 1
+" show folder glyphs for NERDTree
+let g:WebDevIconsUnicodeDecorateFolderNodes = 1
 
 function! VsimProgrammerMode()
     set updatetime=300

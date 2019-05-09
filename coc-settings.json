@@ -13,5 +13,10 @@
     },
     "python.jediEnabled": false,
     "python.linting.enabled": true,
-    "python.linting.pylintEnabled": true
+    "python.linting.pylintEnabled": true,
+    "diagnostic.warningSign": "",
+    "diagnostic.errorSign": ">>",
+    "diagnostic.infoSign": "",
+    "codeLens.enable": true 
+
 }
