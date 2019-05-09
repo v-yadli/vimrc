@@ -69,6 +69,7 @@ Plug 'scrooloose/nerdtree',             { 'on': 'NERDTreeToggle' }
 Plug 'jistr/vim-nerdtree-tabs',         { 'on': 'NERDTreeToggle' }
 Plug 'yatli/vmux.vim'
 Plug 'mhinz/vim-signify'
+Plug 'ryanoasis/vim-devicons'
 
 " Junkyard -- things that do not work for me, or never found useful.
 " Plug 'reedes/vim-pencil'          <--- not working anymore
@@ -438,8 +439,12 @@ nmap <C-w><C-e> :copen<CR>
 nmap <C-k><C-r> :call VsimFindReferences()<CR>
 
 " <C-=> for calling EasyAlign
-nmap <C-=> ^O:EasyAlign<CR>
-vmap <C-=> :EasyAlign<CR>
+nmap <C-=> <Plug>(EasyAlign)
+vmap <C-=> <Plug>(EasyAlign)
+
+let g:easy_align_delimiters = {
+    \ '-': { 'pattern': '->\|<-' },
+    \ }
 
 " <C-k> (kontrol) family
 vmap <C-k><C-c> <plug>NERDCommenterComment
