@@ -242,10 +242,10 @@ set completeopt=longest,menuone,preview
 " -- use <c-space>for trigger completion
 inoremap <silent><expr> <c-space> coc#refresh()
 " -- use <Tab> and <S-Tab> for navigate completion list:
-inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 " -- use <cr> to confirm complete
-inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+inoremap <expr> <cr>    pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 " -- close preview window when completion is done.
 autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
 
@@ -274,9 +274,16 @@ let g:NERDTreeHighlightCursorline = 0
 " show glyphs for NERDTree
 let g:webdevicons_enable_nerdtree = 1
 " don't show brackets around NERDTree glyphs
-"let g:webdevicons_conceal_nerdtree_brackets = 1
+let g:webdevicons_conceal_nerdtree_brackets = 1
 " show folder glyphs for NERDTree
 let g:WebDevIconsUnicodeDecorateFolderNodes = 1
+" show folder open/close glyphs
+let g:DevIconsEnableFoldersOpenClose = 1
+" more filetypes...
+let g:WebDevIconsUnicodeDecorateFileNodesPatternSymbols = {} " needed
+let g:WebDevIconsUnicodeDecorateFileNodesPatternSymbols['.*\.xaml$'] = 'ﭲ'
+let g:WebDevIconsUnicodeDecorateFileNodesPatternSymbols['.*\.svg$'] = 'ﰟ'
+let g:WebDevIconsUnicodeDecorateFileNodesPatternSymbols['.*\..*proj$'] = ''
 
 function! VsimProgrammerMode()
     set updatetime=300
@@ -289,24 +296,31 @@ function! VsimProgrammerMode()
     vmap <buffer> <C-e><C-d> <Plug>(coc-format-selected)
     imap <buffer> <C-e><C-d> <Plug>(coc-format-selected)
     nmap <buffer> <C-e><C-d> :call CocAction('format')<CR>
+    vmap <buffer> <C-e>d     <Plug>(coc-format-selected)
+    imap <buffer> <C-e>d     <Plug>(coc-format-selected)
+    nmap <buffer> <C-e>d     :call CocAction('format')<CR>
 
     nmap <buffer> <C-.>      <Plug>(coc-codeaction)
     vmap <buffer> <C-.>      <Plug>(coc-codeaction-selected)
-    nmap <buffer> <F3>       <Plug>(coc-codeaction)
-    vmap <buffer> <F3>       <Plug>(coc-codeaction-selected)
 
     nmap <silent> <buffer> <S-K>      :call CocActionAsync('doHover')<CR>
     nmap <silent> <buffer> <F1>       :call CocActionAsync('doHover')<CR>
 
     nmap <buffer> <F2>                <Plug>(coc-rename)
     nmap <silent> <buffer> <F12>      <Plug>(coc-definition)
-    nmap <silent> <buffer> <C-]>      <Plug>(coc-definition)
+    nmap <silent> <buffer> <C-]>      <Plug>(coc-declaration)
     nmap <silent> <buffer> <C-k><C-r> <Plug>(coc-references)
+    nmap <silent> <buffer> <C-k>r     <Plug>(coc-references)
 
     nmap <silent> <buffer> gd         <Plug>(coc-definition)
     nmap <silent> <buffer> gy         <Plug>(coc-type-definition)
     nmap <silent> <buffer> gi         <Plug>(coc-implementation)
     nmap <silent> <buffer> gr         <Plug>(coc-references)
+
+    nmap <silent> <buffer> <C-S-F12>  <Plug>(coc-diagnostic-next)
+    nmap <silent> <buffer> <C-W><C-E> :CocList diagnostics<CR>
+    nmap <silent> <buffer> <C-W>e     :CocList diagnostics<CR>
+    nmap <silent> <buffer> <C-S-P>    :CocCommand<CR>
 endfunction
 
 let g:coc_global_extensions=[
