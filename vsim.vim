@@ -217,7 +217,8 @@ nmap <C-s> :update<CR>
 imap <C-s> <Esc>:update<CR>a
 
 " Folding workaround
-set foldmethod=marker
+set foldmethod=syntax
+set foldlevelstart=10
 " Quick resource vim configuration
 execute "nmap <Leader>ss :source" . g:vsim_config_file . "<CR>"
 
