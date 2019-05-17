@@ -295,7 +295,7 @@ function! VsimProgrammerMode()
     autocmd! CursorHoldI * silent call CocActionAsync('showSignatureHelp')
     autocmd! User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
 
-    setl formatexpr=CocAction('formmatSelection')
+    setl formatexpr=CocAction('formatSelection')
     vmap <buffer> <C-e><C-d> <Plug>(coc-format-selected)
     imap <buffer> <C-e><C-d> <Plug>(coc-format-selected)
     nmap <buffer> <C-e><C-d> :call CocAction('format')<CR>
