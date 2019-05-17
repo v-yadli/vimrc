@@ -41,6 +41,13 @@ Plug 'vim-scripts/LargeFile'
 Plug 'guns/vim-sexp'
 Plug 'bohlender/vim-smt2'
 Plug 'v-yadli/vim-tsl'
+Plug 'kshenoy/vim-signature'          " displays marks in the gutter (sign column)
+Plug 'mhinz/vim-signify'              " displays changes in the gutter
+Plug 'scrooloose/nerdtree',             { 'on': 'NERDTreeToggle' }
+Plug 'jistr/vim-nerdtree-tabs',         { 'on': 'NERDTreeToggle' }
+Plug 'yatli/vmux.vim'
+Plug 'sheerun/vim-polyglot'
+Plug 'tpope/vim-surround'
 
 " Utilities -- Things that I do love to issue Ex commands to utilize
 Plug 'mbbill/undotree'
@@ -48,27 +55,21 @@ Plug 'tpope/vim-fugitive'
 Plug 'Shougo/denite.nvim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
+Plug 'tweekmonster/startuptime.vim'
 
 " Laborotary -- Things I'd love to know more about
 if g:vsim_environment=="neovim"
     Plug 'kassio/neoterm'
 endif
-Plug 'tpope/vim-surround'
 Plug 'godlygeek/tabular'              " Required by vim-markdown
 Plug 'plasticboy/vim-markdown'
 Plug 'gyim/vim-boxdraw'
-Plug 'tweekmonster/startuptime.vim'
 " hopefully this time it gets things right
 Plug 'Shougo/neco-vim'
 Plug 'neoclide/coc-neco'
 Plug 'yatli/coc-powershell',            {'do': { -> coc#powershell#install()}}
 Plug 'neoclide/coc-denite'
 Plug 'neoclide/coc.nvim',               {'do': { -> coc#util#install({'tag':1})}} 
-Plug 'sheerun/vim-polyglot'
-Plug 'scrooloose/nerdtree',             { 'on': 'NERDTreeToggle' }
-Plug 'jistr/vim-nerdtree-tabs',         { 'on': 'NERDTreeToggle' }
-Plug 'yatli/vmux.vim'
-Plug 'mhinz/vim-signify'
 Plug 'ryanoasis/vim-devicons'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 
