@@ -23,6 +23,7 @@ elseif exists('g:fvim_loaded')
     set guifont=Iosevka\ Slab:h14
     nnoremap <silent> <C-ScrollWheelUp> :set guifont=+<CR>
     nnoremap <silent> <C-ScrollWheelDown> :set guifont=-<CR>
+    call rpcnotify(1, 'SetCursorAnimation', v:false, v:true)
 
     function! VsimToggleFullScreen()
         call rpcnotify(1, 'ToggleFullScreen', 1)
