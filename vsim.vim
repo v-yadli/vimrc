@@ -114,6 +114,7 @@ filetype plugin indent on
 
 set nowrap
 set cindent
+set title           " enable titlestring
 set shiftwidth=4
 set tabstop=4
 set expandtab       " replace tab to whitespace.
@@ -344,9 +345,11 @@ nmap <C-S-tab> :bp<CR>
 " airline settings
 let g:airline_powerline_fonts=1
 let g:airline#extensions#tabline#enabled = 1
-let g:airline_inactive_collapse=0
-let g:airline#extensions#fugitiveline#enabled = 0
-let g:airline#extensions#branch#enabled = 0
+let g:airline_inactive_collapse=1
+let g:airline_inactive_alt_sep=0
+let g:airline#extensions#wordcount#enabled = 1
+let g:airline#extensions#fugitiveline#enabled = 1
+let g:airline#extensions#branch#enabled = 1
 let g:airline_detect_spell=0
 let g:airline_detect_spelllang=0
 let g:airline_exclude_preview = 1
