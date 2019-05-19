@@ -51,5 +51,5 @@
     "codeLens.separator": "",
     "coc.preferences.currentFunctionSymbolAutoUpdate": true,
     "coc.preferences.useQuickfixForLocations": true,
-    "coc.preferences.extensionUpdateCheck":"weekly",
+    "coc.preferences.extensionUpdateCheck":"weekly"
 }
