@@ -289,10 +289,11 @@ call airline#parts#define_function('buf_func', 'VsimAirlineCurrentFunction')
 call airline#parts#define_function('cur_char', 'VsimAirlineCurrentChar')
 
 function! AirlineInit()
+  let spc=g:airline_symbols.space
   let g:airline_section_a = airline#section#create(['crypt', 'paste', 'spell', 'iminsert', 'coc'])
-  let g:airline_section_x = airline#section#create(['buf_func', 'filetype'])
+  let g:airline_section_x = airline#section#create(['buf_func'.spc, 'filetype'])
   let g:airline_section_y = airline#section#create(['ffenc'])
-  let g:airline_section_z = airline#section#create(['cur_char', 'windowswap', 'obsession', '%3p%%'.g:airline_symbols.space, 'linenr', 'maxlinenr', g:airline_symbols.space.':%3v'])
+  let g:airline_section_z = airline#section#create(['cur_char', 'windowswap', 'obsession', '%3p%%'.spc, 'linenr', 'maxlinenr', spc.':%3v'])
 
   let g:airline_section_error = '%{airline#util#wrap(airline#extensions#coc#get_error(),0)}'
   let g:airline_section_warning = '%{airline#util#wrap(airline#extensions#coc#get_warning(),0)}'
