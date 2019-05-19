@@ -72,6 +72,7 @@ Plug 'neoclide/coc-denite'
 Plug 'neoclide/coc.nvim',               {'do': { -> coc#util#install({'tag':1})}} 
 Plug 'ryanoasis/vim-devicons'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+Plug 'NLKNguyen/papercolor-theme'
 
 " Junkyard -- things that do not work for me, or never found useful.
 " Plug 'reedes/vim-pencil'          <--- not working anymore
@@ -201,8 +202,12 @@ autocmd FileType tex,mkd,markdown call WriterMode()
 "}}}
 
 set background=light
+"let g:airline_theme='tomorrow'
+" colorscheme pencil
+" colorscheme Tomorrow-Night-Blue
+
 let g:airline_theme='tomorrow'
-colorscheme pencil
+colorscheme PaperColor
 set guicursor=n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50
   \,a:blinkwait100-blinkoff500-blinkon500-Cursor/lCursor
   \,sm:block-blinkwait175-blinkoff150-blinkon175
@@ -253,17 +258,44 @@ inoremap <expr> <cr>    pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 " -- close preview window when completion is done.
 autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
 
-" use error & warning count of diagnostics form coc.nvim
-let g:airline_section_error = '%{airline#util#wrap(airline#extensions#coc#get_error(),0)}'
-let g:airline_section_warning = '%{airline#util#wrap(airline#extensions#coc#get_warning(),0)}'
+" airline settings
+let g:airline_powerline_fonts=1
+let g:airline#extensions#tabline#enabled = 1
+let g:airline_inactive_collapse=1
+let g:airline_inactive_alt_sep=0
+let g:airline_detect_modified=1
+let g:airline#extensions#wordcount#enabled = 1
+let g:airline#extensions#fugitiveline#enabled = 1
+let g:airline#extensions#branch#enabled = 1
+let g:airline_detect_spell=1
+let g:airline_detect_spelllang=1
+let g:airline_exclude_preview = 1
+set ttimeoutlen=50
 
-" create a part for server status.
-function! GetServerStatus()
+" create airline parts for coc server status & coc_current_function
+function! VsimAirlineCocServer()
   return get(g:, 'coc_status', '')
 endfunction
-call airline#parts#define_function('coc', 'GetServerStatus')
+function! VsimAirlineCurrentFunction()
+  return get(b:, 'coc_current_function', '')
+endfunction
+function! VsimAirlineCurrentChar()
+  let chr = matchstr(getline('.'), '\%' . col('.') . 'c.')
+  return '[' . printf("0x%04X", char2nr(chr)) . ']'
+endfunction
+
+call airline#parts#define_function('coc', 'VsimAirlineCocServer')
+call airline#parts#define_function('buf_func', 'VsimAirlineCurrentFunction')
+call airline#parts#define_function('cur_char', 'VsimAirlineCurrentChar')
+
 function! AirlineInit()
-  let g:airline_section_a = airline#section#create(['coc'])
+  let g:airline_section_a = airline#section#create(['crypt', 'paste', 'spell', 'iminsert', 'coc'])
+  let g:airline_section_x = airline#section#create(['buf_func', 'filetype'])
+  let g:airline_section_y = airline#section#create(['ffenc'])
+  let g:airline_section_z = airline#section#create(['cur_char', 'windowswap', 'obsession', '%3p%%'.g:airline_symbols.space, 'linenr', 'maxlinenr', g:airline_symbols.space.':%3v'])
+
+  let g:airline_section_error = '%{airline#util#wrap(airline#extensions#coc#get_error(),0)}'
+  let g:airline_section_warning = '%{airline#util#wrap(airline#extensions#coc#get_warning(),0)}'
 endfunction
 autocmd User AirlineAfterInit call AirlineInit()
 
@@ -341,19 +373,6 @@ let g:coc_global_extensions=[
 " Quicker navigation in tabs^H^H^H^Hbuffers...
 nmap <C-tab> :bn<CR>
 nmap <C-S-tab> :bp<CR>
-
-" airline settings
-let g:airline_powerline_fonts=1
-let g:airline#extensions#tabline#enabled = 1
-let g:airline_inactive_collapse=1
-let g:airline_inactive_alt_sep=0
-let g:airline#extensions#wordcount#enabled = 1
-let g:airline#extensions#fugitiveline#enabled = 1
-let g:airline#extensions#branch#enabled = 1
-let g:airline_detect_spell=0
-let g:airline_detect_spelllang=0
-let g:airline_exclude_preview = 1
-set ttimeoutlen=50
 
 autocmd FileType vim nnoremap <buffer> <S-K> :call VimrcGetHelp()<CR>
 autocmd FileType help nnoremap <buffer> q :q<CR>

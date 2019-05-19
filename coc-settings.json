@@ -42,11 +42,14 @@
     "python.jediEnabled": false,
     "python.linting.enabled": true,
     "python.linting.pylintEnabled": true,
-    "suggest.maxCompleteItemCount": 100,
+    "suggest.maxCompleteItemCount": 200,
     "diagnostic.errorSign": "",
     "diagnostic.warningSign": "",
     "diagnostic.infoSign": "",
     "diagnostic.hintSign": "ﳁ",
     "codeLens.enable": true,
-    "codeLens.separator": ""
+    "codeLens.separator": "",
+    "coc.preferences.currentFunctionSymbolAutoUpdate": true,
+    "coc.preferences.useQuickfixForLocations": true,
+    "coc.preferences.extensionUpdateCheck":"weekly",
 }
