@@ -205,8 +205,6 @@ set background=light
 "let g:airline_theme='tomorrow'
 " colorscheme pencil
 " colorscheme Tomorrow-Night-Blue
-
-let g:airline_theme='tomorrow'
 colorscheme PaperColor
 set guicursor=n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50
   \,a:blinkwait100-blinkoff500-blinkon500-Cursor/lCursor
@@ -277,7 +275,12 @@ function! VsimAirlineCocServer()
   return get(g:, 'coc_status', '')
 endfunction
 function! VsimAirlineCurrentFunction()
-  return get(b:, 'coc_current_function', '')
+  let n = get(b:, 'coc_current_function', '')
+  if n != ''
+      return n.' '
+  else
+      return n
+  endif
 endfunction
 function! VsimAirlineCurrentChar()
   let chr = matchstr(getline('.'), '\%' . col('.') . 'c.')
@@ -291,7 +294,7 @@ call airline#parts#define_function('cur_char', 'VsimAirlineCurrentChar')
 function! AirlineInit()
   let spc=g:airline_symbols.space
   let g:airline_section_a = airline#section#create(['crypt', 'paste', 'spell', 'iminsert', 'coc'])
-  let g:airline_section_x = airline#section#create(['buf_func'.spc, 'filetype'])
+  let g:airline_section_x = airline#section#create(['buf_func', 'filetype'])
   let g:airline_section_y = airline#section#create(['ffenc'])
   let g:airline_section_z = airline#section#create(['cur_char', 'windowswap', 'obsession', '%3p%%'.spc, 'linenr', 'maxlinenr', spc.':%3v'])
 
@@ -376,8 +379,6 @@ nmap <C-tab> :bn<CR>
 nmap <C-S-tab> :bp<CR>
 
 autocmd FileType vim nnoremap <buffer> <S-K> :call VimrcGetHelp()<CR>
-autocmd FileType help nnoremap <buffer> q :q<CR>
-autocmd FileType qf nnoremap <buffer> q :q<CR>
 autocmd FileType c,cpp,typescript,json,ps1,psm1,psd1,fsharp call VsimProgrammerMode()
 
 "*****************************************************************************
@@ -488,8 +489,8 @@ imap <C-BS> <C-o>vbx
 nmap <C-w><C-s> :NERDTreeToggle<CR>
 imap <C-w><C-s> <Esc>:NERDTreeToggle<CR>
 
-nmap <C-w><C-e> :copen<CR>
-nmap <C-k><C-r> :call VsimFindReferences()<CR>
+nmap <C-w><C-e> <silent> :cwindow<CR>
+nmap <C-k><C-r> <silent> :call VsimFindReferences()<CR>
 
 " <C-=> for calling EasyAlign
 nmap <C-=> <Plug>(EasyAlign)
@@ -572,18 +573,9 @@ function! VsimToggleColor()
     call VsimEcho("Current theme: ". l:theme)
 endfunction
 
-function! VsimOnBufAdd()
-    if &previewwindow || &buftype == 'nofile' || &buftype == 'quickfix' || &buftype == 'nofile'
-        nnoremap <buffer> q :q<CR>
-        setlocal nobuflisted
-    endif
-endfunction
-
 inoremap <F9> <C-O>:call VsimToggleColor()<CR>
 vnoremap <F9> <C-O>:call VsimToggleColor()<CR>
 nnoremap <F9> :call VsimToggleColor()<CR>
-
-autocmd BufAdd   * call VsimOnBufAdd()
 
 "}}}
 
