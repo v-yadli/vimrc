@@ -205,7 +205,7 @@ set background=light
 "let g:airline_theme='tomorrow'
 " colorscheme pencil
 colorscheme Tomorrow-Night-Blue
-" colorscheme PaperColor
+"colorscheme PaperColor
 set guicursor=n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50
   \,a:blinkwait100-blinkoff500-blinkon500-Cursor/lCursor
   \,sm:block-blinkwait175-blinkoff150-blinkon175
@@ -570,6 +570,11 @@ function! VsimToggleColor()
     let l:theme = s:vsim_theme_name[s:vsim_theme_idx]
     execute "colorscheme "    . l:theme
     execute "set background=" . s:vsim_theme_bg[s:vsim_theme_idx]
+    
+    if s:vsim_theme_idx == 2
+        " weird.. guifg turns Yellow after Tomorrow-Night is set.
+    endif
+
     call VsimEcho("Current theme: ". l:theme)
 endfunction
 

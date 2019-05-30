@@ -44,7 +44,7 @@ let g:colors_name = "Tomorrow-Night-Blue"
 
 if has("gui_running") || &t_Co == 88 || &t_Co == 256
 	" Returns an approximate grey index for the given grey level
-	fun <SID>grey_number(x)
+	fun! <SID>grey_number(x)
 		if &t_Co == 88
 			if a:x < 23
 				return 0
@@ -83,7 +83,7 @@ if has("gui_running") || &t_Co == 88 || &t_Co == 256
 	endfun
 
 	" Returns the actual grey level represented by the grey index
-	fun <SID>grey_level(n)
+	fun! <SID>grey_level(n)
 		if &t_Co == 88
 			if a:n == 0
 				return 0
@@ -116,7 +116,7 @@ if has("gui_running") || &t_Co == 88 || &t_Co == 256
 	endfun
 
 	" Returns the palette index for the given grey index
-	fun <SID>grey_colour(n)
+	fun! <SID>grey_colour(n)
 		if &t_Co == 88
 			if a:n == 0
 				return 16
@@ -137,7 +137,7 @@ if has("gui_running") || &t_Co == 88 || &t_Co == 256
 	endfun
 
 	" Returns an approximate colour index for the given colour level
-	fun <SID>rgb_number(x)
+	fun! <SID>rgb_number(x)
 		if &t_Co == 88
 			if a:x < 69
 				return 0
@@ -164,7 +164,7 @@ if has("gui_running") || &t_Co == 88 || &t_Co == 256
 	endfun
 
 	" Returns the actual colour level for the given colour index
-	fun <SID>rgb_level(n)
+	fun! <SID>rgb_level(n)
 		if &t_Co == 88
 			if a:n == 0
 				return 0
@@ -185,7 +185,7 @@ if has("gui_running") || &t_Co == 88 || &t_Co == 256
 	endfun
 
 	" Returns the palette index for the given R/G/B colour indices
-	fun <SID>rgb_colour(x, y, z)
+	fun! <SID>rgb_colour(x, y, z)
 		if &t_Co == 88
 			return 16 + (a:x * 16) + (a:y * 4) + a:z
 		else
@@ -194,7 +194,7 @@ if has("gui_running") || &t_Co == 88 || &t_Co == 256
 	endfun
 
 	" Returns the palette index to approximate the given R/G/B colour levels
-	fun <SID>colour(r, g, b)
+	fun! <SID>colour(r, g, b)
 		" Get the closest grey
 		let l:gx = <SID>grey_number(a:r)
 		let l:gy = <SID>grey_number(a:g)
@@ -229,7 +229,7 @@ if has("gui_running") || &t_Co == 88 || &t_Co == 256
 	endfun
 
 	" Returns the palette index to approximate the 'rrggbb' hex string
-	fun <SID>rgb(rgb)
+	fun! <SID>rgb(rgb)
 		let l:r = ("0x" . strpart(a:rgb, 0, 2)) + 0
 		let l:g = ("0x" . strpart(a:rgb, 2, 2)) + 0
 		let l:b = ("0x" . strpart(a:rgb, 4, 2)) + 0
@@ -238,7 +238,7 @@ if has("gui_running") || &t_Co == 88 || &t_Co == 256
 	endfun
 
 	" Sets the highlighting for the given group
-	fun <SID>X(group, fg, bg, attr)
+	fun! <SID>X(group, fg, bg, attr)
 		if a:fg != ""
 			exec "hi " . a:group . " guifg=#" . a:fg . " ctermfg=" . <SID>rgb(a:fg)
 		endif
@@ -279,7 +279,31 @@ if has("gui_running") || &t_Co == 88 || &t_Co == 256
 	end
 	if version >= 703
 		call <SID>X("ColorColumn", "", s:line, "none")
+        highlight Cursor       guibg=#ef1810 guifg=fg
+        highlight CursorLineNr guifg=Brown
 	end
+    " Coc highlighting
+    highlight      CocUnderline          gui=underline
+    highlight      CocErrorSign          guifg=#ff0000
+    highlight      CocWarningSign        guifg=#ff922b
+    highlight      CocInfoSign           guifg=#fab005
+    highlight      CocHintSign           guifg=#15aabf
+    highlight      CocSelectedText       guifg=#fb4394
+    highlight      CocCodeLens           guifg=#999999
+    highlight link CocErrorFloat         Identifier
+    highlight link CocWarningFloat       Constant
+    highlight link CocInfoFloat          Normal
+    highlight link CocHintFloat          Normal
+    highlight      CocErrorHighlight     gui=undercurl guisp=#ff0000
+    highlight      CocWarningHighlight   gui=underline guisp=#ff922b
+    highlight      CocInfoHighlight      gui=underline guisp=Green
+    highlight      CocHintHighlight      gui=underline guisp=#15aabf
+    highlight link CocListMode           ModeMsg
+    highlight link CocListPath           Comment
+    highlight link CocFloating           Pmenu
+    highlight link CocHighlightText      Pmenu
+    highlight link CocHighlightTextRead  Pmenu
+    highlight link CocHighlightTextWrite Pmenu
 
 	" Standard Highlighting
 	call <SID>X("Comment", s:comment, "", "")
