@@ -258,7 +258,6 @@ autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
 
 " airline settings
 let g:airline_powerline_fonts=1
-let g:airline#extensions#tabline#enabled = 1
 let g:airline_inactive_collapse=1
 let g:airline_inactive_alt_sep=0
 let g:airline_detect_modified=1
@@ -268,6 +267,10 @@ let g:airline#extensions#branch#enabled = 1
 let g:airline_detect_spell=1
 let g:airline_detect_spelllang=1
 let g:airline_exclude_preview = 1
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#buffer_nr_show = 1
+let g:airline#extensions#tabline#buffer_nr_format = '%s: '
+let g:airline#extensions#tabline#fnamemod = ':t'
 set ttimeoutlen=50
 
 " create airline parts for coc server status & coc_current_function
