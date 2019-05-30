@@ -12,6 +12,6 @@ else
 endif
 
 let g:vsim_environment = "vim"
-set guifont=Iosevka_Yadori_Slab:h12
+set guifont=Iosevka_Slab:h12
 
 execute "source " . g:vsim_config_file
