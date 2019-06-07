@@ -52,7 +52,6 @@ Plug 'tpope/vim-surround'
 " Utilities -- Things that I do love to issue Ex commands to utilize
 Plug 'mbbill/undotree'
 Plug 'tpope/vim-fugitive'
-Plug 'Shougo/denite.nvim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'tweekmonster/startuptime.vim'
@@ -64,11 +63,11 @@ endif
 Plug 'godlygeek/tabular'              " Required by vim-markdown
 Plug 'plasticboy/vim-markdown'
 Plug 'gyim/vim-boxdraw'
+Plug 'fidian/hexmode'
 " hopefully this time it gets things right
 Plug 'Shougo/neco-vim'
 Plug 'neoclide/coc-neco'
 Plug 'yatli/coc-powershell',            {'do': { -> coc#powershell#install()}}
-Plug 'neoclide/coc-denite'
 Plug 'neoclide/coc.nvim',               {'do': { -> coc#util#install({'tag':1})}} 
 Plug 'ryanoasis/vim-devicons'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
@@ -558,8 +557,8 @@ if has("win32")
 endif
 
 let s:vsim_theme_idx = 0
-let s:vsim_theme_name = ['Tomorrow', 'Tomorrow-Night', 'Tomorrow-Night-Blue', 'pencil', 'pencil', 'colorzone']
-let s:vsim_theme_bg   = ['light', 'dark', 'dark', 'light', 'dark', 'light']
+let s:vsim_theme_name = ['Tomorrow', 'Tomorrow-Night', 'Tomorrow-Night-Blue', 'pencil', 'pencil', 'colorzone', 'PaperColor']
+let s:vsim_theme_bg   = ['light', 'dark', 'dark', 'light', 'dark', 'light', 'light']
 
 " highlight TermCursor gui=standout
 " highlight TermCursor guibg=auto
@@ -567,16 +566,35 @@ let s:vsim_theme_bg   = ['light', 'dark', 'dark', 'light', 'dark', 'light']
 
 function! VsimToggleColor()
     let s:vsim_theme_idx = s:vsim_theme_idx + 1
-    if s:vsim_theme_idx == 6
+    if s:vsim_theme_idx >= len(s:vsim_theme_name)
         let s:vsim_theme_idx = 0
     endif
     let l:theme = s:vsim_theme_name[s:vsim_theme_idx]
     execute "colorscheme "    . l:theme
     execute "set background=" . s:vsim_theme_bg[s:vsim_theme_idx]
     
-    if s:vsim_theme_idx == 2
-        " weird.. guifg turns Yellow after Tomorrow-Night is set.
-    endif
+    " Coc highlighting
+    highlight      CocUnderline          gui=underline
+    highlight      CocErrorSign          guifg=#ff0000
+    highlight      CocWarningSign        guifg=#ff922b
+    highlight      CocInfoSign           guifg=#fab005
+    highlight      CocHintSign           guifg=#15aabf
+    highlight      CocSelectedText       guifg=#fb4394
+    highlight      CocCodeLens           guifg=#999999
+    highlight link CocErrorFloat         Identifier
+    highlight link CocWarningFloat       Constant
+    highlight link CocInfoFloat          Normal
+    highlight link CocHintFloat          Normal
+    highlight      CocErrorHighlight     gui=undercurl guisp=#ff0000
+    highlight      CocWarningHighlight   gui=underline guisp=#ff922b
+    highlight      CocInfoHighlight      gui=underline guisp=Green
+    highlight      CocHintHighlight      gui=underline guisp=#15aabf
+    highlight link CocListMode           ModeMsg
+    highlight link CocListPath           Comment
+    highlight link CocFloating           Pmenu
+    highlight link CocHighlightText      Pmenu
+    highlight link CocHighlightTextRead  Pmenu
+    highlight link CocHighlightTextWrite Pmenu
 
     call VsimEcho("Current theme: ". l:theme)
 endfunction

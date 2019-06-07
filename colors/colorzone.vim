@@ -130,7 +130,7 @@ hi TabLineFill    cterm=none   guifg=#2e3436    guibg=blue
 hi Tag            ctermfg=magenta  guifg=magenta
 
 "Windows elements
-hi VertSplit  ctermbg=white   gui=reverse   guibg=#2e3436 guifg=#eeeeec
+hi VertSplit  ctermbg=white   gui=reverse   guibg=#2e3436 guifg=#2e3436
 hi Visual     cterm=none      ctermbg=green ctermfg=white gui=none  guibg=#6b8e23 guifg=black
 hi VisualNOS  cterm=underline gui=underline
 hi LineNr     ctermfg=darkgrey   guifg=#2e3436
@@ -153,6 +153,30 @@ hi StatuslineCapsBuddy cterm=none ctermfg=white ctermbg=green gui=none guibg=#8a
 "hi StatuslineSyn cterm=none ctermbg=white ctermfg=yellow gui=none guibg=#60af9f guifg=black
 "hi StatuslineRealSyn cterm=none ctermbg=white ctermfg=yellow gui=none guibg=#5881b7 guifg=black
 "hi StatuslineTermEnc cterm=none ctermbg=white ctermfg=yellow gui=none guibg=#77cf77 guifg=black
+
+
+" Coc highlighting
+highlight      CocUnderline          gui=underline
+highlight      CocErrorSign          guifg=#ff0000
+highlight      CocWarningSign        guifg=#ff922b
+highlight      CocInfoSign           guifg=#fab005
+highlight      CocHintSign           guifg=#15aabf
+highlight      CocSelectedText       guifg=#fb4394
+highlight      CocCodeLens           guifg=#999999
+highlight link CocErrorFloat         Identifier
+highlight link CocWarningFloat       Constant
+highlight link CocInfoFloat          Normal
+highlight link CocHintFloat          Normal
+highlight      CocErrorHighlight     gui=undercurl guisp=#ff0000
+highlight      CocWarningHighlight   gui=underline guisp=#ff922b
+highlight      CocInfoHighlight      gui=underline guisp=Green
+highlight      CocHintHighlight      gui=underline guisp=#15aabf
+highlight link CocListMode           ModeMsg
+highlight link CocListPath           Comment
+highlight link CocFloating           Pmenu
+highlight link CocHighlightText      Pmenu
+highlight link CocHighlightTextRead  Pmenu
+highlight link CocHighlightTextWrite Pmenu
 
 "----------
 "This color scheme uses a light grey background.

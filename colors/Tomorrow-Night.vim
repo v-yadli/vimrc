@@ -268,7 +268,31 @@ if has("gui_running") || &t_Co == 88 || &t_Co == 256
 	end
 	if version >= 703
 		call <SID>X("ColorColumn", "", s:line, "none")
+        highlight Cursor       guibg=#ef1810 guifg=fg
+        highlight CursorLineNr guifg=Brown
 	end
+    " Coc highlighting
+    highlight      CocUnderline          gui=underline
+    highlight      CocErrorSign          guifg=#ff0000
+    highlight      CocWarningSign        guifg=#ff922b
+    highlight      CocInfoSign           guifg=#fab005
+    highlight      CocHintSign           guifg=#15aabf
+    highlight      CocSelectedText       guifg=#fb4394
+    highlight      CocCodeLens           guifg=#999999
+    highlight link CocErrorFloat         Identifier
+    highlight link CocWarningFloat       Constant
+    highlight link CocInfoFloat          Normal
+    highlight link CocHintFloat          Normal
+    highlight      CocErrorHighlight     gui=undercurl guisp=#ff0000
+    highlight      CocWarningHighlight   gui=underline guisp=#ff922b
+    highlight      CocInfoHighlight      gui=underline guisp=Green
+    highlight      CocHintHighlight      gui=underline guisp=#15aabf
+    highlight link CocListMode           ModeMsg
+    highlight link CocListPath           Comment
+    highlight link CocFloating           Pmenu
+    highlight link CocHighlightText      Pmenu
+    highlight link CocHighlightTextRead  Pmenu
+    highlight link CocHighlightTextWrite Pmenu
 
 	" Standard Highlighting
 	call <SID>X("Comment", s:comment, "", "")

@@ -369,20 +369,34 @@ hi! link xmlEndTag                  xmlTag
 hi! link xmlTagName                 htmlTagName
 
 " Signify, git-gutter
-if g:pencil_gutter_color == 1
-  hi link SignifySignAdd              DiffAdd
-  hi link SignifySignDelete           DiffDelete
-  hi link SignifySignChange           DiffChange
-  hi link GitGutterAdd                DiffAdd
-  hi link GitGutterDelete             DiffDelete
-  hi link GitGutterChange             DiffChange
-  hi link GitGutterChangeDelete       DiffChange
-else
-  hi link SignifySignAdd              LineNr
-  hi link SignifySignDelete           LineNr
-  hi link SignifySignChange           LineNr
-  hi link GitGutterAdd                LineNr
-  hi link GitGutterDelete             LineNr
-  hi link GitGutterChange             LineNr
-  hi link GitGutterChangeDelete       LineNr
-endif
+hi link SignifySignAdd              DiffAdd
+hi link SignifySignDelete           DiffDelete
+hi link SignifySignChange           DiffChange
+hi link GitGutterAdd                DiffAdd
+hi link GitGutterDelete             DiffDelete
+hi link GitGutterChange             DiffChange
+hi link GitGutterChangeDelete       DiffChange
+
+" Coc highlighting
+highlight      CocUnderline          gui=underline
+highlight      CocErrorSign          guifg=#ff0000
+highlight      CocWarningSign        guifg=#ff922b
+highlight      CocInfoSign           guifg=#fab005
+highlight      CocHintSign           guifg=#15aabf
+highlight      CocSelectedText       guifg=#fb4394
+highlight      CocCodeLens           guifg=#999999
+highlight link CocErrorFloat         Identifier
+highlight link CocWarningFloat       Constant
+highlight link CocInfoFloat          Normal
+highlight link CocHintFloat          Normal
+highlight      CocErrorHighlight     gui=undercurl guisp=#ff0000
+highlight      CocWarningHighlight   gui=underline guisp=#ff922b
+highlight      CocInfoHighlight      gui=underline guisp=Green
+highlight      CocHintHighlight      gui=underline guisp=#15aabf
+highlight link CocListMode           ModeMsg
+highlight link CocListPath           Comment
+highlight link CocFloating           Pmenu
+highlight link CocHighlightText      Pmenu
+highlight link CocHighlightTextRead  Pmenu
+highlight link CocHighlightTextWrite Pmenu
+
