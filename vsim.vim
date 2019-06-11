@@ -122,6 +122,7 @@ syntax on
 set autoindent
 set smartindent
 set encoding=utf-8
+set fileencodings=utf-8,gb2312,gb18030,gbk,ucs-bom,cp936,latin1
 set nocompatible
 set ignorecase
 set smartcase
@@ -381,7 +382,7 @@ nmap <C-tab> :bn<CR>
 nmap <C-S-tab> :bp<CR>
 
 autocmd FileType vim nnoremap <buffer> <S-K> :call VimrcGetHelp()<CR>
-autocmd FileType c,cpp,typescript,json,ps1,psm1,psd1,fsharp,cs call VsimProgrammerMode()
+autocmd FileType c,cpp,typescript,json,ps1,psm1,psd1,fsharp,cs,python call VsimProgrammerMode()
 
 "*****************************************************************************
 "" Abbreviations
