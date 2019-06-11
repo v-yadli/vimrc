@@ -69,9 +69,12 @@ Plug 'Shougo/neco-vim'
 Plug 'neoclide/coc-neco'
 Plug 'yatli/coc-powershell',            {'do': { -> coc#powershell#install()}}
 Plug 'neoclide/coc.nvim',               {'do': { -> coc#util#install({'tag':1})}} 
-Plug 'ryanoasis/vim-devicons'
-Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plug 'NLKNguyen/papercolor-theme'
+
+if has("gui_running")
+    Plug 'ryanoasis/vim-devicons'
+    Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+endif
 
 " Junkyard -- things that do not work for me, or never found useful.
 " Plug 'reedes/vim-pencil'          <--- not working anymore
