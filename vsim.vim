@@ -375,6 +375,7 @@ let g:coc_global_extensions=[
             \ 'coc-html',
             \ 'coc-highlight',
             \ 'coc-fsharp',
+            \ 'coc-vimlsp',
             \ ]
 
 " Quicker navigation in tabs^H^H^H^Hbuffers...
