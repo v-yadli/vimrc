@@ -48,6 +48,13 @@ Plug 'jistr/vim-nerdtree-tabs',         { 'on': 'NERDTreeToggle' }
 Plug 'yatli/vmux.vim'
 Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-surround'
+Plug 'NLKNguyen/papercolor-theme'
+
+" mighty coc.nvim
+Plug 'Shougo/neco-vim'
+Plug 'neoclide/coc-neco'
+Plug 'yatli/coc-powershell',            {'do': { -> coc#powershell#install()}}
+Plug 'neoclide/coc.nvim',               {'do': { -> coc#util#install({'tag':1})}} 
 
 " Utilities -- Things that I do love to issue Ex commands to utilize
 Plug 'mbbill/undotree'
@@ -64,14 +71,8 @@ Plug 'godlygeek/tabular'              " Required by vim-markdown
 Plug 'plasticboy/vim-markdown'
 Plug 'gyim/vim-boxdraw'
 Plug 'fidian/hexmode'
-" hopefully this time it gets things right
-Plug 'Shougo/neco-vim'
-Plug 'neoclide/coc-neco'
-Plug 'yatli/coc-powershell',            {'do': { -> coc#powershell#install()}}
-Plug 'neoclide/coc.nvim',               {'do': { -> coc#util#install({'tag':1})}} 
-Plug 'NLKNguyen/papercolor-theme'
 
-if has("gui_running")
+if exists("g:fvim_loaded")
     Plug 'ryanoasis/vim-devicons'
     Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 endif
@@ -349,7 +350,10 @@ function! VsimProgrammerMode()
     nmap <buffer> <C-.>      <Plug>(coc-codeaction)
     vmap <buffer> <C-.>      <Plug>(coc-codeaction-selected)
 
-    nmap <silent> <buffer> <S-K>      :call CocActionAsync('doHover')<CR>
+    if &filetype != 'vim'
+        nmap <silent> <buffer> <S-K>      :call CocActionAsync('doHover')<CR>
+    endif
+
     nmap <silent> <buffer> <F1>       :call CocActionAsync('doHover')<CR>
 
     nmap <buffer> <F2>                <Plug>(coc-rename)
@@ -386,7 +390,7 @@ nmap <C-tab> :bn<CR>
 nmap <C-S-tab> :bp<CR>
 
 autocmd FileType vim nnoremap <buffer> <S-K> :call VimrcGetHelp()<CR>
-autocmd FileType c,cpp,typescript,json,ps1,psm1,psd1,fsharp,cs,python call VsimProgrammerMode()
+autocmd FileType c,cpp,typescript,json,ps1,psm1,psd1,fsharp,cs,python,vim call VsimProgrammerMode()
 
 "*****************************************************************************
 "" Abbreviations
