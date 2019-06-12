@@ -48,7 +48,6 @@ Plug 'jistr/vim-nerdtree-tabs',         { 'on': 'NERDTreeToggle' }
 Plug 'yatli/vmux.vim'
 Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-surround'
-Plug 'NLKNguyen/papercolor-theme'
 
 " mighty coc.nvim
 Plug 'Shougo/neco-vim'
@@ -205,10 +204,15 @@ autocmd FileType tex,mkd,markdown call WriterMode()
 
 "}}}
 
-set background=light
+set background=dark
+let g:falcon_airline = 1
+let g:falcon_inactive = 1
+let g:falcon_background = 1
+colorscheme falcon
+let g:airline_theme = 'falcon'
+"colorscheme pencil
 "let g:airline_theme='tomorrow'
-" colorscheme pencil
-colorscheme Tomorrow-Night-Blue
+"colorscheme Tomorrow-Night-Blue
 "colorscheme PaperColor
 set guicursor=n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50
   \,a:blinkwait100-blinkoff500-blinkon500-Cursor/lCursor
@@ -566,8 +570,8 @@ if has("win32")
 endif
 
 let s:vsim_theme_idx = 0
-let s:vsim_theme_name = ['Tomorrow', 'Tomorrow-Night', 'Tomorrow-Night-Blue', 'pencil', 'pencil', 'colorzone', 'PaperColor']
-let s:vsim_theme_bg   = ['light', 'dark', 'dark', 'light', 'dark', 'light', 'light']
+let s:vsim_theme_name = ['falcon', 'Tomorrow', 'Tomorrow-Night', 'Tomorrow-Night-Blue', 'pencil', 'pencil', 'colorzone', 'PaperColor']
+let s:vsim_theme_bg   = ['dark',   'light',    'dark',           'dark',                'light',  'dark',   'light',     'light']
 
 " highlight TermCursor gui=standout
 " highlight TermCursor guibg=auto
