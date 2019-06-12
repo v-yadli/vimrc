@@ -76,6 +76,8 @@ if exists("g:fvim_loaded")
     Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 endif
 
+Plug 'Yggdroot/indentLine'
+
 " Junkyard -- things that do not work for me, or never found useful.
 " Plug 'reedes/vim-pencil'          <--- not working anymore
 " Plug 'rakr/vim-one'               <--- very slow on start!!
@@ -242,6 +244,9 @@ nmap <A-a> ggVG
 
 " Quick edit vimrc!
 execute "command! -nargs=0 Vimrc  :e " . g:vsim_config_file 
+
+" quick cd to buffer directory
+command! -nargs=0 CD :cd %:h
 
 set noswapfile
 
