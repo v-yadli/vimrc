@@ -345,6 +345,9 @@ let g:WebDevIconsUnicodeDecorateFileNodesPatternSymbols['.*\.xaml$'] = 'ﭲ'
 let g:WebDevIconsUnicodeDecorateFileNodesPatternSymbols['.*\.svg$'] = 'ﰟ'
 let g:WebDevIconsUnicodeDecorateFileNodesPatternSymbols['.*\..*proj$'] = ''
 
+let g:indentLine_char_list = ['|', '¦', '┆', '┊']
+let g:indentLine_leadingSpaceChar = '·'
+
 function! VsimProgrammerMode()
     set updatetime=300
     set signcolumn=yes
@@ -545,8 +548,15 @@ let s:vsim_wrap_state = 3
 call VsimToggleWrap()
 
 nnoremap <C-e><C-w> :call VsimToggleWrap()<CR>
-"nnoremap <C-;> :FZF<CR>
-"inoremap <C-;> <C-o>:FZF<CR>
+nnoremap <C-e>w :call VsimToggleWrap()<CR>
+nnoremap <C-e><C-l> :IndentLinesToggle<CR>
+nnoremap <C-e>l :IndentLinesToggle<CR>
+nnoremap <C-e><C-s> :LeadingSpaceToggle<CR>
+nnoremap <C-e>s :LeadingSpaceToggle<CR>
+
+
+nnoremap <C-;> :FZF<CR>
+inoremap <C-;> <C-o>:FZF<CR>
 
 vnoremap <C-C> y
 vnoremap <C-X> x
