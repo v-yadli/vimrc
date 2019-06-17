@@ -76,6 +76,9 @@ if exists("g:fvim_loaded")
     Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 endif
 
+if exists("g:fvim_startify")
+    Plug 'mhinz/vim-startify'
+endif
 Plug 'Yggdroot/indentLine'
 
 " Junkyard -- things that do not work for me, or never found useful.
@@ -234,6 +237,7 @@ imap <C-s> <Esc>:update<CR>a
 " Folding workaround
 set foldmethod=syntax
 set foldlevelstart=10
+nmap <Space> za
 " Quick resource vim configuration
 execute "nmap <Leader>ss :source" . g:vsim_config_file . "<CR>"
 
@@ -348,6 +352,9 @@ function! VsimProgrammerMode()
     autocmd! CursorHoldI * silent call CocActionAsync('showSignatureHelp')
     autocmd! User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
 
+    setlocal nobackup
+    setlocal nowritebackup
+
     setl formatexpr=CocAction('formatSelection')
     vmap <buffer> <C-e><C-d> <Plug>(coc-format-selected)
     imap <buffer> <C-e><C-d> <Plug>(coc-format-selected)
@@ -361,6 +368,10 @@ function! VsimProgrammerMode()
 
     if &filetype != 'vim'
         nmap <silent> <buffer> <S-K>      :call CocActionAsync('doHover')<CR>
+    endif
+
+    if &filetype == 'fsharp' || &filetype == 'vim'
+        setlocal foldmethod=indent
     endif
 
     nmap <silent> <buffer> <F1>       :call CocActionAsync('doHover')<CR>

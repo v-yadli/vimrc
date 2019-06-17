@@ -58,5 +58,6 @@
     "coc.preferences.currentFunctionSymbolAutoUpdate": true,
     "coc.preferences.useQuickfixForLocations": false,
     "coc.preferences.extensionUpdateCheck":"weekly",
-    "suggest.timeout": 5000
+    "suggest.timeout": 5000,
+    "fsharp.codelens.references": false
 }
