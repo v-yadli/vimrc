@@ -76,9 +76,7 @@ if exists("g:fvim_loaded")
     Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 endif
 
-if exists("g:fvim_startify")
-    Plug 'mhinz/vim-startify'
-endif
+Plug 'mhinz/vim-startify'
 Plug 'Yggdroot/indentLine'
 
 " Junkyard -- things that do not work for me, or never found useful.
@@ -347,6 +345,16 @@ let g:WebDevIconsUnicodeDecorateFileNodesPatternSymbols['.*\..*proj$'] = ''
 
 let g:indentLine_char_list = ['|', '¦', '┆', '┊']
 let g:indentLine_leadingSpaceChar = '·'
+
+let g:startify_session_persistence = 1
+let g:startify_session_autoload = 1
+let g:startify_session_before_save = [
+            \ 'echo "Cleaning up before saving.."',
+            \ 'silent! NERDTreeTabsClose'
+            \ ]
+"if exists('g:fvim_startify')
+    "Startify
+"endif
 
 function! VsimProgrammerMode()
     set updatetime=300
