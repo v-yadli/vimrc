@@ -357,7 +357,6 @@ hi GitGutterChange guifg=#ffc552 ctermfg=221 guibg=NONE ctermbg=NONE gui=NONE ct
 hi GitGutterDelete guifg=#ff3600 ctermfg=202 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
 hi GitGutterChangeDelete guifg=#ff761a ctermfg=208 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
 hi SignatureMarkText guifg=#99a4bc ctermfg=248 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
-hi Terminal guifg=#b4b4b9 ctermfg=249 guibg=#020221 ctermbg=0 gui=NONE cterm=NONE
 hi titleEntry guifg=#ffc552 ctermfg=221 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
 hi vimCommentTitle guifg=#dfdfe5 ctermfg=254 guibg=NONE ctermbg=NONE gui=italic cterm=italic
 hi vimCommand guifg=#ddcfbf ctermfg=187 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
@@ -437,3 +436,24 @@ hi link CocHighlightText      Pmenu
 hi link CocHighlightTextRead  Pmenu
 hi link CocHighlightTextWrite Pmenu
 hi      Cursor                guibg=#20ff78 guifg=#000000
+
+" Terminal colors
+
+let g:terminal_color_foreground = '#b4b4b9'
+let g:terminal_color_background = '#212127'
+let g:terminal_color_0  = '#212127'
+let g:terminal_color_1  = '#ff3600'
+let g:terminal_color_2  = '#798c54'
+let g:terminal_color_3  = '#ffc552'
+let g:terminal_color_4  = '#bfdaff'
+let g:terminal_color_5  = '#635196'
+let g:terminal_color_6  = '#34bfa4'
+let g:terminal_color_7  = '#999999'
+let g:terminal_color_8  = '#b4b4b9'
+let g:terminal_color_9  = '#ff8e78'
+let g:terminal_color_10 = '#b1bf75'
+let g:terminal_color_11 = '#ffd392'
+let g:terminal_color_12 = '#9f97cc'
+let g:terminal_color_13 = '#ffb07b'
+let g:terminal_color_14 = '#85ccbf'
+let g:terminal_color_15 = '#f8f8ff'
