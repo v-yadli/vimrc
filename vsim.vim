@@ -115,6 +115,8 @@ Plug 'panozzaj/vim-autocorrect'
 " Initialize plugin system finish
 call plug#end()
 
+let g:polyglot_disabled = ['fsharp', 'latex']
+
 
 filetype plugin indent on
 
