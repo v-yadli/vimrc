@@ -48,19 +48,20 @@ Plug 'jistr/vim-nerdtree-tabs',         { 'on': 'NERDTreeToggle' }
 Plug 'yatli/vmux.vim'
 Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-surround'
+Plug 'tpope/vim-fugitive'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+Plug 'tweekmonster/startuptime.vim'
 
 " mighty coc.nvim
 Plug 'Shougo/neco-vim'
 Plug 'neoclide/coc-neco'
 Plug 'yatli/coc-powershell',            {'do': { -> coc#powershell#install()}}
 Plug 'neoclide/coc.nvim',               {'do': { -> coc#util#install({'tag':1})}} 
+Plug 'fidian/hexmode'
 
 " Utilities -- Things that I do love to issue Ex commands to utilize
 Plug 'mbbill/undotree'
-Plug 'tpope/vim-fugitive'
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'junegunn/fzf.vim'
-Plug 'tweekmonster/startuptime.vim'
 
 " Laborotary -- Things I'd love to know more about
 if g:vsim_environment=="neovim"
@@ -69,7 +70,7 @@ endif
 Plug 'godlygeek/tabular'              " Required by vim-markdown
 Plug 'plasticboy/vim-markdown'
 Plug 'gyim/vim-boxdraw'
-Plug 'fidian/hexmode'
+Plug 'othree/xml.vim'
 
 if exists("g:fvim_loaded")
     Plug 'ryanoasis/vim-devicons'
@@ -115,7 +116,7 @@ Plug 'panozzaj/vim-autocorrect'
 " Initialize plugin system finish
 call plug#end()
 
-let g:polyglot_disabled = ['fsharp', 'latex']
+let g:polyglot_disabled = ['fsharp', 'latex', 'xml']
 
 
 filetype plugin indent on
