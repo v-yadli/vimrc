@@ -56,7 +56,7 @@ Plug 'tweekmonster/startuptime.vim'
 " mighty coc.nvim
 Plug 'Shougo/neco-vim'
 Plug 'neoclide/coc-neco'
-Plug 'yatli/coc-powershell',            {'do': { -> coc#powershell#install()}}
+" Plug 'yatli/coc-powershell',            {'do': { -> coc#powershell#install()}}
 Plug 'neoclide/coc.nvim',               {'do': { -> coc#util#install({'tag':1})}} 
 Plug 'fidian/hexmode'
 
@@ -215,6 +215,8 @@ let g:falcon_airline = 1
 let g:falcon_inactive = 1
 let g:falcon_background = 1
 colorscheme falcon
+" workaround: falcon terminal colors not picked up
+let g:terminal_color_8 = '#b4b4b9'
 let g:airline_theme = 'falcon'
 "colorscheme pencil
 "let g:airline_theme='tomorrow'
@@ -623,29 +625,6 @@ function! VsimToggleColor()
     execute "colorscheme "    . l:theme
     execute "set background=" . s:vsim_theme_bg[s:vsim_theme_idx]
     
-    " Coc highlighting
-    highlight      CocUnderline          gui=underline
-    highlight      CocErrorSign          guifg=#ff0000
-    highlight      CocWarningSign        guifg=#ff922b
-    highlight      CocInfoSign           guifg=#fab005
-    highlight      CocHintSign           guifg=#15aabf
-    highlight      CocSelectedText       guifg=#fb4394
-    highlight      CocCodeLens           guifg=#999999
-    highlight link CocErrorFloat         Identifier
-    highlight link CocWarningFloat       Constant
-    highlight link CocInfoFloat          Normal
-    highlight link CocHintFloat          Normal
-    highlight      CocErrorHighlight     gui=undercurl guisp=#ff0000
-    highlight      CocWarningHighlight   gui=underline guisp=#ff922b
-    highlight      CocInfoHighlight      gui=underline guisp=Green
-    highlight      CocHintHighlight      gui=underline guisp=#15aabf
-    highlight link CocListMode           ModeMsg
-    highlight link CocListPath           Comment
-    highlight link CocFloating           Pmenu
-    highlight link CocHighlightText      Pmenu
-    highlight link CocHighlightTextRead  Pmenu
-    highlight link CocHighlightTextWrite Pmenu
-
     call VsimEcho("Current theme: ". l:theme)
 endfunction
 
