@@ -419,6 +419,7 @@ let g:coc_global_extensions=[
             \ 'coc-highlight',
             \ 'coc-fsharp',
             \ 'coc-vimlsp',
+            \ 'coc-powershell',
             \ ]
 
 " Quicker navigation in tabs^H^H^H^Hbuffers...
