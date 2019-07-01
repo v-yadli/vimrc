@@ -55,7 +55,6 @@ Plug 'tweekmonster/startuptime.vim'
 " mighty coc.nvim
 Plug 'Shougo/neco-vim'
 Plug 'neoclide/coc-neco'
-" Plug 'yatli/coc-powershell',            {'do': { -> coc#powershell#install()}}
 Plug 'neoclide/coc.nvim',               {'do': { -> coc#util#install({'tag':1})}} 
 Plug 'fidian/hexmode'
 
