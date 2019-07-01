@@ -44,7 +44,6 @@ Plug 'v-yadli/vim-tsl'
 Plug 'kshenoy/vim-signature'          " displays marks in the gutter (sign column)
 Plug 'mhinz/vim-signify'              " displays changes in the gutter
 Plug 'scrooloose/nerdtree',             { 'on': 'NERDTreeToggle' }
-Plug 'jistr/vim-nerdtree-tabs',         { 'on': 'NERDTreeToggle' }
 Plug 'yatli/vmux.vim'
 Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-surround'
@@ -56,7 +55,6 @@ Plug 'tweekmonster/startuptime.vim'
 " mighty coc.nvim
 Plug 'Shougo/neco-vim'
 Plug 'neoclide/coc-neco'
-" Plug 'yatli/coc-powershell',            {'do': { -> coc#powershell#install()}}
 Plug 'neoclide/coc.nvim',               {'do': { -> coc#util#install({'tag':1})}} 
 Plug 'fidian/hexmode'
 
@@ -216,6 +214,7 @@ let g:falcon_inactive = 1
 let g:falcon_background = 1
 colorscheme falcon
 " workaround: falcon terminal colors not picked up
+let g:terminal_color_7 = '#b4b4b9'
 let g:terminal_color_8 = '#b4b4b9'
 let g:airline_theme = 'falcon'
 "colorscheme pencil
@@ -330,8 +329,9 @@ autocmd User AirlineAfterInit call AirlineInit()
 let g:airline_exclude_filetypes = ["list"]
 
 " set folder open/close glyphs
-let NERDTreeDirArrowExpandable="▸"
-let NERDTreeDirArrowCollapsible="▾"
+let g:NERDTreeDirArrowExpandable="▸"
+let g:NERDTreeDirArrowCollapsible="▾"
+let g:NERDTreeHighlightFolders = 1
 " do not alter cursorline for NERDTree
 let g:NERDTreeHighlightCursorline = 0
 " show glyphs for NERDTree
