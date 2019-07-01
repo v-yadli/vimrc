@@ -59,4 +59,5 @@
     "coc.preferences.useQuickfixForLocations": false,
     "coc.preferences.extensionUpdateCheck":"weekly",
     "suggest.timeout": 5000
+    //"powershell.powerShellExePath": "C:/Program Files/PowerShell/6/pwsh.exe"
 }

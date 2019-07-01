@@ -421,6 +421,7 @@ let g:coc_global_extensions=[
             \ 'coc-vimlsp',
             \ 'coc-powershell',
             \ ]
+"set runtimepath^=F:/git/coc-powershell
 
 " Quicker navigation in tabs^H^H^H^Hbuffers...
 nmap <C-tab> :bn<CR>
@@ -603,6 +604,7 @@ vnoremap <Down> <Esc><Down>
 let g:neoterm_open_in_all_tabs = 1
 let g:neoterm_autoinsert = 1
 let g:neoterm_keep_term_open = 1
+let g:neoterm_default_mod = ':belowright'
 
 if has("win32")
     let g:neoterm_shell = "powershell"
