@@ -373,10 +373,8 @@ function! VsimProgrammerMode()
 
     setl formatexpr=CocAction('formatSelection')
     vmap <buffer> <C-e><C-d> <Plug>(coc-format-selected)
-    imap <buffer> <C-e><C-d> <Plug>(coc-format-selected)
     nmap <buffer> <C-e><C-d> :call CocAction('format')<CR>
     vmap <buffer> <C-e>d     <Plug>(coc-format-selected)
-    imap <buffer> <C-e>d     <Plug>(coc-format-selected)
     nmap <buffer> <C-e>d     :call CocAction('format')<CR>
 
     nmap <buffer> <C-.>      <Plug>(coc-codeaction)
@@ -388,6 +386,12 @@ function! VsimProgrammerMode()
 
     if &filetype == 'fsharp' || &filetype == 'vim'
         setlocal foldmethod=indent
+    endif
+
+    if &filetype == 'ps1'
+        nmap <buffer> <F5> :CocCommand powershell.execute<CR>
+        nmap <buffer> <F8> :CocCommand powershell.evaluateLine<CR>
+        vmap <buffer> <F8> :<C-u>CocCommand powershell.evaluateSelection<CR>
     endif
 
     nmap <silent> <buffer> <F1>       :call CocActionAsync('doHover')<CR>
@@ -419,16 +423,16 @@ let g:coc_global_extensions=[
             \ 'coc-highlight',
             \ 'coc-fsharp',
             \ 'coc-vimlsp',
-            \ 'coc-powershell',
             \ ]
-"set runtimepath^=F:/git/coc-powershell
+            "\ 'coc-powershell',
+set runtimepath^=F:/git/coc-powershell
 
 " Quicker navigation in tabs^H^H^H^Hbuffers...
 nmap <C-tab> :bn<CR>
 nmap <C-S-tab> :bp<CR>
 
 autocmd FileType vim nnoremap <buffer> <S-K> :call VimrcGetHelp()<CR>
-autocmd FileType c,cpp,typescript,json,ps1,psm1,psd1,fsharp,cs,python,vim call VsimProgrammerMode()
+autocmd FileType c,cpp,typescript,javascript,json,ps1,psm1,psd1,fsharp,cs,python,vim call VsimProgrammerMode()
 
 "*****************************************************************************
 "" Abbreviations
