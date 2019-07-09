@@ -213,9 +213,6 @@ let g:falcon_airline = 1
 let g:falcon_inactive = 1
 let g:falcon_background = 1
 colorscheme falcon
-" workaround: falcon terminal colors not picked up
-let g:terminal_color_7 = '#b4b4b9'
-let g:terminal_color_8 = '#b4b4b9'
 let g:airline_theme = 'falcon'
 "colorscheme pencil
 "let g:airline_theme='tomorrow'
@@ -423,9 +420,9 @@ let g:coc_global_extensions=[
             \ 'coc-highlight',
             \ 'coc-fsharp',
             \ 'coc-vimlsp',
+            \ 'coc-powershell',
             \ ]
-            "\ 'coc-powershell',
-set runtimepath^=F:/git/coc-powershell
+"set runtimepath^=F:/git/coc-powershell
 
 " Quicker navigation in tabs^H^H^H^Hbuffers...
 nmap <C-tab> :bn<CR>
@@ -534,7 +531,7 @@ endfunction
 "{{{
 
 " <C-backspace> binding
-imap <C-BS> <C-o>vbx
+imap <C-BS> <C-o>db
 
 " nmap <F6> :make<CR>
 
@@ -605,6 +602,7 @@ vnoremap <Up> <Esc><Up>
 vnoremap <Down> <Esc><Down>
 
 " REPL and Neoterm
+let g:neoterm_autoscroll = 1
 let g:neoterm_open_in_all_tabs = 1
 let g:neoterm_autoinsert = 1
 let g:neoterm_keep_term_open = 1
@@ -622,6 +620,9 @@ let s:vsim_theme_bg   = ['dark',   'light',    'dark',           'dark',        
 " highlight TermCursor gui=standout
 " highlight TermCursor guibg=auto
 " highlight TermCursor guifg=#ef1810
+" TODO: figure out why these terminal color settings aren't working
+"let g:terminal_color_7 = '#b4b4b9'
+"let g:terminal_color_8 = '#b4b4b9'
 
 function! VsimToggleColor()
     let s:vsim_theme_idx = s:vsim_theme_idx + 1
