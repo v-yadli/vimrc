@@ -68,7 +68,6 @@ endif
 Plug 'godlygeek/tabular'              " Required by vim-markdown
 Plug 'plasticboy/vim-markdown'
 Plug 'gyim/vim-boxdraw'
-Plug 'othree/xml.vim'
 
 if exists("g:fvim_loaded")
     Plug 'ryanoasis/vim-devicons'
@@ -415,12 +414,15 @@ let g:coc_global_extensions=[
             \ 'coc-json',
             \ 'coc-tsserver',
             \ 'coc-python',
-            \ 'coc-svg',
             \ 'coc-html',
             \ 'coc-highlight',
             \ 'coc-fsharp',
             \ 'coc-vimlsp',
             \ 'coc-powershell',
+            \ 'coc-lists',
+            \ 'coc-sh',
+            \ 'coc-xml',
+            \ 'coc-marketplace',
             \ ]
 "set runtimepath^=F:/git/coc-powershell
 
@@ -429,7 +431,7 @@ nmap <C-tab> :bn<CR>
 nmap <C-S-tab> :bp<CR>
 
 autocmd FileType vim nnoremap <buffer> <S-K> :call VimrcGetHelp()<CR>
-autocmd FileType c,cpp,typescript,javascript,json,ps1,psm1,psd1,fsharp,cs,python,vim call VsimProgrammerMode()
+autocmd FileType c,cpp,typescript,javascript,json,ps1,psm1,psd1,fsharp,cs,python,vim,xml,sh call VsimProgrammerMode()
 
 "*****************************************************************************
 "" Abbreviations
