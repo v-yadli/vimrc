@@ -55,7 +55,7 @@ Plug 'tweekmonster/startuptime.vim'
 " mighty coc.nvim
 Plug 'Shougo/neco-vim'
 Plug 'neoclide/coc-neco'
-Plug 'neoclide/coc.nvim',               {'do': { -> coc#util#install({'tag':1})}} 
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'fidian/hexmode'
 
 " Utilities -- Things that I do love to issue Ex commands to utilize
@@ -388,6 +388,12 @@ function! VsimProgrammerMode()
         nmap <buffer> <F5> :CocCommand powershell.execute<CR>
         nmap <buffer> <F8> :CocCommand powershell.evaluateLine<CR>
         vmap <buffer> <F8> :<C-u>CocCommand powershell.evaluateSelection<CR>
+    endif
+
+    if &filetype == 'fsharp'
+        nmap <buffer> <F5> :CocCommand fsharp.run<CR>
+        nmap <buffer> <F8> :CocCommand fsharp.evaluateLine<CR>
+        vmap <buffer> <F8> :<C-u>CocCommand fsharp.evaluateSelection<CR>
     endif
 
     nmap <silent> <buffer> <F1>       :call CocActionAsync('doHover')<CR>
