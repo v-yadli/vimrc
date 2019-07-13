@@ -242,11 +242,6 @@ nmap <Space> za
 " Quick resource vim configuration
 execute "nmap <Leader>ss :source" . g:vsim_config_file . "<CR>"
 
-" Tab operations and buffer operations{{{
-nmap <A-t> :enew<CR>
-nmap <A-a> ggVG
-"}}}
-
 " Quick edit vimrc!
 execute "command! -nargs=0 Vimrc edit " . g:vsim_config_file 
 
