@@ -161,7 +161,7 @@ set completeopt=longest,menuone,preview
 set previewheight=5
 
 " Terminal color workaround
-if has("termguicolors")
+if has("termguicolors") && !(has("win32") && $TERM == 'vtpcon')
     set termguicolors
 endif
 " Backspace workaround
@@ -200,6 +200,7 @@ function! WriterMode()
     let g:lexical#spell = 1
     call lexical#init()
     setlocal smartindent
+    setlocal concealcursor="n"
 endfunction
 
 let g:tex_flavor = "latex"
@@ -211,10 +212,12 @@ set background=dark
 let g:falcon_airline = 1
 let g:falcon_inactive = 1
 let g:falcon_background = 1
-colorscheme falcon
-let g:airline_theme = 'falcon'
-"colorscheme pencil
-"let g:airline_theme='tomorrow'
+
+"colorscheme falcon
+"let g:airline_theme = 'falcon'
+colorscheme pencil
+let g:airline_theme='tomorrow'
+
 "colorscheme Tomorrow-Night-Blue
 "colorscheme PaperColor
 set guicursor=n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50
@@ -233,7 +236,7 @@ nmap <C-s> :update<CR>
 imap <C-s> <Esc>:update<CR>a
 
 " Folding workaround
-set foldmethod=syntax
+set foldmethod=manual
 set foldlevelstart=10
 nmap <Space> za
 " Quick resource vim configuration
@@ -245,10 +248,10 @@ nmap <A-a> ggVG
 "}}}
 
 " Quick edit vimrc!
-execute "command! -nargs=0 Vimrc  :e " . g:vsim_config_file 
+execute "command! -nargs=0 Vimrc edit " . g:vsim_config_file 
 
 " quick cd to buffer directory
-command! -nargs=0 CD :cd %:h
+command! -nargs=0 CD cd %:h
 
 set noswapfile
 
@@ -431,6 +434,7 @@ let g:coc_global_extensions=[
             \ 'coc-marketplace',
             \ ]
 "set runtimepath^=F:/git/coc-powershell
+"set runtimepath^=F:/git/coc-omnisharp
 
 " Quicker navigation in tabs^H^H^H^Hbuffers...
 nmap <C-tab> :bn<CR>

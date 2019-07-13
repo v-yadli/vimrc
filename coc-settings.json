@@ -9,12 +9,6 @@
                     "directory": ".ccls-cache"
                 }
             }
-        },
-        "omnisharp": {
-            "command": "OmniSharp",
-            "args": ["-lsp"],
-            "filetypes": ["cs"],
-            "rootPatterns": ["*.csproj", "*.sln", ".vim/", ".git/", ".hg/"]
         }
     },
     // https://github.com/neoclide/coc.nvim/pull/603
