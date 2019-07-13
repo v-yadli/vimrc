@@ -463,11 +463,11 @@ set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.db,*.sqlite
 " Tmux navigation settings
 let g:tmux_navigator_no_mappings = 1
 
-nnoremap <silent> <M-h> :TmuxNavigateLeft<cr>
-nnoremap <silent> <M-j> :TmuxNavigateDown<cr>
-nnoremap <silent> <M-k> :TmuxNavigateUp<cr>
-nnoremap <silent> <M-l> :TmuxNavigateRight<cr>
-nnoremap <silent> <M-/> :TmuxNavigatePrevious<cr>
+nmap <silent> <M-h> :TmuxNavigateLeft<cr>
+nmap <silent> <M-j> :TmuxNavigateDown<cr>
+nmap <silent> <M-k> :TmuxNavigateUp<cr>
+nmap <silent> <M-l> :TmuxNavigateRight<cr>
+nmap <silent> <M-/> :TmuxNavigatePrevious<cr>
 
 if has("persistent_undo")
     set undodir=~/.undodir/
