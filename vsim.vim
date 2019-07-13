@@ -463,11 +463,6 @@ set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.db,*.sqlite
 " Tmux navigation settings
 let g:tmux_navigator_no_mappings = 1
 
-nunmap <M-h>
-nunmap <M-j>
-nunmap <M-k>
-nunmap <M-l>
-
 nnoremap <silent> <M-h> :TmuxNavigateLeft<cr>
 nnoremap <silent> <M-j> :TmuxNavigateDown<cr>
 nnoremap <silent> <M-k> :TmuxNavigateUp<cr>
