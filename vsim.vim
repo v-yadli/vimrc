@@ -427,6 +427,7 @@ let g:coc_global_extensions=[
             \ 'coc-sh',
             \ 'coc-xml',
             \ 'coc-marketplace',
+            \ 'coc-omnisharp',
             \ ]
 "set runtimepath^=F:/git/coc-powershell
 "set runtimepath^=F:/git/coc-omnisharp
@@ -458,11 +459,28 @@ set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.db,*.sqlite
 " Tmux navigation settings
 let g:tmux_navigator_no_mappings = 1
 
-nnoremap <silent> <M-h> :TmuxNavigateLeft<cr>
-nnoremap <silent> <M-j> :TmuxNavigateDown<cr>
-nnoremap <silent> <M-k> :TmuxNavigateUp<cr>
-nnoremap <silent> <M-l> :TmuxNavigateRight<cr>
-nnoremap <silent> <M-/> :TmuxNavigatePrevious<cr>
+nnoremap <silent> <A-h> :TmuxNavigateLeft<cr>
+nnoremap <silent> <A-j> :TmuxNavigateDown<cr>
+nnoremap <silent> <A-k> :TmuxNavigateUp<cr>
+nnoremap <silent> <A-l> :TmuxNavigateRight<cr>
+nnoremap <silent> <A-/> :TmuxNavigatePrevious<cr>
+
+tnoremap <silent> <A-h> <C-\><C-N>:TmuxNavigateLeft<cr>
+tnoremap <silent> <A-j> <C-\><C-N>:TmuxNavigateDown<cr>
+tnoremap <silent> <A-k> <C-\><C-N>:TmuxNavigateUp<cr>
+tnoremap <silent> <A-l> <C-\><C-N>:TmuxNavigateRight<cr>
+tnoremap <silent> <A-/> <C-\><C-N>:TmuxNavigatePrevious<cr>
+
+inoremap <silent> <A-h> <C-O>:TmuxNavigateLeft<cr>
+inoremap <silent> <A-j> <C-O>:TmuxNavigateDown<cr>
+inoremap <silent> <A-k> <C-O>:TmuxNavigateUp<cr>
+inoremap <silent> <A-l> <C-O>:TmuxNavigateRight<cr>
+inoremap <silent> <A-/> <C-O>:TmuxNavigatePrevious<cr>
+
+nnoremap <silent> <C-A-h> <C-w>H
+nnoremap <silent> <C-A-j> <C-w>J
+nnoremap <silent> <C-A-k> <C-w>K
+nnoremap <silent> <C-A-l> <C-w>L
 
 if has("persistent_undo")
     set undodir=~/.undodir/
