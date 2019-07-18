@@ -342,7 +342,7 @@ let g:WebDevIconsUnicodeDecorateFileNodesPatternSymbols['.*\.xaml$'] = 'ﭲ'
 let g:WebDevIconsUnicodeDecorateFileNodesPatternSymbols['.*\.svg$'] = 'ﰟ'
 let g:WebDevIconsUnicodeDecorateFileNodesPatternSymbols['.*\..*proj$'] = ''
 
-let g:indentLine_char_list = ['|', '¦', '┆', '┊']
+let g:indentLine_char_list = [ '┆', '┊']
 let g:indentLine_leadingSpaceChar = '·'
 
 let g:startify_session_persistence = 1
@@ -437,7 +437,7 @@ nmap <C-tab> :bn<CR>
 nmap <C-S-tab> :bp<CR>
 
 autocmd FileType vim nnoremap <buffer> <S-K> :call VimrcGetHelp()<CR>
-autocmd FileType c,cpp,typescript,javascript,json,ps1,psm1,psd1,fsharp,cs,python,vim,xml,sh call VsimProgrammerMode()
+autocmd FileType c,cpp,typescript,javascript,json,ps1,psm1,psd1,fsharp,cs,python,vim,xml,sh,cuda call VsimProgrammerMode()
 
 "*****************************************************************************
 "" Abbreviations
