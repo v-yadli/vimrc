@@ -161,7 +161,7 @@ set completeopt=longest,menuone,preview
 set previewheight=5
 
 " Terminal color workaround
-if has("termguicolors") && !(has("win32") && $TERM == 'vtpcon')
+if has("termguicolors") && !(has("win32") && $TERM != 'vtpcon')
     set termguicolors
 endif
 " Backspace workaround
@@ -424,6 +424,7 @@ let g:coc_global_extensions=[
             \ 'coc-vimlsp',
             \ 'coc-powershell',
             \ 'coc-lists',
+            \ 'coc-snippets',
             \ 'coc-sh',
             \ 'coc-xml',
             \ 'coc-marketplace',
