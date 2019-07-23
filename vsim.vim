@@ -269,6 +269,44 @@ inoremap <expr> <cr>    pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 " -- close preview window when completion is done.
 autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
 
+if exists("g:fvim_loaded")
+    " https://github.com/neoclide/coc.nvim/pull/603
+    call coc#config('suggest.completionItemKindLabels', {
+                \   'function': '',
+                \   'method': '',
+                \   'variable': '',
+                \   'constant': '',
+                \   'struct': 'פּ',
+                \   'class': '',
+                \   'interface': '禍',
+                \   'text': '',
+                \   'enum': 'ﳁ2',
+                \   'enumMember': '',
+                \   'module': '',
+                \   'color': ' ',
+                \   'property': '襁',
+                \   'field': '綠',
+                \   'unit': '',
+                \   'file': '',
+                \   'value': '',
+                \   'event': '鬒',
+                \   'folder': '',
+                \   'keyword': '',
+                \   'snippet': '',
+                \   'operator': '洛',
+                \   'reference': '',
+                \   'typeParameter': '<T>',
+                \   'default': ''
+                \ })
+    call coc#config('diagnostic', {
+                \   'errorSign': '',
+                \   'warningSign': '',
+                \   'infoSign': '',
+                \   'hintSign': 'ﳁ',
+                \ })
+    call coc#config('codeLens', {'separator': ''})
+endif
+
 " airline settings
 let g:airline_powerline_fonts=1
 let g:airline_inactive_collapse=1
