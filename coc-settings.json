@@ -24,5 +24,4 @@
     "suggest.timeout": 5000,
     "powershell.integratedConsole.focusConsoleOnExecute": false,
     "powershell.integratedConsole.showOnStartup": true
-    //"powershell.powerShellExePath": "C:/Program Files/PowerShell/6/pwsh.exe"
 }
