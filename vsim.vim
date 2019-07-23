@@ -161,7 +161,7 @@ set completeopt=longest,menuone,preview
 set previewheight=5
 
 " Terminal color workaround
-if has("termguicolors") && !(has("win32") && $TERM != 'vtpcon') && !exists("g:fvim_loaded")
+if has("termguicolors") && !(has("win32") && $TERM != 'vtpcon') || exists("g:fvim_loaded")
     set termguicolors
 endif
 " Backspace workaround
@@ -309,7 +309,6 @@ endif
 
 " airline settings
 let g:airline_powerline_fonts=1
-let g:airline_symbols_ascii=0
 let g:airline_inactive_collapse=1
 let g:airline_inactive_alt_sep=0
 let g:airline_detect_modified=1
