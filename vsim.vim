@@ -57,6 +57,7 @@ Plug 'Shougo/neco-vim'
 Plug 'neoclide/coc-neco'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'fidian/hexmode'
+Plug 'jackguo380/vim-lsp-cxx-highlight'
 
 " Utilities -- Things that I do love to issue Ex commands to utilize
 Plug 'mbbill/undotree'
@@ -213,13 +214,13 @@ let g:falcon_airline = 1
 let g:falcon_inactive = 1
 let g:falcon_background = 1
 
-"colorscheme falcon
 "let g:airline_theme = 'falcon'
-colorscheme pencil
 let g:airline_theme='tomorrow'
 
-"colorscheme Tomorrow-Night-Blue
+colorscheme Tomorrow-Night-Blue
 "colorscheme PaperColor
+" colorscheme falcon
+" colorscheme pencil
 set guicursor=n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50
   \,a:blinkwait100-blinkoff500-blinkon500-Cursor/lCursor
   \,sm:block-blinkwait175-blinkoff150-blinkon175
@@ -455,7 +456,9 @@ endfunction
 
 let g:coc_global_extensions=[
             \ 'coc-vimtex',
+            \ 'coc-texlab',
             \ 'coc-json',
+            \ 'coc-yaml',
             \ 'coc-tsserver',
             \ 'coc-python',
             \ 'coc-html',
@@ -465,11 +468,12 @@ let g:coc_global_extensions=[
             \ 'coc-powershell',
             \ 'coc-lists',
             \ 'coc-snippets',
-            \ 'coc-sh',
             \ 'coc-xml',
             \ 'coc-marketplace',
             \ 'coc-omnisharp',
             \ ]
+" \ 'coc-sh',
+
 "set runtimepath^=F:/git/coc-powershell
 "set runtimepath^=F:/git/coc-omnisharp
 
