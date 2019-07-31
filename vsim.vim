@@ -601,7 +601,8 @@ endfunction
 "{{{
 
 " <C-backspace> binding
-imap <C-BS> <C-o>db
+imap <C-BS> <C-o>"_db<C-o>"_x
+
 
 " nmap <F6> :make<CR>
 
