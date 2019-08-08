@@ -25,5 +25,6 @@
     "suggest.timeout": 5000,
     "powershell.integratedConsole.focusConsoleOnExecute": false,
     "powershell.integratedConsole.showOnStartup": true,
-    "omnisharp.useDotnet": false
+    "omnisharp.useDotnet": false,
+    "fsharp.analysis.unusedDeclaration": false
 }
