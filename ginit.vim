@@ -22,7 +22,7 @@ elseif exists('g:GtkGuiLoaded')
 elseif exists('g:fvim_loaded')
     FVimFontNormalWeight 300
     FVimFontBoldWeight 600
-    set guifont=Iosevka\ Slab:h15
+    set guifont=Iosevka\ Slab:h14
     nnoremap <silent> <C-ScrollWheelUp> :set guifont=+<CR>
     nnoremap <silent> <C-ScrollWheelDown> :set guifont=-<CR>
     nnoremap <silent> <C-S-ScrollWheelUp> :set guifont=.+<CR>
