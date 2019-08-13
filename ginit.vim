@@ -20,8 +20,8 @@ elseif exists('g:GtkGuiLoaded')
     call rpcnotify(1, 'Gui', 'Option', 'Popupmenu', 0)
     nnoremap <silent> <C-w><C-s> :call rpcnotify(1, 'Gui', 'Command', 'ToggleSidebar')<CR>
 elseif exists('g:fvim_loaded')
-    FVimFontNormalWeight 100
-    FVimFontBoldWeight 400
+    FVimFontNormalWeight 300
+    FVimFontBoldWeight 600
     set guifont=Iosevka\ Slab:h15
     nnoremap <silent> <C-ScrollWheelUp> :set guifont=+<CR>
     nnoremap <silent> <C-ScrollWheelDown> :set guifont=-<CR>
