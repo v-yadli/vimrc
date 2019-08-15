@@ -527,6 +527,16 @@ nnoremap <silent> <C-A-j> <C-w>J
 nnoremap <silent> <C-A-k> <C-w>K
 nnoremap <silent> <C-A-l> <C-w>L
 
+nnoremap <silent> <A-1> :1b<cr>
+nnoremap <silent> <A-2> :2b<cr>
+nnoremap <silent> <A-3> :3b<cr>
+nnoremap <silent> <A-4> :4b<cr>
+nnoremap <silent> <A-5> :5b<cr>
+nnoremap <silent> <A-6> :6b<cr>
+nnoremap <silent> <A-7> :7b<cr>
+nnoremap <silent> <A-8> :8b<cr>
+nnoremap <silent> <A-9> :9b<cr>
+
 if has("persistent_undo")
     set undodir=~/.undodir/
     set undofile
