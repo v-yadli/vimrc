@@ -51,6 +51,13 @@ Plug 'tpope/vim-fugitive'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'tweekmonster/startuptime.vim'
+Plug 'mhinz/vim-startify'
+Plug 'Yggdroot/indentLine'
+
+if exists("g:fvim_loaded")
+    Plug 'ryanoasis/vim-devicons'
+    Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+endif
 
 " mighty coc.nvim
 Plug 'Shougo/neco-vim'
@@ -69,14 +76,6 @@ endif
 Plug 'godlygeek/tabular'              " Required by vim-markdown
 Plug 'plasticboy/vim-markdown'
 Plug 'gyim/vim-boxdraw'
-
-if exists("g:fvim_loaded")
-    Plug 'ryanoasis/vim-devicons'
-    Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
-endif
-
-Plug 'mhinz/vim-startify'
-Plug 'Yggdroot/indentLine'
 
 " Junkyard -- things that do not work for me, or never found useful.
 " Plug 'reedes/vim-pencil'          <--- not working anymore
@@ -272,33 +271,33 @@ autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
 
 if exists("g:fvim_loaded")
     " https://github.com/neoclide/coc.nvim/pull/603
-    call coc#config('suggest.completionItemKindLabels', {
-                \   'function': '',
-                \   'method': '',
-                \   'variable': '',
-                \   'constant': '',
-                \   'struct': 'פּ',
-                \   'class': '',
-                \   'interface': '禍',
-                \   'text': '',
-                \   'enum': 'ﳁ2',
-                \   'enumMember': '',
-                \   'module': '',
-                \   'color': ' ',
-                \   'property': '襁',
-                \   'field': '綠',
-                \   'unit': '',
-                \   'file': '',
-                \   'value': '',
-                \   'event': '鬒',
-                \   'folder': '',
-                \   'keyword': '',
-                \   'snippet': '',
-                \   'operator': '洛',
-                \   'reference': '',
-                \   'typeParameter': '<T>',
-                \   'default': ''
-                \ })
+    "call coc#config('suggest.completionItemKindLabels', {
+                "\   'function': '',
+                "\   'method': '',
+                "\   'variable': '',
+                "\   'constant': '',
+                "\   'struct': 'פּ',
+                "\   'class': '',
+                "\   'interface': '禍',
+                "\   'text': '',
+                "\   'enum': 'ﳁ2',
+                "\   'enumMember': '',
+                "\   'module': '',
+                "\   'color': ' ',
+                "\   'property': '襁',
+                "\   'field': '綠',
+                "\   'unit': '',
+                "\   'file': '',
+                "\   'value': '',
+                "\   'event': '鬒',
+                "\   'folder': '',
+                "\   'keyword': '',
+                "\   'snippet': '',
+                "\   'operator': '洛',
+                "\   'reference': '',
+                "\   'typeParameter': '<T>',
+                "\   'default': ''
+                "\ })
     call coc#config('diagnostic', {
                 \   'errorSign': '',
                 \   'warningSign': '',
@@ -396,6 +395,18 @@ let g:startify_session_before_save = [
     "Startify
 "endif
 
+""" Register a prefix-based key
+function! s:vsim_key(prefix, key, cmd)
+    let key = len(a:key) == 1 ? a:key : '<'.a:key.'>'
+    execute 'nmap <silent> <buffer> <C-'.a:prefix.'>'.key.' '.a:cmd
+    execute 'nmap <silent> <buffer> <C-'.a:prefix.'><C-'.a:key.'> '.a:cmd
+endfunction
+
+""" Register a coc key
+function! s:coc_key(key,cmd)
+    call s:vsim_key('c', a:key, a:cmd)
+endfunction
+
 function! VsimProgrammerMode()
     set updatetime=300
     set signcolumn=yes
@@ -448,10 +459,17 @@ function! VsimProgrammerMode()
     nmap <silent> <buffer> gi         <Plug>(coc-implementation)
     nmap <silent> <buffer> gr         <Plug>(coc-references)
 
-    nmap <silent> <buffer> <C-S-F12>  <Plug>(coc-diagnostic-next)
-    nmap <silent> <buffer> <C-W><C-E> :CocList diagnostics<CR>
-    nmap <silent> <buffer> <C-W>e     :CocList diagnostics<CR>
-    nmap <silent> <buffer> <C-S-P>    :CocCommand<CR>
+    call s:coc_key('p',   ':CocCommand<CR>')
+    call s:coc_key('[',   '<Plug>(coc-diagnostic-prev)')
+    call s:coc_key(']',   '<Plug>(coc-diagnostic-next)')
+    call s:coc_key('c',   ':CocListResume<CR>')
+    call s:coc_key('n',   ':CocNext<CR>')
+    call s:coc_key('b',   ':CocList buffers<CR>')
+    call s:coc_key('d',   ':CocList diagnostics<CR>')
+    call s:coc_key('f',   ':CocList files<CR>')
+    call s:coc_key('s',   ':CocList symbols<CR>')
+    call s:coc_key('m',   ':CocList marks<CR>')
+    call s:coc_key('tab', ':CocList mru<CR>')
 endfunction
 
 let g:coc_global_extensions=[
@@ -710,9 +728,16 @@ function! VsimToggleColor()
     if s:vsim_theme_idx >= len(s:vsim_theme_name)
         let s:vsim_theme_idx = 0
     endif
+
     let l:theme = s:vsim_theme_name[s:vsim_theme_idx]
+    let l:bg    = s:vsim_theme_bg[s:vsim_theme_idx]
+
     execute "colorscheme "    . l:theme
-    execute "set background=" . s:vsim_theme_bg[s:vsim_theme_idx]
+    execute "set background=" . l:bg
+
+    if exists('g:fvim_loaded')
+        FVimFontNormalWeight (l:bg == 'dark') ? 300 : 400
+    endif
     
     call VsimEcho("Current theme: ". l:theme)
 endfunction
