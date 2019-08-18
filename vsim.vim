@@ -662,12 +662,9 @@ nnoremap <C-k><C-u> <S-v>:call NERDComment("x", "Uncomment")<CR>
 let s:vsim_wrap_state = 3
 call VsimToggleWrap()
 
-nnoremap <C-e><C-w> :call VsimToggleWrap()<CR>
-nnoremap <C-e>w :call VsimToggleWrap()<CR>
-nnoremap <C-e><C-l> :IndentLinesToggle<CR>
-nnoremap <C-e>l :IndentLinesToggle<CR>
-nnoremap <C-e><C-s> :LeadingSpaceToggle<CR>
-nnoremap <C-e>s :LeadingSpaceToggle<CR>
+call s:vsim_key('e', 'w', ':call VsimToggleWrap()<CR>')
+call s:vsim_key('e', 'l', ':call IndentLinesToggle()<CR>')
+call s:vsim_key('e', 's', ':call LeadingSpaceToggle()<CR>')
 
 
 nnoremap <C-;> :FZF<CR>
