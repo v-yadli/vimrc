@@ -59,6 +59,11 @@ if exists("g:fvim_loaded")
     Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 endif
 
+" colorschemes
+" Plug 'morhetz/gruvbox'
+" Plug 'fenetikm/falcon'
+" Plug 'NLKNguyen/papercolor-theme'
+
 " mighty coc.nvim
 Plug 'Shougo/neco-vim'
 Plug 'neoclide/coc-neco'
@@ -270,7 +275,33 @@ inoremap <expr> <cr>    pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
 
 if exists("g:fvim_loaded")
-    " https://github.com/neoclide/coc.nvim/pull/603
+    call coc#config('suggest.completionItemKindLabels', {
+                \ "text": "t",
+                \ "method": ":",
+                \ "function": "f",
+                \ "constructor": "c",
+                \ "field": ".",
+                \ "variable": "v",
+                \ "class": "C",
+                \ "interface": "I",
+                \ "module": "M",
+                \ "property": "p",
+                \ "unit": "U",
+                \ "value": "l",
+                \ "enum": "E",
+                \ "keyword": "k",
+                \ "snippet": "s",
+                \ "color": "K",
+                \ "file": "F",
+                \ "reference": "r",
+                \ "folder": "d",
+                \ "enumMember": "m",
+                \ "constant": "0",
+                \ "struct": "S",
+                \ "event": "e",
+                \ "operator": "o",
+                \ "typeParameter": "T"
+                \ })
     "call coc#config('suggest.completionItemKindLabels', {
                 "\   'function': '',
                 "\   'method': '',
@@ -389,7 +420,6 @@ let g:startify_session_persistence = 1
 let g:startify_session_autoload = 1
 let g:startify_session_before_save = [
             \ 'echo "Cleaning up before saving.."',
-            \ 'silent! NERDTreeTabsClose'
             \ ]
 "if exists('g:fvim_startify')
     "Startify
@@ -710,9 +740,10 @@ if has("win32")
     let g:neoterm_eof   = "\r"
 endif
 
-let s:vsim_theme_idx = 0
-let s:vsim_theme_name = ['falcon', 'Tomorrow', 'Tomorrow-Night', 'Tomorrow-Night-Blue', 'pencil', 'pencil', 'colorzone', 'PaperColor']
-let s:vsim_theme_bg   = ['dark',   'light',    'dark',           'dark',                'light',  'dark',   'light',     'light']
+let s:vsim_theme_idx     = 0
+let s:vsim_theme_name    = ['falcon', 'gruvbox', 'gruvbox', 'Tomorrow', 'Tomorrow-Night', 'Tomorrow-Night-Blue', 'pencil', 'pencil', 'colorzone', 'PaperColor', 'PaperColor']
+let s:vsim_theme_bg      = ['dark',   'dark',    'light',   'light',    'dark',           'dark',                'light',  'dark',   'light',     'light',      'dark']
+let s:vsim_theme_airline = ['falcon', 'gruvbox', 'gruvbox', 'tomorrow', 'tomorrow',       'tomorrow',            '',       '',       '',          'papercolor', 'papercolor']
 
 " highlight TermCursor gui=standout
 " highlight TermCursor guibg=auto
@@ -727,11 +758,17 @@ function! VsimToggleColor()
         let s:vsim_theme_idx = 0
     endif
 
-    let l:theme = s:vsim_theme_name[s:vsim_theme_idx]
-    let l:bg    = s:vsim_theme_bg[s:vsim_theme_idx]
+    let l:theme   = s:vsim_theme_name[s:vsim_theme_idx]
+    let l:bg      = s:vsim_theme_bg[s:vsim_theme_idx]
+    let l:airline = s:vsim_theme_airline[s:vsim_theme_idx]
 
     execute "colorscheme "    . l:theme
     execute "set background=" . l:bg
+
+    if l:airline != ""
+        let g:airline_theme = l:airline
+        AirlineRefresh
+    endif
 
     if exists('g:fvim_loaded')
         FVimFontNormalWeight (l:bg == 'dark') ? 300 : 400

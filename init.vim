@@ -8,7 +8,6 @@ if has("win32")
     let g:neoterm_eof       = '\r\n'
     let g:vsim_config_file  = '~/AppData/Local/nvim/vsim.vim'
     set rtp^=~/AppData/Local/nvim/test
-    " let g:neoterm_shell = "C:\Windows\system32\WindowsPowerShell\v1.0\powershell.exe" "doesn't work..
 
     " http://vim.wikia.com/wiki/Adding_Vim_to_MS-Windows_File_Explorer_Menu
     " see second approach -- no shellext dll needed
