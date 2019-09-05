@@ -28,9 +28,9 @@ elseif exists('g:fvim_loaded')
     nnoremap <silent> <C-S-ScrollWheelUp> :set guifont=.+<CR>
     nnoremap <silent> <C-S-ScrollWheelDown> :set guifont=.-<CR>
     FVimCursorSmoothBlink v:true 
-    " FVimCursorSmoothMove v:true
+    FVimCursorSmoothMove v:true
     FVimKeyDisableShiftSpace v:true
-    FVimUIPopupMenu v:true
+    FVimUIPopupMenu v:false
     FVimUIMultiGrid v:false
 
     function! VsimToggleFullScreen()

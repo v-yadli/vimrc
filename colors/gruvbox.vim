@@ -1391,3 +1391,26 @@ endfunction
 " }}}
 
 " vim: set sw=2 ts=2 sts=2 et tw=80 ft=vim fdm=marker:
+" Coc highlighting
+hi      CocUnderline          gui=underline
+hi      CocErrorSign          guifg=#ff0000
+hi      CocWarningSign        guifg=#ff922b
+hi      CocInfoSign           guifg=#fab005
+hi      CocHintSign           guifg=#15aabf
+hi      CocSelectedText       guifg=#fb4394
+hi      CocCodeLens           guifg=#999999
+hi link CocErrorFloat         Identifier
+hi link CocWarningFloat       Constant
+hi link CocInfoFloat          Normal
+hi link CocHintFloat          Normal
+hi      CocErrorHighlight     gui=undercurl guisp=#ff0000
+hi      CocWarningHighlight   gui=underline guisp=#ff922b
+hi      CocInfoHighlight      gui=underline guisp=Green
+hi      CocHintHighlight      gui=underline guisp=#15aabf
+hi link CocListMode           ModeMsg
+hi link CocListPath           Comment
+hi link CocFloating           Pmenu
+hi link CocHighlightText      Pmenu
+hi link CocHighlightTextRead  Pmenu
+hi link CocHighlightTextWrite Pmenu
+hi      Cursor                guibg=#20ff78 guifg=#000000

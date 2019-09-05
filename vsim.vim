@@ -219,10 +219,12 @@ let g:falcon_inactive = 1
 let g:falcon_background = 1
 
 "let g:airline_theme = 'falcon'
-let g:airline_theme='tomorrow'
+"let g:airline_theme='tomorrow'
+let g:airline_theme='gruvbox'
 
-colorscheme Tomorrow-Night-Blue
+"colorscheme Tomorrow-Night-Blue
 "colorscheme PaperColor
+colorscheme gruvbox
 " colorscheme falcon
 " colorscheme pencil
 set guicursor=n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50
