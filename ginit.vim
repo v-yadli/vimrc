@@ -30,7 +30,7 @@ elseif exists('g:fvim_loaded')
     FVimCursorSmoothBlink v:true 
     FVimCursorSmoothMove v:true
     FVimKeyDisableShiftSpace v:true
-    FVimUIPopupMenu v:false
+    FVimUIPopupMenu v:true
     FVimUIMultiGrid v:false
 
     function! VsimToggleFullScreen()

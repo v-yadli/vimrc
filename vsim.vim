@@ -72,7 +72,7 @@ Plug 'fidian/hexmode'
 Plug 'jackguo380/vim-lsp-cxx-highlight'
 
 " Utilities -- Things that I do love to issue Ex commands to utilize
-Plug 'mbbill/undotree'
+Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
 
 " Laborotary -- Things I'd love to know more about
 if g:vsim_environment=="neovim"
@@ -670,6 +670,8 @@ imap <C-BS> <C-o>"_db<C-o>"_x
 " <C-W> (window) family
 nmap <C-w><C-s> :NERDTreeToggle<CR>
 imap <C-w><C-s> <Esc>:NERDTreeToggle<CR>
+nmap <C-w><C-u> :UndotreeToggle<CR>
+imap <C-w><C-u> <Esc>:UndotreeToggle<CR>
 
 nmap <C-w><C-e> <silent> :cwindow<CR>
 nmap <C-k><C-r> <silent> :call VsimFindReferences()<CR>
