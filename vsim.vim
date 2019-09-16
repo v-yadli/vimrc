@@ -16,8 +16,8 @@ if has("win32")
         let g:python3_host_prog='C:/ProgramData/Anaconda3/python.exe'
     elseif filereadable('C:/tools/Anaconda3/python.exe')
         let g:python3_host_prog='C:/tools/Anaconda3/python.exe'
-    elseif filereadable('C:\Program Files (x86)\Microsoft Visual Studio\Shared\Anaconda3_64\python.exe')
-        let g:python3_host_prog='C:\Program Files (x86)\Microsoft Visual Studio\Shared\Anaconda3_64\python.exe'
+    elseif filereadable('C:/Program Files (x86)/Microsoft Visual Studio/Shared/Anaconda3_64/python.exe')
+        let g:python3_host_prog='C:/Program Files (x86)/Microsoft Visual Studio/Shared/Anaconda3_64/python.exe'
     endif
 else
     if filereadable(expand('~/anaconda3/bin/python3'))
