@@ -1,9 +1,0 @@
-Windows Registry Editor Version 5.00
-
-[HKEY_CLASSES_ROOT\*\Shell\Vim]
-@="Edit with &Vim"
-"Icon"="\"C:\\tools\\fvim\\fvim.exe\""
-
-[HKEY_CLASSES_ROOT\*\Shell\Vim\command]
-@="\"C:\\tools\\fvim\\fvim.exe\" \"%1\""
-"ThreadingModel"="Apartment"
