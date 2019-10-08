@@ -20,6 +20,7 @@ elseif exists('g:GtkGuiLoaded')
     call rpcnotify(1, 'Gui', 'Option', 'Popupmenu', 0)
     nnoremap <silent> <C-w><C-s> :call rpcnotify(1, 'Gui', 'Command', 'ToggleSidebar')<CR>
 elseif exists('g:fvim_loaded')
+    FVimCustomTitleBar v:true
     FVimFontNormalWeight 300
     FVimFontBoldWeight 600
     set guifont=Iosevka\ Slab:h14
@@ -34,7 +35,7 @@ elseif exists('g:fvim_loaded')
     FVimUIMultiGrid v:false
     FVimBackgroundComposition 'acrylic'
     FVimBackgroundOpacity 0.85
-    FVimBackgroundAltOpacity 0.85
+    FVimBackgroundAltOpacity 1.0
     FVimFontLcdRender v:false
 
     function! VsimToggleFullScreen()
