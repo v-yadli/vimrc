@@ -32,10 +32,11 @@ elseif exists('g:fvim_loaded')
     FVimKeyDisableShiftSpace v:true
     FVimUIPopupMenu v:true
     FVimUIMultiGrid v:false
+    FVimFontLcdRender v:false
     FVimBackgroundComposition 'acrylic'
     FVimBackgroundOpacity 0.85
     FVimBackgroundAltOpacity 0.85
-    FVimFontLcdRender v:false
+    FVimCustomTitleBar v:true
 
     function! VsimToggleFullScreen()
         FVimToggleFullScreen

@@ -70,7 +70,6 @@ endif
 Plug 'Shougo/neco-vim'
 Plug 'neoclide/coc-neco'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'fidian/hexmode'
 Plug 'jackguo380/vim-lsp-cxx-highlight'
 
 " Utilities -- Things that I do love to issue Ex commands to utilize
@@ -83,6 +82,8 @@ endif
 Plug 'godlygeek/tabular'              " Required by vim-markdown
 Plug 'plasticboy/vim-markdown'
 Plug 'gyim/vim-boxdraw'
+Plug 'fidian/hexmode'
+Plug 'derekwyatt/vim-fswitch'
 
 " Junkyard -- things that do not work for me, or never found useful.
 " Plug 'reedes/vim-pencil'          <--- not working anymore
@@ -226,6 +227,7 @@ let g:airline_theme='gruvbox'
 
 "colorscheme Tomorrow-Night-Blue
 "colorscheme PaperColor
+let g:gruvbox_invert_selection=0
 colorscheme gruvbox
 " colorscheme falcon
 " colorscheme pencil
@@ -676,7 +678,6 @@ nmap <C-w><C-u> :UndotreeToggle<CR>
 imap <C-w><C-u> <Esc>:UndotreeToggle<CR>
 
 nmap <C-w><C-e> <silent> :cwindow<CR>
-nmap <C-k><C-r> <silent> :call VsimFindReferences()<CR>
 
 " <C-=> for calling EasyAlign
 nmap <C-=> <Plug>(EasyAlign)
@@ -687,12 +688,14 @@ let g:easy_align_delimiters = {
     \ }
 
 " <C-k> (kontrol) family
+nmap <C-k><C-r> <silent> :call VsimFindReferences()<CR>
 vmap <C-k><C-c> <plug>NERDCommenterComment
 vmap <C-k><C-u> <plug>NERDCommenterUncomment
 
 nnoremap <C-c> <silent> <C-c>
 nnoremap <C-k><C-c> <S-v>:call NERDComment("x", "Comment")<CR>
 nnoremap <C-k><C-u> <S-v>:call NERDComment("x", "Uncomment")<CR>
+nnoremap <C-k><C-o> :FSHere<CR>
 
 " <C-e> (view) family
 " set Wrap=OFF upon start
