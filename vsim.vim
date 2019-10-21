@@ -129,8 +129,8 @@ filetype plugin indent on
 set nowrap
 set cindent
 set title           " enable titlestring
-set shiftwidth=4
-set tabstop=4
+set shiftwidth=2
+set tabstop=2
 set expandtab       " replace tab to whitespace.
 syntax on
 set autoindent
