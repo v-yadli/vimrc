@@ -1413,4 +1413,4 @@ hi link CocFloating           Pmenu
 hi link CocHighlightText      Pmenu
 hi link CocHighlightTextRead  Pmenu
 hi link CocHighlightTextWrite Pmenu
-hi      Cursor                guibg=#20ff78 guifg=#000000
+hi      Cursor                guibg=#FFFFFF guifg=#DF0087
