@@ -12,6 +12,9 @@
             }
         }
     },
+    "latex.build.executable": "latexmk",
+    "latex.build.args": ["-xelatex"],
+    "latex.lint.onSave": true,
     "python.jediEnabled": true,
     "python.linting.enabled": true,
     "python.linting.pylintEnabled": false,

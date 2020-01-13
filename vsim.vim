@@ -37,7 +37,7 @@ Plug 'roxma/vim-tmux-clipboard'
 Plug 'tmux-plugins/vim-tmux-focus-events'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'scrooloose/nerdcommenter'
-Plug 'lervag/vimtex'
+" Plug 'lervag/vimtex'
 Plug 'junegunn/vim-easy-align'
 Plug 'vim-scripts/LargeFile'
 Plug 'guns/vim-sexp'
@@ -182,25 +182,25 @@ else
     let g:vsim_latexmk_backend = 'jobs'
 endif
 
-let g:vimtex_view_general_viewer = 'SumatraPDF'
-let g:vimtex_view_general_options
-    \ = '-reuse-instance -forward-search @tex @line @pdf'
-let g:vimtex_view_general_options_latexmk = '-reuse-instance'
-let g:vimtex_compiler_latexmk = {
-    \ 'backend' : g:vsim_latexmk_backend,
-    \ 'background' : 1,
-    \ 'build_dir' : '',
-    \ 'callback' : 1,
-    \ 'continuous' : 1,
-    \ 'executable' : 'latexmk',
-    \ 'options' : [
-    \   '-shell-escape',
-    \   '-verbose',
-    \   '-file-line-error',
-    \   '-synctex=1',
-    \   '-interaction=nonstopmode',
-    \ ],
-    \}
+" let g:vimtex_view_general_viewer = 'SumatraPDF'
+" let g:vimtex_view_general_options
+"     \ = '-reuse-instance -forward-search @tex @line @pdf'
+" let g:vimtex_view_general_options_latexmk = '-reuse-instance'
+" let g:vimtex_compiler_latexmk = {
+"     \ 'backend' : g:vsim_latexmk_backend,
+"     \ 'background' : 1,
+"     \ 'build_dir' : '',
+"     \ 'callback' : 1,
+"     \ 'continuous' : 1,
+"     \ 'executable' : 'latexmk',
+"     \ 'options' : [
+"     \   '-shell-escape',
+"     \   '-verbose',
+"     \   '-file-line-error',
+"     \   '-synctex=1',
+"     \   '-interaction=nonstopmode',
+"     \ ],
+"     \}
 
 function! WriterMode()
     nnoremap <buffer> <F5> :silent! NextWordy<CR>
@@ -510,7 +510,6 @@ function! VsimProgrammerMode()
 endfunction
 
 let g:coc_global_extensions=[
-            \ 'coc-vimtex',
             \ 'coc-texlab',
             \ 'coc-json',
             \ 'coc-yaml',
@@ -528,6 +527,7 @@ let g:coc_global_extensions=[
             \ 'coc-omnisharp',
             \ ]
 " \ 'coc-sh',
+" \ 'coc-vimtex',
 
 "set runtimepath^=F:/git/coc-powershell
 "set runtimepath^=F:/git/coc-omnisharp
@@ -537,7 +537,7 @@ nmap <C-tab> :bn<CR>
 nmap <C-S-tab> :bp<CR>
 
 autocmd FileType vim nnoremap <buffer> <S-K> :call VimrcGetHelp()<CR>
-autocmd FileType c,cpp,typescript,javascript,json,ps1,psm1,psd1,fsharp,cs,python,vim,xml,sh,cuda call VsimProgrammerMode()
+autocmd FileType c,cpp,typescript,javascript,json,ps1,psm1,psd1,fsharp,cs,python,vim,xml,sh,cuda,verilog,tex call VsimProgrammerMode()
 
 "*****************************************************************************
 "" Abbreviations
