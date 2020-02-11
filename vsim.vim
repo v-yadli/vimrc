@@ -55,6 +55,8 @@ Plug 'junegunn/fzf.vim'
 Plug 'tweekmonster/startuptime.vim'
 Plug 'mhinz/vim-startify'
 Plug 'Yggdroot/indentLine'
+Plug 'fidian/hexmode'
+Plug 'derekwyatt/vim-fswitch'
 
 if exists("g:fvim_loaded")
     Plug 'ryanoasis/vim-devicons'
@@ -82,8 +84,6 @@ endif
 Plug 'godlygeek/tabular'              " Required by vim-markdown
 Plug 'plasticboy/vim-markdown'
 Plug 'gyim/vim-boxdraw'
-Plug 'fidian/hexmode'
-Plug 'derekwyatt/vim-fswitch'
 
 " Junkyard -- things that do not work for me, or never found useful.
 " Plug 'reedes/vim-pencil'          <--- not working anymore
@@ -121,7 +121,7 @@ Plug 'panozzaj/vim-autocorrect'
 " Initialize plugin system finish
 call plug#end()
 
-let g:polyglot_disabled = ['fsharp', 'latex', 'xml']
+let g:polyglot_disabled = ['fsharp', 'latex', 'xml', 'v']
 
 
 filetype plugin indent on
