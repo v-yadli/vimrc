@@ -11,18 +11,18 @@ let g:loaded_falcon=1
 " Required as colors will come from terminal without
 let g:fzf_colors=
   \ { 'fg':      ['fg', 'Comment'],
-  \ 'bg':      ['bg', 'Normal'],
-  \ 'hl':      ['fg', 'Normal'],
-  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
-  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
-  \ 'hl+':     ['fg', 'Keyword'],
-  \ 'info':    ['fg', 'PreProc'],
-  \ 'border':  ['fg', 'Ignore'],
-  \ 'prompt':  ['fg', 'Conditional'],
-  \ 'pointer': ['fg', 'Exception'],
-  \ 'marker':  ['fg', 'Keyword'],
-  \ 'spinner': ['fg', 'Label'],
-  \ 'header':  ['fg', 'Comment'] }
+    \ 'bg':      ['bg', 'NormalFloat'],
+    \ 'hl':      ['fg', 'Normal'],
+    \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+    \ 'bg+':     ['bg', 'NormalFloat', 'NormalFloat'],
+    \ 'hl+':     ['fg', 'Keyword'],
+    \ 'info':    ['fg', 'PreProc'],
+    \ 'border':  ['fg', 'Ignore'],
+    \ 'prompt':  ['fg', 'Conditional'],
+    \ 'pointer': ['fg', 'Question'],
+    \ 'marker':  ['fg', 'Directory'],
+    \ 'spinner': ['fg', 'Label'],
+    \ 'header':  ['fg', 'Comment'] }
 
 function s:HandleInactiveBackground()
   " NeoVim has support for changing background colour depending on active or not
@@ -37,9 +37,17 @@ function s:HandleInactiveBackground()
 
   hi NonText guifg=#36363a ctermfg=237 guibg=#020221 ctermbg=0 gui=NONE cterm=NONE
   hi Normal guifg=#b4b4b9 ctermfg=249 guibg=#020221 ctermbg=0 gui=NONE cterm=NONE
+  " has('gui_running') doesn't work well..
+  "if !has("gui_running") || g:falcon_background == 0
+    "hi NonText guifg=#36363a ctermfg=237 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
+    "hi Normal guifg=#b4b4b9 ctermfg=249 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
+  "else
+    "hi NonText guifg=#36363a ctermfg=237 guibg=#020221 ctermbg=0 gui=NONE cterm=NONE
+    "hi Normal guifg=#b4b4b9 ctermfg=249 guibg=#020221 ctermbg=0 gui=NONE cterm=NONE
+  "endif
 
   if exists('+winhighlight') && g:falcon_inactive == 1
-    hi ActiveWindow guibg=#020221
+    hi ActiveWindow guibg=NONE
     hi InactiveWindow guibg=#151521
     set winhighlight=Normal:ActiveWindow,NormalNC:InactiveWindow
   else
@@ -95,7 +103,7 @@ if has ("nvim")
   let g:terminal_color_6='#34bfa4'
   let g:terminal_color_7='#b4b4b9'
 
-  let g:terminal_color_8='#020221'
+  let g:terminal_color_8='#c28201'
   let g:terminal_color_9='#ff8e78'
   let g:terminal_color_10='#b1bf75'
   let g:terminal_color_11='#ffd392'
@@ -103,6 +111,8 @@ if has ("nvim")
   let g:terminal_color_13='#ffb07b'
   let g:terminal_color_14='#85ccbf'
   let g:terminal_color_15='#f8f8ff'
+
+" Terminal colors
 
   let g:terminal_color_background=g:terminal_color_8
   let g:terminal_color_foreground=g:terminal_color_7
@@ -112,7 +122,7 @@ else
     \ '#718e3f', '#ffc552',
     \ '#635196', '#ff761a',
     \ '#34bfa4', '#b4b4b9',
-    \ '#020221', '#ff8e78',
+    \ '#c28201', '#ff8e78',
     \ '#b1bf75', '#ffd392',
     \ '#99a4bc', '#ffb07b',
     \ '#85ccbf', '#f8f8ff',

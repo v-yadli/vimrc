@@ -221,16 +221,16 @@ let g:falcon_airline = 1
 let g:falcon_inactive = 1
 let g:falcon_background = 1
 
-"let g:airline_theme = 'falcon'
+let g:airline_theme = 'falcon'
 "let g:airline_theme='tomorrow'
-let g:airline_theme='gruvbox'
+"let g:airline_theme='gruvbox'
 
 "colorscheme Tomorrow-Night-Blue
 "colorscheme PaperColor
 let g:gruvbox_invert_selection=0
-colorscheme gruvbox
-" colorscheme falcon
-" colorscheme pencil
+"colorscheme gruvbox
+colorscheme falcon
+"colorscheme pencil
 set guicursor=n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50
   \,a:blinkwait100-blinkoff500-blinkon500-Cursor/lCursor
   \,sm:block-blinkwait175-blinkoff150-blinkon175
