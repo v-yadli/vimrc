@@ -43,6 +43,7 @@ Plug 'vim-scripts/LargeFile'
 Plug 'guns/vim-sexp'
 Plug 'bohlender/vim-smt2'
 Plug 'v-yadli/vim-tsl'
+Plug '~/git/vim-sleigh'
 Plug 'kshenoy/vim-signature'          " displays marks in the gutter (sign column)
 Plug 'mhinz/vim-signify'              " displays changes in the gutter
 Plug 'scrooloose/nerdtree',             { 'on': 'NERDTreeToggle' }

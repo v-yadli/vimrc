@@ -33,14 +33,15 @@ elseif exists('g:fvim_loaded')
     FVimKeyDisableShiftSpace v:true
     FVimUIPopupMenu v:true
     FVimUIMultiGrid v:false
+    FVimUIWildMenu v:false
     FVimFontLcdRender v:false
     FVimCustomTitleBar v:true
     FVimBackgroundComposition 'none'
     FVimBackgroundOpacity 0.85
     FVimBackgroundAltOpacity 1.0
-    FVimBackgroundImage g:vsim_config_dir.'/image/W2.jpg'
+    FVimBackgroundImage g:vsim_config_dir.'/image/RIM.png'
     FVimBackgroundImageOpacity 0.3
-    FVimBackgroundImageHAlign 'left'
+    FVimBackgroundImageHAlign 'right'
     FVimBackgroundImageVAlign 'top'
 
     function! VsimToggleFullScreen()
