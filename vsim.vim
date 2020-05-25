@@ -34,6 +34,7 @@ Plug 'vim-scripts/LargeFile'
 Plug 'guns/vim-sexp'
 Plug 'bohlender/vim-smt2'
 Plug 'v-yadli/vim-tsl'
+Plug '~/git/vim-sleigh'
 Plug 'kshenoy/vim-signature'          " displays marks in the gutter (sign column)
 Plug 'mhinz/vim-signify'              " displays changes in the gutter
 Plug 'scrooloose/nerdtree',             { 'on': 'NERDTreeToggle' }
@@ -334,7 +335,7 @@ if exists("g:fvim_loaded")
                 \   'infoSign': '',
                 \   'hintSign': 'ﳁ',
                 \ })
-    call coc#config('codeLens', {'separator': ''})
+    call coc#config('codeLens', {'separator': '▸'})
 endif
 
 " airline settings
@@ -735,7 +736,7 @@ vnoremap <Down> <Esc><Down>
 " REPL and Neoterm
 let g:neoterm_autoscroll = 1
 let g:neoterm_open_in_all_tabs = 1
-let g:neoterm_autoinsert = 1
+let g:neoterm_autoinsert = 0
 let g:neoterm_keep_term_open = 1
 let g:neoterm_default_mod = ':belowright'
 
@@ -748,13 +749,6 @@ let s:vsim_theme_idx     = 0
 let s:vsim_theme_name    = ['falcon', 'gruvbox', 'gruvbox', 'Tomorrow', 'Tomorrow-Night', 'Tomorrow-Night-Blue', 'pencil', 'pencil', 'colorzone', 'PaperColor', 'PaperColor']
 let s:vsim_theme_bg      = ['dark',   'dark',    'light',   'light',    'dark',           'dark',                'light',  'dark',   'light',     'light',      'dark']
 let s:vsim_theme_airline = ['falcon', 'gruvbox', 'gruvbox', 'tomorrow', 'tomorrow',       'tomorrow',            '',       '',       '',          'papercolor', 'papercolor']
-
-" highlight TermCursor gui=standout
-" highlight TermCursor guibg=auto
-" highlight TermCursor guifg=#ef1810
-" TODO: figure out why these terminal color settings aren't working
-"let g:terminal_color_7 = '#b4b4b9'
-"let g:terminal_color_8 = '#b4b4b9'
 
 function! VsimToggleColor()
     let s:vsim_theme_idx = s:vsim_theme_idx + 1
