@@ -12,6 +12,10 @@
             }
         }
     },
+    "snippets.extends": {
+      "cpp": ["c"],
+      "typescript": ["javascript"]
+    },
     "latex.build.executable": "latexmk",
     "latex.build.args": ["-xelatex"],
     "latex.lint.onSave": true,

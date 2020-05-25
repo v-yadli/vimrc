@@ -10,15 +10,6 @@ if has("win32")
     elseif filereadable('C:/Python27/python.exe')
         let g:python_host_prog  = 'C:/Python27/python.exe'
     endif
-    if filereadable('C:/Users/yatli/AppData/Local/Continuum/anaconda3/python.exe')
-        let g:python3_host_prog='C:/Users/yatli/AppData/Local/Continuum/anaconda3/python.exe'
-    elseif filereadable('C:/ProgramData/Anaconda3/python.exe')
-        let g:python3_host_prog='C:/ProgramData/Anaconda3/python.exe'
-    elseif filereadable('C:/tools/Anaconda3/python.exe')
-        let g:python3_host_prog='C:/tools/Anaconda3/python.exe'
-    elseif filereadable('C:/Program Files (x86)/Microsoft Visual Studio/Shared/Anaconda3_64/python.exe')
-        let g:python3_host_prog='C:/Program Files (x86)/Microsoft Visual Studio/Shared/Anaconda3_64/python.exe'
-    endif
 else
     if filereadable(expand('~/anaconda3/bin/python3'))
         let g:python3_host_prog = '~/anaconda3/bin/python3'
@@ -84,6 +75,7 @@ endif
 Plug 'godlygeek/tabular'              " Required by vim-markdown
 Plug 'plasticboy/vim-markdown'
 Plug 'gyim/vim-boxdraw'
+Plug 'honza/vim-snippets'
 
 " Junkyard -- things that do not work for me, or never found useful.
 " Plug 'reedes/vim-pencil'          <--- not working anymore
@@ -102,6 +94,7 @@ Plug 'gyim/vim-boxdraw'
 " Plug 'rking/ag.vim'               <---- fzf has this(!)
 " Plug 'KabbAmine/zeavim.vim'       <---- never calls Zeal actually...
 " Plug 'qpkorr/vim-bufkill'         <---- replaced by vmux.vim
+" Plug 'puremourning/vimspector'    <---- doesn't work well with NeoVim
 "
 " -------------- BEGIN legacy programming environment.. ----------------
 "  They never pulled it together well.. Really.
@@ -121,7 +114,7 @@ Plug 'panozzaj/vim-autocorrect'
 " Initialize plugin system finish
 call plug#end()
 
-let g:polyglot_disabled = ['fsharp', 'latex', 'xml', 'v']
+let g:polyglot_disabled = ['fsharp', 'latex', 'xml', 'v', 'vlang']
 
 
 filetype plugin indent on
@@ -489,6 +482,7 @@ function! VsimProgrammerMode()
     nmap <silent> <buffer> <C-]>      <Plug>(coc-declaration)
     nmap <silent> <buffer> <C-k><C-r> <Plug>(coc-references)
     nmap <silent> <buffer> <C-k>r     <Plug>(coc-references)
+    imap <C-l>                        <Plug>(coc-snippets-expand)
 
     nmap <silent> <buffer> gd         <Plug>(coc-definition)
     nmap <silent> <buffer> gy         <Plug>(coc-type-definition)
@@ -507,6 +501,7 @@ function! VsimProgrammerMode()
     call s:coc_key('s',   ':CocList symbols<CR>')
     call s:coc_key('m',   ':CocList marks<CR>')
     call s:coc_key('tab', ':CocList mru<CR>')
+
 endfunction
 
 let g:coc_global_extensions=[
@@ -537,7 +532,7 @@ nmap <C-tab> :bn<CR>
 nmap <C-S-tab> :bp<CR>
 
 autocmd FileType vim nnoremap <buffer> <S-K> :call VimrcGetHelp()<CR>
-autocmd FileType c,cpp,typescript,javascript,json,ps1,psm1,psd1,fsharp,cs,python,vim,xml,sh,cuda,verilog,tex call VsimProgrammerMode()
+autocmd FileType c,cpp,typescript,javascript,json,ps1,psm1,psd1,fsharp,cs,python,vim,xml,sh,cuda,verilog,vue,tex call VsimProgrammerMode()
 
 "*****************************************************************************
 "" Abbreviations
