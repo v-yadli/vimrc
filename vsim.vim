@@ -34,10 +34,9 @@ Plug 'vim-scripts/LargeFile'
 Plug 'guns/vim-sexp'
 Plug 'bohlender/vim-smt2'
 Plug 'v-yadli/vim-tsl'
-Plug '~/git/vim-sleigh'
+Plug 'yatli/sleigh.vim'
 Plug 'kshenoy/vim-signature'          " displays marks in the gutter (sign column)
 Plug 'mhinz/vim-signify'              " displays changes in the gutter
-Plug 'scrooloose/nerdtree',             { 'on': 'NERDTreeToggle' }
 Plug 'yatli/vmux.vim'
 Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-surround'
@@ -52,7 +51,6 @@ Plug 'derekwyatt/vim-fswitch'
 
 if exists("g:fvim_loaded")
     Plug 'ryanoasis/vim-devicons'
-    Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 endif
 
 " colorschemes
@@ -68,7 +66,6 @@ Plug 'jackguo380/vim-lsp-cxx-highlight'
 
 " Utilities -- Things that I do love to issue Ex commands to utilize
 Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
-
 " Laborotary -- Things I'd love to know more about
 if g:vsim_environment=="neovim"
     Plug 'kassio/neoterm'
@@ -92,10 +89,12 @@ Plug 'honza/vim-snippets'
 " Plug 'v-yadli/vim-online-thesaurus'
 " Plug 'flazz/vim-colorschemes'     <--- need to customize some of the colors
 " Plug 'roxma/nvim-completion-manager' < trying alternatives..
-" Plug 'rking/ag.vim'               <---- fzf has this(!)
-" Plug 'KabbAmine/zeavim.vim'       <---- never calls Zeal actually...
-" Plug 'qpkorr/vim-bufkill'         <---- replaced by vmux.vim
-" Plug 'puremourning/vimspector'    <---- doesn't work well with NeoVim
+" Plug 'rking/ag.vim'               <--- fzf has this(!)
+" Plug 'KabbAmine/zeavim.vim'       <--- never calls Zeal actually...
+" Plug 'qpkorr/vim-bufkill'         <--- replaced by vmux.vim
+" Plug 'puremourning/vimspector'    <--- doesn't work well with NeoVim
+" Plug 'scrooloose/nerdtree',       <--- replaced by coc-explorer
+" Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 "
 " -------------- BEGIN legacy programming environment.. ----------------
 "  They never pulled it together well.. Really.
@@ -393,26 +392,6 @@ autocmd User AirlineAfterInit call AirlineInit()
 " exclude overwrite statusline of list filetype
 let g:airline_exclude_filetypes = ["list"]
 
-" set folder open/close glyphs
-let g:NERDTreeDirArrowExpandable="▸"
-let g:NERDTreeDirArrowCollapsible="▾"
-let g:NERDTreeHighlightFolders = 1
-" do not alter cursorline for NERDTree
-let g:NERDTreeHighlightCursorline = 0
-" show glyphs for NERDTree
-let g:webdevicons_enable_nerdtree = 1
-" don't show brackets around NERDTree glyphs
-let g:webdevicons_conceal_nerdtree_brackets = 1
-" show folder glyphs for NERDTree
-let g:WebDevIconsUnicodeDecorateFolderNodes = 1
-" show folder open/close glyphs
-let g:DevIconsEnableFoldersOpenClose = 1
-" more filetypes...
-let g:WebDevIconsUnicodeDecorateFileNodesPatternSymbols = {} " needed
-let g:WebDevIconsUnicodeDecorateFileNodesPatternSymbols['.*\.xaml$'] = 'ﭲ'
-let g:WebDevIconsUnicodeDecorateFileNodesPatternSymbols['.*\.svg$'] = 'ﰟ'
-let g:WebDevIconsUnicodeDecorateFileNodesPatternSymbols['.*\..*proj$'] = ''
-
 let g:indentLine_char_list = [ '┆', '┊']
 let g:indentLine_leadingSpaceChar = '·'
 
@@ -521,6 +500,7 @@ let g:coc_global_extensions=[
             \ 'coc-xml',
             \ 'coc-marketplace',
             \ 'coc-omnisharp',
+            \ 'coc-explorer',
             \ ]
 " \ 'coc-sh',
 " \ 'coc-vimtex',
@@ -668,8 +648,8 @@ imap <C-BS> <C-o>"_db<C-o>"_x
 " nmap <F6> :make<CR>
 
 " <C-W> (window) family
-nmap <C-w><C-s> :NERDTreeToggle<CR>
-imap <C-w><C-s> <Esc>:NERDTreeToggle<CR>
+nmap <C-w><C-s> :CocCommand explorer<CR>
+imap <C-w><C-s> <Esc>:CocCommand explorer<CR>
 nmap <C-w><C-u> :UndotreeToggle<CR>
 imap <C-w><C-u> <Esc>:UndotreeToggle<CR>
 

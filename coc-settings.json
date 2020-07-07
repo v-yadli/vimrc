@@ -16,6 +16,7 @@
       "cpp": ["c"],
       "typescript": ["javascript"]
     },
+    "explorer.icon.enableVimDevicons": true,
     "latex.build.executable": "latexmk",
     "latex.build.args": ["-xelatex"],
     "latex.lint.onSave": true,
@@ -26,6 +27,7 @@
     "python.formatting.provider": "autopep8",
     "coc.preferences.hoverTarget": "float",
     "coc.preferences.enableFloatHighlight": true,
+    "coc.preferences.maxFileSize":"1MB",
     "suggest.floatEnable": true,
     "suggest.echodocSupport": false,
     "suggest.timeout": 5000,

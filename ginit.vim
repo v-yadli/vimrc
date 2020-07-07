@@ -32,9 +32,8 @@ elseif exists('g:fvim_loaded')
     FVimCursorSmoothMove v:true
     FVimKeyDisableShiftSpace v:true
     FVimUIPopupMenu v:true
-    FVimUIMultiGrid v:false
+    " FVimUIMultiGrid v:false
     FVimUIWildMenu v:false
-    FVimFontLcdRender v:false
     FVimCustomTitleBar v:true
     FVimBackgroundComposition 'none'
     FVimBackgroundOpacity 0.85
