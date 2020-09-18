@@ -160,6 +160,8 @@ else
 endif
 set completeopt=longest,menuone,preview
 set previewheight=5
+" remove blank from sessionoptions
+set sessionoptions=buffers,curdir,folds,help,tabpages,winsize
 
 " Terminal color workaround
 if has("termguicolors") && !(has("win32") && $TERM != 'vtpcon') || exists("g:fvim_loaded")
