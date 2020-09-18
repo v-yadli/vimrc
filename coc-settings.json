@@ -17,6 +17,12 @@
       "typescript": ["javascript"]
     },
     "explorer.icon.enableVimDevicons": true,
+    "explorer.icon.enableNerdfont": true,
+    "explorer.previewAction.onHover": false,
+    "explorer.width": 30,
+    "explorer.keyMappings": {
+      "<space>": "toggleSelection"
+    },
     "latex.build.executable": "latexmk",
     "latex.build.args": ["-xelatex"],
     "latex.lint.onSave": true,
@@ -40,5 +46,6 @@
     "powershell.integratedConsole.focusConsoleOnExecute": false,
     "powershell.integratedConsole.showOnStartup": false,
     "omnisharp.useDotnet": false,
-    "fsharp.analysis.unusedDeclaration": false
+    "fsharp.analysis.unusedDeclaration": false,
+    "http.proxy":"localhost:1080"
 }
