@@ -39,6 +39,5 @@
     "coc.preferences.extensionUpdateCheck":"weekly",
     "powershell.integratedConsole.focusConsoleOnExecute": false,
     "powershell.integratedConsole.showOnStartup": false,
-    "omnisharp.useDotnet": false,
-    "fsharp.analysis.unusedDeclaration": false
+    "omnisharp.useDotnet": false
 }
