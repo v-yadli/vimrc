@@ -10,13 +10,10 @@ if has("win32")
     elseif filereadable('C:/Python27/python.exe')
         let g:python_host_prog  = 'C:/Python27/python.exe'
     endif
-else
-    if filereadable(expand('~/anaconda3/bin/python3'))
-        let g:python3_host_prog = '~/anaconda3/bin/python3'
-    endif
 endif
 
 let g:vsim_init = 0
+let g:polyglot_disabled = ['fsharp', 'latex', 'xml', 'v', 'vlang']
 
 " Initialize plugin system
 call plug#begin(g:plugged_dir)
