@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:msb="http://schemas.microsoft.com/developer/msbuild/2003" elementFormDefault="qualified" targetNamespace="http://schemas.microsoft.com/developer/msbuild/2003" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:include schemaLocation="Microsoft.Build.Commontypes.xsd" />
+  <xs:element name="SqlBuildTask" substitutionGroup="msb:Task">
+    <xs:complexType>
+      <xs:complexContent mixed="false">
+        <xs:extension base="msb:TaskType">
+          <xs:attribute name="BuildEngine" />
+          <xs:attribute name="BuildEngine2" />
+          <xs:attribute name="BuildEngine3" />
+          <xs:attribute name="BuildExtensionConfiguration" />
+          <xs:attribute name="CatalogPropertiesFile" type="xs:string" />
+          <xs:attribute name="ContributorArguments" />
+          <xs:attribute name="DacApplicationName" type="xs:string" />
+          <xs:attribute name="DacDescription" type="xs:string" />
+          <xs:attribute name="DacVersion" type="xs:string" />
+          <xs:attribute name="DatabaseSchemaProviderName" type="msb:non_empty_string" use="required" />
+          <xs:attribute name="GenerateCreateScript" />
+          <xs:attribute name="GenerateDac" />
+          <xs:attribute name="GenerateDatabaseFile" />
+          <xs:attribute name="HostObject" />
+          <xs:attribute name="Log" />
+          <xs:attribute name="ModelCollation" type="xs:string" />
+          <xs:attribute name="OutputSQLSchema" use="required" />
+          <xs:attribute name="PostdeployItem" />
+          <xs:attribute name="PredeployItem" />
+          <xs:attribute name="PreserveHeaderComments" type="xs:string" />
+          <xs:attribute name="ServerPropertiesFile" type="xs:string" />
+          <xs:attribute name="Source" />
+          <xs:attribute name="SqlCommandVariablesFile" type="xs:string" />
+          <xs:attribute name="SqlReferencePath" />
+          <xs:attribute name="SqlServerVerification" />
+          <xs:attribute name="SuppressWarnings" type="xs:string" />
+          <xs:attribute name="TreatWarningsAsErrors" />
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SqlClrDeployTask" substitutionGroup="msb:Task">
+    <xs:complexType>
+      <xs:complexContent mixed="false">
+        <xs:extension base="msb:TaskType">
+          <xs:attribute name="AssemblyOwner" type="xs:string" />
+          <xs:attribute name="AssemblyPath" type="msb:non_empty_string" use="required" />
+          <xs:attribute name="BuildEngine" />
+          <xs:attribute name="BuildEngine2" />
+          <xs:attribute name="BuildEngine3" />
+          <xs:attribute name="Code" />
+          <xs:attribute name="ConnectionString" type="xs:string" />
+          <xs:attribute name="DeployScriptPath" type="xs:string" />
+          <xs:attribute name="DeployToDatabase" />
+          <xs:attribute name="DeployToScript" />
+          <xs:attribute name="DropBlockingAssemblies" />
+          <xs:attribute name="HostObject" />
+          <xs:attribute name="IncludeCode" />
+          <xs:attribute name="Log" />
+          <xs:attribute name="PermissionSet" />
+          <xs:attribute name="PostDeploymentScript" type="xs:string" />
+          <xs:attribute name="PreDeploymentScript" type="xs:string" />
+          <xs:attribute name="ProjectFilePath" type="xs:string" />
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SqlDeployTask" substitutionGroup="msb:Task">
+    <xs:complexType>
+      <xs:complexContent mixed="false">
+        <xs:extension base="msb:TaskType">
+          <xs:attribute name="BuildEngine" />
+          <xs:attribute name="BuildEngine2" />
+          <xs:attribute name="BuildEngine3" />
+          <xs:attribute name="ConnectionString" type="xs:string" />
+          <xs:attribute name="ContributorArguments" />
+          <xs:attribute name="DatabaseName" type="xs:string" />
+          <xs:attribute name="DeploymentConfigurationFile" type="xs:string" />
+          <xs:attribute name="DeploymentExtensions" type="xs:string" />
+          <xs:attribute name="DeploymentManifest" />
+          <xs:attribute name="DeployScriptFile" type="xs:string" />
+          <xs:attribute name="DeployToDatabase" />
+          <xs:attribute name="DeployToScript" />
+          <xs:attribute name="HostObject" />
+          <xs:attribute name="Log" />
+          <xs:attribute name="SourceModel" use="required" />
+          <xs:attribute name="SqlCommandVariableOverrides" />
+          <xs:attribute name="SqlCommandVariablesFile" type="xs:string" />
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SqlFindDeploymentScriptTask" substitutionGroup="msb:Task">
+    <xs:complexType>
+      <xs:complexContent mixed="false">
+        <xs:extension base="msb:TaskType">
+          <xs:attribute name="BuildEngine" />
+          <xs:attribute name="BuildEngine2" />
+          <xs:attribute name="BuildEngine3" />
+          <xs:attribute name="FoundScriptPath" type="xs:string" />
+          <xs:attribute name="HostObject" />
+          <xs:attribute name="Log" />
+          <xs:attribute name="ScriptNameToFind" type="xs:string" />
+          <xs:attribute name="ScriptsToSearch" />
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SqlSetupDeployTask" substitutionGroup="msb:Task">
+    <xs:complexType>
+      <xs:complexContent mixed="false">
+        <xs:extension base="msb:TaskType">
+          <xs:attribute name="BuildEngine" />
+          <xs:attribute name="BuildEngine2" />
+          <xs:attribute name="BuildEngine3" />
+          <xs:attribute name="CatalogPropertiesFile" type="xs:string" />
+          <xs:attribute name="ConnectionString" type="xs:string" />
+          <xs:attribute name="DatabaseName" type="msb:non_empty_string" use="required" />
+          <xs:attribute name="DatabaseSchemaProviderName" type="msb:non_empty_string" use="required" />
+          <xs:attribute name="DeployManifestName" type="msb:non_empty_string" use="required" />
+          <xs:attribute name="DeploymentConfigFile" type="xs:string" />
+          <xs:attribute name="DeploymentExtensionConfiguration" />
+          <xs:attribute name="DeploymentExtensions" type="xs:string" />
+          <xs:attribute name="DeploymentFiles" />
+          <xs:attribute name="DeploymentScriptName" type="xs:string" />
+          <xs:attribute name="DeployToDatabase" />
+          <xs:attribute name="DeployToScript" />
+          <xs:attribute name="HostObject" />
+          <xs:attribute name="Log" />
+          <xs:attribute name="OutputDirectory" type="xs:string" />
+          <xs:attribute name="OverwriteExistingFiles" />
+          <xs:attribute name="PostdeployItem" />
+          <xs:attribute name="PredeployItem" />
+          <xs:attribute name="PropertiesFile" />
+          <xs:attribute name="ServerPropertiesFile" type="xs:string" />
+          <xs:attribute name="SourceModel" use="required" />
+          <xs:attribute name="SqlCommandVariablesFile" type="xs:string" />
+          <xs:attribute name="SqlReferencePath" />
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SqlStaticCodeAnalysisTask" substitutionGroup="msb:Task">
+    <xs:complexType>
+      <xs:complexContent mixed="false">
+        <xs:extension base="msb:TaskType">
+          <xs:attribute name="BuildEngine" />
+          <xs:attribute name="BuildEngine2" />
+          <xs:attribute name="BuildEngine3" />
+          <xs:attribute name="CatalogPropertiesFile" type="xs:string" />
+          <xs:attribute name="CodeAnalysisRules" type="xs:string" />
+          <xs:attribute name="DatabaseSchemaProviderName" type="msb:non_empty_string" use="required" />
+          <xs:attribute name="HostObject" />
+          <xs:attribute name="Log" />
+          <xs:attribute name="ModelCollation" type="xs:string" />
+          <xs:attribute name="ProjectFolder" type="msb:non_empty_string" use="required" />
+          <xs:attribute name="ResultsFile" type="xs:string" />
+          <xs:attribute name="ServerPropertiesFile" type="xs:string" />
+          <xs:attribute name="Source" />
+          <xs:attribute name="SqlReferencePath" />
+          <xs:attribute name="StaticCodeAnalysisSucceededFile" type="xs:string" />
+          <xs:attribute name="SuppressWarnings" type="xs:string" />
+          <xs:attribute name="TreatWarningsAsErrors" />
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
