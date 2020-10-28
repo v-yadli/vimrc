@@ -1,0 +1,293 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" 
+           xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+           targetNamespace="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet"
+           xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  
+  <xs:element name="CodeSnippets" xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+    <xs:annotation>
+      <xs:documentation><!-- _locID_text="CodeSnippets" _locComment="" -->Groups CodeSnippet elements. The CodeSnippets element is the root element of the code snippet XML schema.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="CodeSnippet" minOccurs="1" maxOccurs="unbounded"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CodeSnippet" >
+    <xs:annotation>
+      <xs:documentation><!-- _locID_text="CodeSnippet" _locComment="" -->Allows you to specify a heading and multiple IntelliSense Code Snippets, which you can insert into Visual Studio 2005 code files.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Header">
+          <xs:annotation>
+            <xs:documentation><!-- _locID_text="Header" _locComment="" -->Specifies general information about the IntelliSense Code Snippet.</xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:choice maxOccurs="unbounded">
+              <xs:element name="Title" type="xs:string" minOccurs="1" maxOccurs="1">
+                <xs:annotation>
+                  <xs:documentation><!-- _locID_text="Title" _locComment="" -->
+					Specifies the title for the code snippet. The title stored in the Title element of the code snippet appears in the Code Snippet Inserter and in the code snippet's description in the Code Snippets Manager.</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="Author" type="xs:string" minOccurs="0" maxOccurs="1" >
+                <xs:annotation>
+                  <xs:documentation><!-- _locID_text="Author" _locComment="" -->
+					Specifies the name of the snippet author. The Code Snippets Manager displays the code snippet name stored in the Author element of the code snippet.</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="Description" type="xs:string" minOccurs="0" maxOccurs="1" >
+                <xs:annotation>
+                  <xs:documentation><!-- _locID_text="Description" _locComment="" -->
+					Specifies descriptive information about the contents of an IntelliSense Code Snippet.  The text value of the Description element provides a ToolTip for the code snippet in the Code Snippet Inserter and the description for the code snippet in the Code Snippets Manager.</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="HelpUrl" type="xs:string" minOccurs="0" maxOccurs="1" >
+                <xs:annotation>
+                  <xs:documentation><!-- _locID_text="HelpUrl" _locComment="" -->
+					Specifies a URL that provides more information about a code snippet.</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="SnippetTypes" minOccurs="0" maxOccurs="1">
+                <xs:annotation>
+                  <xs:documentation><!-- _locID_text="SnippetTypes" _locComment="" -->Groups individual SnippetType elements.  If the SnippetTypes element is not present, the code snippet can be inserted anywhere in the code.</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element maxOccurs="unbounded" name="SnippetType" >
+                      <xs:annotation>
+                        <xs:documentation><!-- _locID_text="SnippetType" _locComment="" -->Specifies how Visual Studio inserts the code snippet. A value of SurroundsWith allows the code snippet to be placed around a selected piece of code while a value of Expansion allows the code snippet to be inserted at the cursor.</xs:documentation>
+                      </xs:annotation>
+                      <xs:simpleType>
+                        <xs:union>
+                          <xs:simpleType>
+                            <xs:restriction base="xs:string"/>
+                          </xs:simpleType>
+                          <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                              <xs:enumeration value="Expansion" />
+                              <xs:enumeration value="SurroundsWith" />
+                              <xs:enumeration value="Refactoring" />
+                            </xs:restriction>
+                          </xs:simpleType>
+                        </xs:union>
+                      </xs:simpleType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="Keywords" minOccurs="0" maxOccurs="1">
+                <xs:annotation>
+                  <xs:documentation><!-- _locID_text="Keywords" _locComment="" -->Groups individual Keyword elements. The code snippet keywords are used by Visual Studio and represent a standard way for online content providers to add custom keywords.</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element maxOccurs="unbounded" name="Keyword" type="xs:string" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="Shortcut" type="xs:string" minOccurs="0" maxOccurs="1" >
+                <xs:annotation>
+                  <xs:documentation><!-- _locID_text="Shortcut" _locComment="" -->Specifies the shortcut text used to insert the snippet. </xs:documentation>
+                </xs:annotation>
+              </xs:element>
+            </xs:choice>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Snippet">
+          <xs:annotation>
+            <xs:documentation><!-- _locID_text="Snippet" _locComment="" -->Specifies the references, imports, declarations, and code for the code snippet.</xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:choice minOccurs="1" maxOccurs="unbounded">
+              <xs:element name="References" minOccurs="0" maxOccurs="1">
+                <xs:annotation>
+                  <xs:documentation><!-- _locID_text="References" _locComment="" -->Groups individual Reference elements.</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="Reference" maxOccurs="unbounded" >
+                      <xs:complexType>
+                        <xs:choice>
+                          <xs:element name="Assembly" type="xs:string" minOccurs ="1" maxOccurs ="unbounded">
+                            <xs:annotation>
+                              <xs:documentation><!-- _locID_text="Assembly" _locComment="" -->Specifies the name of the assembly referenced by the code snippet. The Assembly element is only supported by Visual Basic code snippets. The text value of the Assembly element is either the friendly text name of the assembly, such as System.dll, or its strong name, such as System,Version=1.0.0.1,Culture=neutral,PublicKeyToken=9b35aa323c18d4fb1.</xs:documentation>
+                            </xs:annotation>
+                          </xs:element>
+                          <xs:element name="Url" type="xs:string" minOccurs="0" maxOccurs="1">
+                            <xs:annotation>
+                              <xs:documentation><!-- _locID_text="Url" _locComment="" -->Specifies a URL that provides more information about the referenced assembly.</xs:documentation>
+                            </xs:annotation>
+                          </xs:element>
+                        </xs:choice>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="Imports" minOccurs="0" maxOccurs="1">
+                <xs:annotation>
+                  <xs:documentation><!-- _locID_text="Imports" _locComment="" -->Groups individual Import elements. </xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="Import" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation><!-- _locID_text="Import" _locComment="" -->Specifies the imported namespaces used by an IntelliSense Code Snippet.</xs:documentation>
+						</xs:annotation>
+                      <xs:complexType>
+                        <xs:sequence>
+							<xs:element name="Namespace" type="xs:string">
+								<xs:annotation>
+									<xs:documentation><!-- _locID_text="Namespace" _locComment="" -->Specifies the namespace of the code snippet.</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="Declarations" minOccurs="0" maxOccurs="1">
+                <xs:annotation>
+                  <xs:documentation><!-- _locID_text="Declarations" _locComment="" -->Specifies the literals and objects that make up the parts of a code snippet that you can edit.</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:choice minOccurs="1" maxOccurs="unbounded">
+                    <xs:element name="Literal">
+                      <xs:annotation>
+                        <xs:documentation><!-- _locID_text="Literal" _locComment="" -->Defines the literals of the code snippet that you can edit.  The Literal element is used to identify a replacement for a piece of code that is entirely contained within the snippet, but will likely be customized after it is inserted into the code. For example, literal strings, numeric values, and some variable names should be declared as literals.</xs:documentation>
+                      </xs:annotation>
+                      <xs:complexType>
+                        <xs:choice minOccurs="1" maxOccurs="unbounded">
+                          <xs:element name="ID" type="xs:string">
+                            <xs:annotation>
+                              <xs:documentation><!-- _locID_text="Literal.ID" _locComment="" -->Specifies a unique identifier for a Literal or Object element.</xs:documentation>
+                            </xs:annotation>
+                          </xs:element>
+                          <xs:element name="Type" type="xs:string" minOccurs="0" maxOccurs="1">
+                            <xs:annotation>
+                              <xs:documentation><!-- _locID_text="Literal.Type" _locComment="" -->Specifies the type of the object.</xs:documentation>
+                            </xs:annotation>	
+                          </xs:element>
+                          <xs:element name="ToolTip" type="xs:string" minOccurs="0" maxOccurs="1">
+                            <xs:annotation>
+                              <xs:documentation><!-- _locID_text="Literal.ToolTip" _locComment="" -->Describes the expected value and usage of a literal or object in a code snippet, which Visual Studio displays in a ToolTip when it inserts the code snippet into a project.</xs:documentation>
+                            </xs:annotation>
+                          </xs:element>
+                          <xs:element name="Default" type="xs:string">
+                            <xs:annotation>
+                              <xs:documentation><!-- _locID_text="Literal.Default" _locComment="" -->Specifies the default value of the literal or object for an IntelliSense Code Snippet.</xs:documentation>
+                            </xs:annotation>
+                          </xs:element>
+							<xs:element name="Function" type="xs:string" minOccurs="0" maxOccurs="1">
+								<xs:annotation>
+									<xs:documentation><!-- _locID_text="Literal.Function" _locComment="" -->Specifies a function to execute when the literal or object receives focus in Visual Studio.</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+                        </xs:choice>
+                        <xs:attribute name="Editable" type="xs:boolean" use="optional" >
+                          <xs:annotation>
+                            <xs:documentation><!-- _locID_text="Literal.Editable" _locComment="" -->Specifies whether or not you can edit the literal after the code snippet is inserted. The default value of this attribute is true.</xs:documentation>
+                          </xs:annotation>
+                        </xs:attribute>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="Object">
+                      <xs:annotation>
+                        <xs:documentation><!-- _locID_text="Object" _locComment="" -->Defines the objects of the code snippet that you can edit.</xs:documentation>
+                      </xs:annotation>
+                      <xs:complexType>
+                        <xs:choice minOccurs="1" maxOccurs="unbounded">
+                          <xs:element name="ID" type="xs:string" >
+                            <xs:annotation>
+                              <xs:documentation><!-- _locID_text="Object.ID" _locComment="" -->Specifies a unique identifier for a Literal or Object element.</xs:documentation>
+                            </xs:annotation>
+                          </xs:element>
+                          <xs:element name="Type" type="xs:string" minOccurs="1" maxOccurs="1">
+                            <xs:annotation>
+                              <xs:documentation><!-- _locID_text="Object.Type" _locComment="" -->Required. Specifies the type of the object.</xs:documentation>
+                            </xs:annotation>
+                          </xs:element>
+                          <xs:element name="ToolTip" type="xs:string" minOccurs="0" maxOccurs="1">
+                            <xs:annotation>
+								<xs:documentation><!-- _locID_text="Object.Tooltip" _locComment="" -->Describes the expected value and usage of a literal or object in a code snippet, which Visual Studio displays in a ToolTip when it inserts the code snippet into a project.</xs:documentation>
+							</xs:annotation>
+                          </xs:element>
+                          <xs:element name="Default" type="xs:string" >
+                            <xs:annotation>
+                              <xs:documentation><!-- _locID_text="Object.Default" _locComment="" -->Specifies the default value of the literal or object for an IntelliSense Code Snippet. This text specifies the default value of the literal or object that fills the fields of the code snippet that you can edit.</xs:documentation>
+                            </xs:annotation>
+                          </xs:element>
+							<xs:element name="Function" type="xs:string" minOccurs="0" maxOccurs="1">
+								<xs:annotation>
+									<xs:documentation><!-- _locID_text="Function" _locComment="" -->
+										Specifies a function to execute when the literal or object receives focus in Visual Studio.
+									</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+                        </xs:choice>
+                        <xs:attribute name="Editable" type="xs:boolean" use="optional" >
+                        <xs:annotation>
+                            <xs:documentation><!-- _locID_text="Object.Editable" _locComment="" -->Specifies whether or not the object can be edited after the code snippet is inserted. The default value of this attribute is true.</xs:documentation>
+                        </xs:annotation>
+                        </xs:attribute>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:choice>
+                </xs:complexType>
+              </xs:element>
+              <xs:element minOccurs="1" maxOccurs="1" name="Code">
+                <xs:annotation>
+                  <xs:documentation><!-- _locID_text="Code" _locComment="" -->Provides a container the short code blocks of IntelliSense Code Snippets.</xs:documentation>
+                </xs:annotation>
+                <xs:complexType mixed="true">
+                  <xs:attribute name="Language" use="required">
+                    <xs:annotation>
+                      <xs:documentation><!-- _locID_text="Language" _locComment="" -->Specifies the language of the code snippet. The values available are VB, CSharp, VJSharp, or XML.</xs:documentation>
+                    </xs:annotation>
+                    <xs:simpleType>
+                      <xs:union>
+                        <xs:simpleType>
+                          <xs:restriction base="xs:string"/>
+                        </xs:simpleType>
+                        <xs:simpleType>
+                          <xs:restriction base="xs:string">
+                            <xs:enumeration value="VB" />
+                            <xs:enumeration value="CSharp" />
+                            <xs:enumeration value="VJSharp" />
+                            <xs:enumeration value="XML" />
+                          </xs:restriction>
+                        </xs:simpleType>
+                      </xs:union>
+                    </xs:simpleType>
+                  </xs:attribute>
+                  <xs:attribute name="Kind"  use="optional" >
+                    <xs:annotation>
+                      <xs:documentation><!-- _locID_text="Kind" _locComment="" -->Specifies the kind of code the snippet contains. This attribute filters out snippets based on the current location in the code</xs:documentation>
+                    </xs:annotation>
+                    <xs:simpleType>
+                      <xs:restriction base="xs:string"/>
+                    </xs:simpleType>
+                  </xs:attribute>
+                  <xs:attribute name="Delimiter" type="xs:string" use="optional" >
+                    <xs:annotation>
+						<xs:documentation><!-- _locID_text="Delimiter" _locComment="" --> Specifies the delimiter used to describe literals and objects in the code. By default, the delimiter is $.</xs:documentation>
+                    </xs:annotation>
+                  </xs:attribute>
+                </xs:complexType>
+              </xs:element>
+            </xs:choice>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+		<xs:attribute name="Format" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation><!-- _locID_text="Format" _locComment="" -->Specifies the schema version of the code snippet. The Format attribute must be a string in the syntax of x.x.x, where each "x" represents a numerical value of the version number. Visual Studio will ignore code snippets with Format attributes that it does not understand.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

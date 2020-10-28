@@ -110,9 +110,6 @@ Plug 'panozzaj/vim-autocorrect'
 " Initialize plugin system finish
 call plug#end()
 
-let g:polyglot_disabled = ['fsharp', 'latex', 'xml', 'v', 'vlang']
-
-
 filetype plugin indent on
 
 set nowrap
@@ -503,6 +500,10 @@ let g:coc_global_extensions=[
             \ ]
 " \ 'coc-sh',
 " \ 'coc-vimtex',
+"
+let g:coc_filetype_map = {
+            \ 'xslt': 'xml',
+            \ }
 
 "set runtimepath^=F:/git/coc-powershell
 "set runtimepath^=F:/git/coc-omnisharp
@@ -749,6 +750,16 @@ function! VsimToggleColor()
 
     if exists('g:fvim_loaded')
         FVimFontNormalWeight (l:bg == 'dark') ? 300 : 400
+    endif
+
+    if l:bg == 'dark'
+        hi LspCxxHlGroupEnumConstant ctermfg=Magenta guifg=#AD7FA8 cterm=none gui=none
+        hi LspCxxHlGroupNamespace ctermfg=Yellow guifg=#BBBB00 cterm=none gui=none
+        hi LspCxxHlGroupMemberVariable ctermfg=White guifg=White
+    else
+        hi LspCxxHlGroupEnumConstant ctermfg=Magenta guifg=#573F54 cterm=none gui=none
+        hi LspCxxHlGroupNamespace ctermfg=Yellow guifg=#3D3D00 cterm=none gui=none
+        hi LspCxxHlGroupMemberVariable ctermfg=Black guifg=Black
     endif
     
     call VsimEcho("Current theme: ". l:theme)

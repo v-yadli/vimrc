@@ -16,13 +16,24 @@
       "cpp": ["c"],
       "typescript": ["javascript"]
     },
-    "explorer.icon.enableVimDevicons": true,
+    "explorer.icon.enableVimDevicons": false,
     "explorer.icon.enableNerdfont": true,
     "explorer.previewAction.onHover": false,
     "explorer.width": 30,
     "explorer.keyMappings": {
       "<space>": "toggleSelection"
     },
+    "xml.fileAssociations": [
+        {
+            "systemId": "https://raw.githubusercontent.com/dotnet/msbuild/master/src/MSBuild/Microsoft.Build.xsd",
+            "pattern": "**/*.fsproj"
+        },
+        {
+            "systemId": "https://raw.githubusercontent.com/dotnet/msbuild/master/src/MSBuild/Microsoft.Build.xsd",
+            "pattern": "**/*.csproj"
+        }
+    ],
+    "xml.logs.client": false,
     "latex.build.executable": "latexmk",
     "latex.build.args": ["-xelatex"],
     "latex.lint.onSave": true,
@@ -45,5 +56,6 @@
     "coc.preferences.extensionUpdateCheck":"weekly",
     "powershell.integratedConsole.focusConsoleOnExecute": false,
     "powershell.integratedConsole.showOnStartup": false,
-    "omnisharp.useDotnet": false
+    "omnisharp.useDotnet": false,
+    "http.proxy":"localhost:1080"
 }
