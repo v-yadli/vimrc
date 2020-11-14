@@ -53,9 +53,7 @@ Plug 'Yggdroot/indentLine'
 Plug 'fidian/hexmode'
 Plug 'derekwyatt/vim-fswitch'
 
-if exists("g:fvim_loaded")
-    Plug 'ryanoasis/vim-devicons'
-endif
+Plug 'ryanoasis/vim-devicons'
 
 " colorschemes
 " Plug 'morhetz/gruvbox'
@@ -67,6 +65,7 @@ Plug 'Shougo/neco-vim'
 Plug 'neoclide/coc-neco'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'jackguo380/vim-lsp-cxx-highlight'
+ 
 
 " Utilities -- Things that I do love to issue Ex commands to utilize
 Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
