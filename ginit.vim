@@ -23,11 +23,13 @@ elseif exists('g:fvim_loaded')
     FVimCustomTitleBar v:true
     FVimFontNormalWeight 300
     FVimFontBoldWeight 600
-    set guifont=Iosevka\ Slab:h14
+    set guifont=Iosevka\ Slab:h16
     nnoremap <silent> <C-ScrollWheelUp> :set guifont=+<CR>
     nnoremap <silent> <C-ScrollWheelDown> :set guifont=-<CR>
     nnoremap <silent> <C-S-ScrollWheelUp> :set guifont=.+<CR>
     nnoremap <silent> <C-S-ScrollWheelDown> :set guifont=.-<CR>
+    nnoremap <silent> <C--> :set guifont=-<CR>
+    nnoremap <silent> <C-+> :set guifont=+<CR>
     FVimCursorSmoothBlink v:true 
     FVimCursorSmoothMove v:true
     FVimKeyDisableShiftSpace v:true
