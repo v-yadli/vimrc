@@ -10,6 +10,13 @@ if has("win32")
     elseif filereadable('C:/Python27/python.exe')
         let g:python_host_prog  = 'C:/Python27/python.exe'
     endif
+    if filereadable('F:/anaconda3/python.exe')
+      let g:python3_host_prog  = 'F:/anaconda3/python.exe'
+    endif
+else
+    if filereadable(expand('~/anaconda3/bin/python3'))
+        let g:python3_host_prog = '~/anaconda3/bin/python3'
+    endif
 endif
 
 let g:vsim_init = 0
@@ -389,6 +396,7 @@ let g:airline_exclude_filetypes = ["list"]
 
 let g:indentLine_char_list = [ '┆', '┊']
 let g:indentLine_leadingSpaceChar = '·'
+let g:indentLine_fileTypeExclude = ['coc-explorer', 'neoterm']
 
 let g:startify_session_persistence = 1
 let g:startify_session_autoload = 1
