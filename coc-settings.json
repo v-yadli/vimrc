@@ -63,7 +63,5 @@
     "coc.preferences.extensionUpdateCheck":"weekly",
     "powershell.integratedConsole.focusConsoleOnExecute": false,
     "powershell.integratedConsole.showOnStartup": false,
-    "omnisharp.trace.server": "verbose",
-    "omnisharp.debug.server": false,
-    "http.proxy":"http://localhost:1080"
+    "fsharp.analysis.unusedDeclaration": false
 }
