@@ -27,7 +27,7 @@
     "FSharp.Linter": false,
     "xml.fileAssociations": [
         {
-            "systemId": "C:/Users/Yatao/AppData/Local/nvim/xsd/MSBuild/Microsoft.Build.Commontypes.xsd",
+            "systemId": "https://raw.githubusercontent.com/dotnet/msbuild/master/src/MSBuild/Microsoft.Build.xsd",
             "pattern": "**/*.fsproj"
         },
         {
@@ -44,7 +44,7 @@
     "latex.build.executable": "latexmk",
     "latex.build.args": ["-xelatex"],
     "latex.lint.onSave": true,
-    "python.jediEnabled": true,
+    "python.jediEnabled": false,
     "python.linting.enabled": false,
     "python.linting.pylintEnabled": false,
     "python.linting.pep8Enabled": true,
@@ -61,9 +61,9 @@
     "coc.preferences.currentFunctionSymbolAutoUpdate": true,
     "coc.preferences.useQuickfixForLocations": false,
     "coc.preferences.extensionUpdateCheck":"weekly",
+    "coc.preferences.enableMarkdown": true,
+    "coc.preferences.colorSupport": true,
     "powershell.integratedConsole.focusConsoleOnExecute": false,
     "powershell.integratedConsole.showOnStartup": false,
-    "omnisharp.trace.server": "verbose",
-    "omnisharp.debug.server": false,
-    "http.proxy":"http://localhost:1080"
+    "omnisharp.trace.server": "verbose"
 }

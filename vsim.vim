@@ -32,7 +32,6 @@ Plug 'roxma/vim-tmux-clipboard'
 Plug 'tmux-plugins/vim-tmux-focus-events'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'scrooloose/nerdcommenter'
-" Plug 'lervag/vimtex'
 Plug 'junegunn/vim-easy-align'
 Plug 'vim-scripts/LargeFile'
 Plug 'guns/vim-sexp'
@@ -41,7 +40,6 @@ Plug 'v-yadli/vim-tsl'
 Plug 'yatli/sleigh.vim'
 Plug 'kshenoy/vim-signature'          " displays marks in the gutter (sign column)
 Plug 'mhinz/vim-signify'              " displays changes in the gutter
-Plug 'yatli/vmux.vim'
 Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-fugitive'
@@ -53,26 +51,32 @@ Plug 'Yggdroot/indentLine'
 Plug 'fidian/hexmode'
 Plug 'derekwyatt/vim-fswitch'
 
-Plug 'ryanoasis/vim-devicons'
-
 " colorschemes
 " Plug 'morhetz/gruvbox'
 " Plug 'fenetikm/falcon'
 " Plug 'NLKNguyen/papercolor-theme'
 
 " mighty coc.nvim
-Plug 'Shougo/neco-vim'
-Plug 'neoclide/coc-neco'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'jackguo380/vim-lsp-cxx-highlight'
- 
+Plug 'Shougo/neco-vim'
+Plug 'neoclide/coc-neco'
 
 " Utilities -- Things that I do love to issue Ex commands to utilize
 Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
+
 " Laborotary -- Things I'd love to know more about
 if g:vsim_environment=="neovim"
+    Plug 'kyazdani42/nvim-web-devicons'
     Plug 'kassio/neoterm'
+    Plug 'romgrk/barbar.nvim'
+    Plug 'yatli/vmux.vim'
+else
+    Plug 'ryanoasis/vim-devicons'
+    Plug 'yatli/vmux.vim'
 endif
+
+
 Plug 'godlygeek/tabular'              " Required by vim-markdown
 Plug 'plasticboy/vim-markdown'
 Plug 'gyim/vim-boxdraw'
@@ -98,6 +102,7 @@ Plug 'honza/vim-snippets'
 " Plug 'puremourning/vimspector'    <--- doesn't work well with NeoVim
 " Plug 'scrooloose/nerdtree',       <--- replaced by coc-explorer
 " Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+" Plug 'lervag/vimtex'
 "
 " -------------- BEGIN legacy programming environment.. ----------------
 "  They never pulled it together well.. Really.
@@ -176,6 +181,12 @@ if g:vsim_environment == 'neovim'
 else
     let g:vsim_latexmk_backend = 'jobs'
 endif
+
+" disable header folding
+let g:vim_markdown_folding_disabled = 1
+
+" do not use conceal feature, the implementation is not so good
+let g:vim_markdown_conceal = 0
 
 " let g:vimtex_view_general_viewer = 'SumatraPDF'
 " let g:vimtex_view_general_options
@@ -267,6 +278,7 @@ set completeopt=longest,menuone,preview
 " Coc settings
 " -- use <c-space>for trigger completion
 inoremap <silent><expr> <c-space> coc#refresh()
+
 " -- use <Tab> and <S-Tab> for navigate completion list:
 inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
@@ -352,10 +364,14 @@ let g:airline#extensions#branch#enabled = 1
 let g:airline_detect_spell=1
 let g:airline_detect_spelllang=1
 let g:airline_exclude_preview = 1
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#buffer_nr_show = 1
-let g:airline#extensions#tabline#buffer_nr_format = '%s: '
-let g:airline#extensions#tabline#fnamemod = ':t'
+if g:vsim_environment=="neovim"
+    " use barbar
+else
+    let g:airline#extensions#tabline#enabled = 1
+    let g:airline#extensions#tabline#buffer_nr_show = 1
+    let g:airline#extensions#tabline#buffer_nr_format = '%s: '
+    let g:airline#extensions#tabline#fnamemod = ':t'
+endif
 set ttimeoutlen=50
 
 " create airline parts for coc server status & coc_current_function
@@ -424,7 +440,6 @@ function! VsimProgrammerMode()
     set updatetime=300
     set signcolumn=yes
     autocmd! CursorHold  * silent call CocActionAsync('highlight')
-    autocmd! CursorHoldI * silent call CocActionAsync('showSignatureHelp')
     autocmd! User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
 
     setlocal nobackup
@@ -540,7 +555,7 @@ cnoreabbrev Qall qall
 
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.db,*.sqlite
 
-" Tmux navigation settings
+" navigation settings
 let g:tmux_navigator_no_mappings = 1
 
 nnoremap <silent> <A-h> :TmuxNavigateLeft<cr>
@@ -561,20 +576,77 @@ inoremap <silent> <A-k> <C-O>:TmuxNavigateUp<cr>
 inoremap <silent> <A-l> <C-O>:TmuxNavigateRight<cr>
 inoremap <silent> <A-/> <C-O>:TmuxNavigatePrevious<cr>
 
-nnoremap <silent> <C-A-h> <C-w>H
-nnoremap <silent> <C-A-j> <C-w>J
-nnoremap <silent> <C-A-k> <C-w>K
-nnoremap <silent> <C-A-l> <C-w>L
+if g:vsim_environment=="neovim"
+    let g:vmux_no_default_bindings=1
+    " Magic buffer-picking mode
+    nnoremap <silent> <A-f> :BufferPick<CR>
+    " Sort automatically by...
+    nnoremap <silent> <Space>bd :BufferOrderByDirectory<CR>
+    nnoremap <silent> <Space>bl :BufferOrderByLanguage<CR>
+    " Re-order to previous/next
+    nnoremap <silent>    <A-,> :BufferMovePrevious<CR>
+    nnoremap <silent>    <A-.> :BufferMoveNext<CR>
+    " Goto buffer in position...
+    nnoremap <silent>    <A-1> :BufferGoto 1<CR>
+    nnoremap <silent>    <A-2> :BufferGoto 2<CR>
+    nnoremap <silent>    <A-3> :BufferGoto 3<CR>
+    nnoremap <silent>    <A-4> :BufferGoto 4<CR>
+    nnoremap <silent>    <A-5> :BufferGoto 5<CR>
+    nnoremap <silent>    <A-6> :BufferGoto 6<CR>
+    nnoremap <silent>    <A-7> :BufferGoto 7<CR>
+    nnoremap <silent>    <A-8> :BufferGoto 8<CR>
+    nnoremap <silent>    <A-9> :BufferLast<CR>
 
-nnoremap <silent> <A-1> :1b<cr>
-nnoremap <silent> <A-2> :2b<cr>
-nnoremap <silent> <A-3> :3b<cr>
-nnoremap <silent> <A-4> :4b<cr>
-nnoremap <silent> <A-5> :5b<cr>
-nnoremap <silent> <A-6> :6b<cr>
-nnoremap <silent> <A-7> :7b<cr>
-nnoremap <silent> <A-8> :8b<cr>
-nnoremap <silent> <A-9> :9b<cr>
+    " Quick buffer switch
+    nmap <silent><expr> <A-n> &buftype=="terminal" ? "<Plug>(vmux-buf-next)" : ":BufferNext<CR>"
+    nmap <silent><expr> <A-p> &buftype=="terminal" ? "<Plug>(vmux-buf-prev)" : ":BufferPrevious<CR>"
+    nmap <silent><expr> <A-w> &buftype=="terminal" ? "<Plug>(vmux-buf-kill)" : ":BufferClose<CR>"
+    tmap <silent> <A-n> <C-\><C-N><Plug>(vmux-buf-next)
+    tmap <silent> <A-p> <C-\><C-N><Plug>(vmux-buf-prev)
+    tmap <silent> <A-w> <C-\><C-N><Plug>(vmux-buf-kill)
+
+    " Quick window split
+    nmap <A-s> <Plug>(vmux-split-horizontal)
+    nmap <A-v> <Plug>(vmux-split-vertical)
+    nmap <A-q> <Plug>(vmux-split-close)
+
+    tmap <A-s> <C-\><C-N><Plug>(vmux-split-horizontal)
+    tmap <A-v> <C-\><C-N><Plug>(vmux-split-vertical)
+    tmap <A-q> <C-\><C-N><Plug>(vmux-split-close)
+
+    " Show/hide terminals
+    imap <F11> <C-O><Plug>(vmux-term-toggle)
+    vmap <F11> <C-O><Plug>(vmux-term-toggle)
+    nmap <F11> <Plug>(vmux-term-toggle)
+    tmap <F11> <C-\><C-n><Plug>(vmux-term-toggle)
+
+    " Quick window resize
+    nmap <A-Up>    <Plug>(vmux-resize-up)
+    nmap <A-Down>  <Plug>(vmux-resize-down)
+    nmap <A-Left>  <Plug>(vmux-resize-left)
+    nmap <A-Right> <Plug>(vmux-resize-right)
+
+    tmap <A-Up>    <C-\><C-N><Plug>(vmux-resize-up)i
+    tmap <A-Down>  <C-\><C-N><Plug>(vmux-resize-down)i
+    tmap <A-Left>  <C-\><C-N><Plug>(vmux-resize-left)i
+    tmap <A-Right> <C-\><C-N><Plug>(vmux-resize-right)i
+
+    " Tabs navigation
+    nnoremap <C-A-t> :tabnew<CR>
+    nnoremap <C-A-q> :tabclose<CR>
+    nnoremap <C-A-n> :tabnext<CR>
+    nnoremap <C-A-p> :tabprevious<CR>
+else
+    nnoremap <silent> <A-1> :1b<cr>
+    nnoremap <silent> <A-2> :2b<cr>
+    nnoremap <silent> <A-3> :3b<cr>
+    nnoremap <silent> <A-4> :4b<cr>
+    nnoremap <silent> <A-5> :5b<cr>
+    nnoremap <silent> <A-6> :6b<cr>
+    nnoremap <silent> <A-7> :7b<cr>
+    nnoremap <silent> <A-8> :8b<cr>
+    nnoremap <silent> <A-9> :9b<cr>
+endif
 
 if has("persistent_undo")
     set undodir=~/.undodir/
@@ -650,8 +722,7 @@ endfunction
 "{{{
 
 " <C-backspace> binding
-imap <C-BS> <C-o>"_db<C-o>"_x
-
+imap <C-BS> <C-\><C-o>db
 
 " nmap <F6> :make<CR>
 

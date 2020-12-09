@@ -37,8 +37,8 @@ elseif exists('g:fvim_loaded')
     " FVimUIMultiGrid v:false
     FVimUIWildMenu v:false
     FVimCustomTitleBar v:true
-    FVimBackgroundComposition 'none'
-    FVimBackgroundOpacity 0.85
+    FVimBackgroundComposition 'transparent'
+    FVimBackgroundOpacity 0.95
     FVimBackgroundAltOpacity 1.0
     FVimBackgroundImage g:vsim_config_dir.'/image/RIM.png'
     FVimBackgroundImageOpacity 0.3
