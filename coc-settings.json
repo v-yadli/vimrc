@@ -25,6 +25,7 @@
     },
     "FSharp.UseSdkScripts": true,
     "FSharp.Linter": false,
+    "fsharp.analysis.unusedDeclaration": false,
     "xml.fileAssociations": [
         {
             "systemId": "https://raw.githubusercontent.com/dotnet/msbuild/master/src/MSBuild/Microsoft.Build.xsd",
