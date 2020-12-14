@@ -23,7 +23,7 @@ elseif exists('g:fvim_loaded')
     FVimCustomTitleBar v:true
     FVimFontNormalWeight 300
     FVimFontBoldWeight 600
-    set guifont=Iosevka\ Slab:h16
+    set guifont=Iosevka\ Slab:h14
     nnoremap <silent> <C-ScrollWheelUp> :set guifont=+<CR>
     nnoremap <silent> <C-ScrollWheelDown> :set guifont=-<CR>
     nnoremap <silent> <C-S-ScrollWheelUp> :set guifont=.+<CR>
@@ -37,7 +37,7 @@ elseif exists('g:fvim_loaded')
     " FVimUIMultiGrid v:false
     FVimUIWildMenu v:false
     FVimCustomTitleBar v:true
-    FVimBackgroundComposition 'transparent'
+    FVimBackgroundComposition 'acrylic'
     FVimBackgroundOpacity 0.95
     FVimBackgroundAltOpacity 1.0
     FVimBackgroundImage g:vsim_config_dir.'/image/RIM.png'

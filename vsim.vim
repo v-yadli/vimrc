@@ -36,20 +36,17 @@ Plug 'junegunn/vim-easy-align'
 Plug 'vim-scripts/LargeFile'
 Plug 'guns/vim-sexp'
 Plug 'bohlender/vim-smt2'
-Plug 'v-yadli/vim-tsl'
-Plug 'yatli/sleigh.vim'
 Plug 'kshenoy/vim-signature'          " displays marks in the gutter (sign column)
 Plug 'mhinz/vim-signify'              " displays changes in the gutter
 Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-fugitive'
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'junegunn/fzf.vim'
-Plug 'tweekmonster/startuptime.vim'
 Plug 'mhinz/vim-startify'
 Plug 'Yggdroot/indentLine'
-Plug 'fidian/hexmode'
 Plug 'derekwyatt/vim-fswitch'
+Plug 'v-yadli/vim-tsl'
+Plug 'yatli/sleigh.vim'
+Plug 'yatli/vmux.vim'
 
 " colorschemes
 " Plug 'morhetz/gruvbox'
@@ -63,24 +60,29 @@ Plug 'Shougo/neco-vim'
 Plug 'neoclide/coc-neco'
 
 " Utilities -- Things that I do love to issue Ex commands to utilize
+Plug 'fidian/hexmode', { 'on': 'Hexmode' }
 Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
+Plug 'tweekmonster/startuptime.vim', { 'on': 'StartupTime' }
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
 
 " Laborotary -- Things I'd love to know more about
-if g:vsim_environment=="neovim"
-    Plug 'kyazdani42/nvim-web-devicons'
-    Plug 'kassio/neoterm'
-    Plug 'romgrk/barbar.nvim'
-    Plug 'yatli/vmux.vim'
-else
-    Plug 'ryanoasis/vim-devicons'
-    Plug 'yatli/vmux.vim'
-endif
-
-
+Plug 'jaawerth/fennel-nvim', { 'branch': 'dev' }
+" Plug 'Olical/aniseed', { 'tag': 'v3.11.0' }
+Plug 'bakpakin/fennel.vim'
+Plug 'puremourning/vimspector'
 Plug 'godlygeek/tabular'              " Required by vim-markdown
 Plug 'plasticboy/vim-markdown'
 Plug 'gyim/vim-boxdraw'
 Plug 'honza/vim-snippets'
+
+if g:vsim_environment=="neovim"
+    Plug 'kyazdani42/nvim-web-devicons'
+    Plug 'kassio/neoterm'
+    Plug 'romgrk/barbar.nvim'
+else
+    Plug 'ryanoasis/vim-devicons'
+endif
 
 " Junkyard -- things that do not work for me, or never found useful.
 " Plug 'reedes/vim-pencil'          <--- not working anymore
@@ -231,11 +233,11 @@ let g:airline_theme = 'falcon'
 "let g:airline_theme='tomorrow'
 "let g:airline_theme='gruvbox'
 
-"colorscheme Tomorrow-Night-Blue
+colorscheme Tomorrow-Night-Blue
 "colorscheme PaperColor
 let g:gruvbox_invert_selection=0
 "colorscheme gruvbox
-colorscheme falcon
+"colorscheme falcon
 "colorscheme pencil
 set guicursor=n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50
   \,a:blinkwait100-blinkoff500-blinkon500-Cursor/lCursor
@@ -536,22 +538,7 @@ nmap <C-tab> :bn<CR>
 nmap <C-S-tab> :bp<CR>
 
 autocmd FileType vim nnoremap <buffer> <S-K> :call VimrcGetHelp()<CR>
-autocmd FileType c,cpp,typescript,javascript,json,ps1,psm1,psd1,fsharp,cs,python,vim,xml,sh,cuda,verilog,vue,tex call VsimProgrammerMode()
-
-"*****************************************************************************
-"" Abbreviations
-"*****************************************************************************
-"" no one is really happy until you have this shortcuts
-cnoreabbrev W! w!
-cnoreabbrev Q! q!
-cnoreabbrev Qall! qall!
-cnoreabbrev Wq wq
-cnoreabbrev Wa wa
-cnoreabbrev wQ wq
-cnoreabbrev WQ wq
-cnoreabbrev W w
-cnoreabbrev Q q
-cnoreabbrev Qall qall
+autocmd FileType c,cpp,typescript,javascript,json,ps1,psm1,psd1,fsharp,cs,python,vim,xml,sh,cuda,verilog,vue,tex,lua,fnl call VsimProgrammerMode()
 
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.db,*.sqlite
 
@@ -581,8 +568,9 @@ if g:vsim_environment=="neovim"
     " Magic buffer-picking mode
     nnoremap <silent> <A-f> :BufferPick<CR>
     " Sort automatically by...
-    nnoremap <silent> <Space>bd :BufferOrderByDirectory<CR>
-    nnoremap <silent> <Space>bl :BufferOrderByLanguage<CR>
+    "   -- note, conflict with za
+    "   nnoremap <silent> <Space>bd :BufferOrderByDirectory<CR>
+    "   nnoremap <silent> <Space>bl :BufferOrderByLanguage<CR>
     " Re-order to previous/next
     nnoremap <silent>    <A-,> :BufferMovePrevious<CR>
     nnoremap <silent>    <A-.> :BufferMoveNext<CR>
@@ -808,6 +796,8 @@ let s:vsim_theme_idx     = 0
 let s:vsim_theme_name    = ['falcon', 'gruvbox', 'gruvbox', 'Tomorrow', 'Tomorrow-Night', 'Tomorrow-Night-Blue', 'pencil', 'pencil', 'colorzone', 'PaperColor', 'PaperColor']
 let s:vsim_theme_bg      = ['dark',   'dark',    'light',   'light',    'dark',           'dark',                'light',  'dark',   'light',     'light',      'dark']
 let s:vsim_theme_airline = ['falcon', 'gruvbox', 'gruvbox', 'tomorrow', 'tomorrow',       'tomorrow',            '',       '',       '',          'papercolor', 'papercolor']
+
+autocmd TermOpen * if g:colors_name == g:vsim_termbg | setlocal winhighlight=Normal:VsimTermBackground | endif
 
 function! VsimToggleColor()
     let s:vsim_theme_idx = s:vsim_theme_idx + 1
