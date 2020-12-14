@@ -429,8 +429,8 @@ let g:startify_session_before_save = [
 """ Register a prefix-based key
 function! s:vsim_key(prefix, key, cmd)
     let key = len(a:key) == 1 ? a:key : '<'.a:key.'>'
-    execute 'nmap <silent> <buffer> <C-'.a:prefix.'>'.key.' '.a:cmd
-    execute 'nmap <silent> <buffer> <C-'.a:prefix.'><C-'.a:key.'> '.a:cmd
+    execute 'nnoremap <silent> <buffer> <C-'.a:prefix.'>'.key.' '.a:cmd
+    execute 'nnoremap <silent> <buffer> <C-'.a:prefix.'><C-'.a:key.'> '.a:cmd
 endfunction
 
 """ Register a coc key
@@ -439,6 +439,16 @@ function! s:coc_key(key,cmd)
 endfunction
 
 function! VsimDebuggerMode()
+    nunmap <F5>
+    nunmap <S-F5>
+    nunmap <C-S-F5>
+    nunmap <F6>
+    nunmap <ins>
+    nunmap <F10>
+    nunmap <S-F10>
+    nunmap <F11>
+    nunmap <S-F11>
+
     nmap <F5> <Plug>VimspectorContinue
     nmap <S-F5> <Plug>VimspectorStop
     nmap <C-S-F5> <Plug>VimspectorRestart
@@ -461,16 +471,16 @@ function! VsimProgrammerMode()
     setlocal nowritebackup
 
     setl formatexpr=CocAction('formatSelection')
-    vmap <buffer> <C-e><C-d> <Plug>(coc-format-selected)
-    nmap <buffer> <C-e><C-d> :call CocAction('format')<CR>
-    vmap <buffer> <C-e>d     <Plug>(coc-format-selected)
-    nmap <buffer> <C-e>d     :call CocAction('format')<CR>
+    vnoremap <buffer> <C-e><C-d> <Plug>(coc-format-selected)
+    nnoremap <buffer> <C-e><C-d> :call CocAction('format')<CR>
+    vnoremap <buffer> <C-e>d     <Plug>(coc-format-selected)
+    nnoremap <buffer> <C-e>d     :call CocAction('format')<CR>
 
-    nmap <buffer> <C-.>      <Plug>(coc-codeaction)
-    vmap <buffer> <C-.>      <Plug>(coc-codeaction-selected)
+    nnoremap <buffer> <C-.>      <Plug>(coc-codeaction)
+    vnoremap <buffer> <C-.>      <Plug>(coc-codeaction-selected)
 
     if &filetype != 'vim'
-        nmap <silent> <buffer> <S-K>      :call CocActionAsync('doHover')<CR>
+        nnoremap <silent> <buffer> <S-K>      :call CocActionAsync('doHover')<CR>
     endif
 
     if &filetype == 'fsharp' || &filetype == 'vim'
@@ -478,30 +488,30 @@ function! VsimProgrammerMode()
     endif
 
     if &filetype == 'ps1'
-        nmap <buffer> <F5> :CocCommand powershell.execute<CR>
-        nmap <buffer> <F8> :CocCommand powershell.evaluateLine<CR>
-        vmap <buffer> <F8> :<C-u>CocCommand powershell.evaluateSelection<CR>
+        nnoremap <buffer> <F5> :CocCommand powershell.execute<CR>
+        nnoremap <buffer> <F8> :CocCommand powershell.evaluateLine<CR>
+        vnoremap <buffer> <F8> :<C-u>CocCommand powershell.evaluateSelection<CR>
     endif
 
     if &filetype == 'fsharp'
-        nmap <buffer> <F5> :CocCommand fsharp.run<CR>
-        nmap <buffer> <F8> :CocCommand fsharp.evaluateLine<CR>
-        vmap <buffer> <F8> :<C-u>CocCommand fsharp.evaluateSelection<CR>
+        nnoremap <buffer> <F5> :CocCommand fsharp.run<CR>
+        nnoremap <buffer> <F8> :CocCommand fsharp.evaluateLine<CR>
+        vnoremap <buffer> <F8> :<C-u>CocCommand fsharp.evaluateSelection<CR>
     endif
 
-    nmap <silent> <buffer> <F1>       :call CocActionAsync('doHover')<CR>
+    nnoremap <silent> <buffer> <F1>       :call CocActionAsync('doHover')<CR>
 
-    nmap <buffer> <F2>                <Plug>(coc-rename)
-    nmap <silent> <buffer> <F12>      <Plug>(coc-definition)
-    nmap <silent> <buffer> <C-]>      <Plug>(coc-declaration)
-    nmap <silent> <buffer> <C-k><C-r> <Plug>(coc-references)
-    nmap <silent> <buffer> <C-k>r     <Plug>(coc-references)
-    imap <C-l>                        <Plug>(coc-snippets-expand)
+    nnoremap <buffer> <F2>                <Plug>(coc-rename)
+    nnoremap <silent> <buffer> <F12>      <Plug>(coc-definition)
+    nnoremap <silent> <buffer> <C-]>      <Plug>(coc-declaration)
+    nnoremap <silent> <buffer> <C-k><C-r> <Plug>(coc-references)
+    nnoremap <silent> <buffer> <C-k>r     <Plug>(coc-references)
+    inoremap <C-l>                        <Plug>(coc-snippets-expand)
 
-    nmap <silent> <buffer> gd         <Plug>(coc-definition)
-    nmap <silent> <buffer> gy         <Plug>(coc-type-definition)
-    nmap <silent> <buffer> gi         <Plug>(coc-implementation)
-    nmap <silent> <buffer> gr         <Plug>(coc-references)
+    nnoremap <silent> <buffer> gd         <Plug>(coc-definition)
+    nnoremap <silent> <buffer> gy         <Plug>(coc-type-definition)
+    nnoremap <silent> <buffer> gi         <Plug>(coc-implementation)
+    nnoremap <silent> <buffer> gr         <Plug>(coc-references)
 
     call s:coc_key('p',   ':CocCommand<CR>')
     call s:coc_key('[',   '<Plug>(coc-diagnostic-prev)')
