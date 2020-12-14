@@ -438,6 +438,19 @@ function! s:coc_key(key,cmd)
     call s:vsim_key('c', a:key, a:cmd)
 endfunction
 
+function! VsimDebuggerMode()
+    nmap <F5> <Plug>VimspectorContinue
+    nmap <S-F5> <Plug>VimspectorStop
+    nmap <C-S-F5> <Plug>VimspectorRestart
+    nmap <F6> <Plug>VimspectorPause
+    nmap <ins> <Plug>VimspectorToggleBreakpoint
+    nmap <S-ins> <Plug>VimspectorToggleConditionalBreakpoint
+    nmap <F10> <Plug>VimspectorStepOver
+    nmap <S-F10> <Plug>VimspectorRunToCursor
+    nmap <F11> <Plug>VimspectorStepInto
+    nmap <S-F11> <Plug>VimspectorStepOut
+endfunction
+
 function! VsimProgrammerMode()
     set updatetime=300
     set signcolumn=yes
