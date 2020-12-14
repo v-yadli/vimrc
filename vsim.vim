@@ -723,7 +723,7 @@ endfunction
 "{{{
 
 " <C-backspace> binding
-imap <C-BS> <C-\><C-o>db
+inoremap <C-BS> <C-w>
 
 " nmap <F6> :make<CR>
 
