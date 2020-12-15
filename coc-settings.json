@@ -45,7 +45,7 @@
     "latex.build.executable": "latexmk",
     "latex.build.args": ["-xelatex"],
     "latex.lint.onSave": true,
-    "python.jediEnabled": false,
+    "python.jediEnabled": true,
     "python.linting.enabled": false,
     "python.linting.pylintEnabled": false,
     "python.linting.pep8Enabled": true,

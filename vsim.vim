@@ -1,5 +1,5 @@
 " Vism -- Vim with Visual Studio key bindings.
-" 
+"
 " Yatao Li<yatao.li@live.com>
 
 " Platform-specific variables
@@ -67,10 +67,12 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 
 " Laborotary -- Things I'd love to know more about
-Plug 'jaawerth/fennel-nvim', { 'branch': 'dev' }
+" Plug 'jaawerth/fennel-nvim', { 'branch': 'dev' }
+Plug 'Olical/conjure'
 " Plug 'Olical/aniseed', { 'tag': 'v3.11.0' }
 Plug 'bakpakin/fennel.vim'
-Plug 'puremourning/vimspector'
+" Plug 'puremourning/vimspector'
+Plug 'F:/git/vimspector'
 Plug 'godlygeek/tabular'              " Required by vim-markdown
 Plug 'plasticboy/vim-markdown'
 Plug 'gyim/vim-boxdraw'
@@ -111,7 +113,7 @@ endif
 " Plug 'fsharp/vim-fsharp'
 " Plug 'OmniSharp/omnisharp-vim'
 " Plug 'autozimu/LanguageClient-neovim'
-" Plug 'Shougo/deoplete.nvim' 
+" Plug 'Shougo/deoplete.nvim'
 " -------------- END legacy programming environment.. ----------------
 
 " Writing tools
@@ -262,7 +264,7 @@ nmap <Space> za
 execute "nmap <Leader>ss :source" . g:vsim_config_file . "<CR>"
 
 " Quick edit vimrc!
-execute "command! -nargs=0 Vimrc edit " . g:vsim_config_file 
+execute "command! -nargs=0 Vimrc edit " . g:vsim_config_file
 
 " quick cd to buffer directory
 command! -nargs=0 CD cd %:h
@@ -363,11 +365,17 @@ let g:airline_highlighting_cache=1
 let g:airline#extensions#wordcount#enabled = 1
 let g:airline#extensions#fugitiveline#enabled = 1
 let g:airline#extensions#branch#enabled = 1
+let g:airline#extensions#coc#get_error = 1
+let g:airline#extensions#coc#get_warning = 1
 let g:airline_detect_spell=1
 let g:airline_detect_spelllang=1
 let g:airline_exclude_preview = 1
 if g:vsim_environment=="neovim"
     " use barbar
+    if !exists("g:bufferline")
+      let g:bufferline = {}
+    endif
+    let g:bufferline.icons="both"
 else
     let g:airline#extensions#tabline#enabled = 1
     let g:airline#extensions#tabline#buffer_nr_show = 1
@@ -403,9 +411,6 @@ function! AirlineInit()
   let g:airline_section_x = airline#section#create(['buf_func', 'filetype'])
   let g:airline_section_y = airline#section#create(['ffenc'])
   let g:airline_section_z = airline#section#create(['cur_char', 'windowswap', 'obsession', '%3p%%'.spc, 'linenr', 'maxlinenr', spc.':%3v'])
-
-  let g:airline_section_error = '%{airline#util#wrap(airline#extensions#coc#get_error(),0)}'
-  let g:airline_section_warning = '%{airline#util#wrap(airline#extensions#coc#get_warning(),0)}'
 endfunction
 autocmd User AirlineAfterInit call AirlineInit()
 
@@ -438,16 +443,19 @@ function! s:coc_key(key,cmd)
     call s:vsim_key('c', a:key, a:cmd)
 endfunction
 
+let g:vsim_debugger_mode = v:false
+
 function! VsimDebuggerMode()
-    nunmap <F5>
-    nunmap <S-F5>
-    nunmap <C-S-F5>
-    nunmap <F6>
-    nunmap <ins>
-    nunmap <F10>
-    nunmap <S-F10>
-    nunmap <F11>
-    nunmap <S-F11>
+    let g:vsim_debugger_mode = v:true
+    silent! nunmap <buffer> <F5>
+    silent! nunmap <buffer> <S-F5>
+    silent! nunmap <buffer> <C-S-F5>
+    silent! nunmap <buffer> <F6>
+    silent! nunmap <buffer> <ins>
+    silent! nunmap <buffer> <F10>
+    silent! nunmap <buffer> <S-F10>
+    silent! nunmap <buffer> <F11>
+    silent! nunmap <buffer> <S-F11>
 
     nmap <F5> <Plug>VimspectorContinue
     nmap <S-F5> <Plug>VimspectorStop
@@ -462,6 +470,11 @@ function! VsimDebuggerMode()
 endfunction
 
 function! VsimProgrammerMode()
+    if g:vsim_debugger_mode
+      call VsimDebuggerMode()
+      return
+    endif
+
     set updatetime=300
     set signcolumn=yes
     autocmd! CursorHold  * silent call CocActionAsync('highlight')
@@ -506,7 +519,7 @@ function! VsimProgrammerMode()
     nnoremap <silent> <buffer> <C-]>      <Plug>(coc-declaration)
     nnoremap <silent> <buffer> <C-k><C-r> <Plug>(coc-references)
     nnoremap <silent> <buffer> <C-k>r     <Plug>(coc-references)
-    inoremap <C-l>                        <Plug>(coc-snippets-expand)
+    inoremap <silent> <buffer> <C-l>      <Plug>(coc-snippets-expand)
 
     nnoremap <silent> <buffer> gd         <Plug>(coc-definition)
     nnoremap <silent> <buffer> gy         <Plug>(coc-type-definition)
@@ -525,6 +538,7 @@ function! VsimProgrammerMode()
     call s:coc_key('s',   ':CocList symbols<CR>')
     call s:coc_key('m',   ':CocList marks<CR>')
     call s:coc_key('tab', ':CocList mru<CR>')
+    call s:coc_key('w',   ':CocList windows<CR>')
 
 endfunction
 
@@ -545,6 +559,7 @@ let g:coc_global_extensions=[
             \ 'coc-marketplace',
             \ 'coc-omnisharp',
             \ 'coc-explorer',
+            \ 'coc-conjure',
             \ ]
 " \ 'coc-sh',
 " \ 'coc-vimtex',
@@ -853,7 +868,7 @@ function! VsimToggleColor()
         hi LspCxxHlGroupNamespace ctermfg=Yellow guifg=#3D3D00 cterm=none gui=none
         hi LspCxxHlGroupMemberVariable ctermfg=Black guifg=Black
     endif
-    
+
     call VsimEcho("Current theme: ". l:theme)
 endfunction
 

@@ -298,17 +298,22 @@ if has("gui_running") || &t_Co == 88 || &t_Co == 256
 
   " Bar Bar Jinks (
 	call <SID>X(  "BufferCurrent",       s:foreground, s:background, "")
-  call <SID>X( 	"BufferCurrentSign",   "#ef1810", s:background, "bold")
+  call <SID>X( 	"BufferCurrentSign",   "#ef1810", s:background, "")
   call <SID>X( 	"BufferCurrentMod",    s:red, s:background, "")
+  call <SID>X( 	"BufferCurrentTarget", "#ef1810", s:background, "bold")
+  call <SID>X( 	"BufferCurrentIndex",  s:foreground, s:background, "bold")
 
 	call <SID>X(  "BufferVisible",       s:foreground, s:selection, "")
-	call <SID>X(  "BufferVisibleSign",   s:window, s:selection, "bold")
+	call <SID>X(  "BufferVisibleSign",   s:window, s:selection, "")
 	call <SID>X(  "BufferVisibleMod",    s:red, s:selection, "")
+	call <SID>X(  "BufferVisibleTarget", "#ef1810", s:selection, "bold")
+	call <SID>X(  "BufferVisibleIndex",  s:foreground, s:selection, "")
 
 	call <SID>X(  "BufferInactive",      '#bababa', s:window, "")
-  call <SID>X( 	"BufferInactiveSign",  '#151515', s:window, "bold")
+  call <SID>X( 	"BufferInactiveSign",  '#151515', s:window, "")
   call <SID>X( 	"BufferInactiveMod",   s:red, s:window, "")
-  call <SID>X( 	"BufferInactiveTarget","#ef1810", s:window, "")
+  call <SID>X( 	"BufferInactiveTarget","#ef1810", s:window, "bold")
+	call <SID>X(  "BufferInactiveIndex", '#bababa', s:window, "")
 
   call <SID>X( 	"BufferTabpages",      s:background, s:foreground, "")
   call <SID>X( 	"BufferTabpageFill",   s:background, s:selection, "")

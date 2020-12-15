@@ -30,14 +30,14 @@ elseif exists('g:fvim_loaded')
     nnoremap <silent> <C-S-ScrollWheelDown> :set guifont=.-<CR>
     nnoremap <silent> <C--> :set guifont=-<CR>
     nnoremap <silent> <C-+> :set guifont=+<CR>
-    FVimCursorSmoothBlink v:true 
+    FVimCursorSmoothBlink v:true
     FVimCursorSmoothMove v:true
     FVimKeyDisableShiftSpace v:true
     FVimUIPopupMenu v:true
     " FVimUIMultiGrid v:false
     FVimUIWildMenu v:false
     FVimCustomTitleBar v:true
-    FVimBackgroundComposition 'acrylic'
+    FVimBackgroundComposition 'none'
     FVimBackgroundOpacity 0.95
     FVimBackgroundAltOpacity 1.0
     FVimBackgroundImage g:vsim_config_dir.'/image/RIM.png'
@@ -52,4 +52,4 @@ endif
 
 nnoremap <silent> <M-CR> :call VsimToggleFullScreen()<CR>
 inoremap <silent> <M-CR> <C-O>:call VsimToggleFullScreen()<CR>
-execute "command! -nargs=0 GVimrc edit " . g:nvim_gconfig_file 
+execute "command! -nargs=0 GVimrc edit " . g:nvim_gconfig_file
