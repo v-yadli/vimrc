@@ -434,13 +434,9 @@ let g:startify_session_before_save = [
 """ Register a prefix-based key
 function! s:vsim_key(prefix, key, cmd)
     let key = len(a:key) == 1 ? a:key : '<'.a:key.'>'
-    execute 'nnoremap <silent> <buffer> <C-'.a:prefix.'>'.key.' '.a:cmd
-    execute 'nnoremap <silent> <buffer> <C-'.a:prefix.'><C-'.a:key.'> '.a:cmd
-endfunction
-
-""" Register a coc key
-function! s:coc_key(key,cmd)
-    call s:vsim_key('c', a:key, a:cmd)
+    let mapcmd =  a:cmd =~ '<Plug>' ? 'nmap' : 'nnoremap'
+    execute mapcmd.' <silent> <buffer> <C-'.a:prefix.'>'.key.' '.a:cmd
+    execute mapcmd.' <silent> <buffer> <C-'.a:prefix.'><C-'.a:key.'> '.a:cmd
 endfunction
 
 let g:vsim_debugger_mode = v:false
@@ -484,13 +480,13 @@ function! VsimProgrammerMode()
     setlocal nowritebackup
 
     setl formatexpr=CocAction('formatSelection')
-    vnoremap <buffer> <C-e><C-d> <Plug>(coc-format-selected)
-    nnoremap <buffer> <C-e><C-d> :call CocAction('format')<CR>
-    vnoremap <buffer> <C-e>d     <Plug>(coc-format-selected)
-    nnoremap <buffer> <C-e>d     :call CocAction('format')<CR>
+    vmap     <buffer> <C-e><C-d> <Plug>(coc-format-selected)
+    nmap     <buffer> <C-e><C-d> <Plug>(coc-format)
+    vmap     <buffer> <C-e>d     <Plug>(coc-format-selected)
+    nmap     <buffer> <C-e>d     <Plug><coc-format>
 
-    nnoremap <buffer> <C-.>      <Plug>(coc-codeaction)
-    vnoremap <buffer> <C-.>      <Plug>(coc-codeaction-selected)
+    nmap     <buffer> <C-.>      <Plug>(coc-codeaction)
+    vmap     <buffer> <C-.>      <Plug>(coc-codeaction-selected)
 
     if &filetype != 'vim'
         nnoremap <silent> <buffer> <S-K>      :call CocActionAsync('doHover')<CR>
@@ -514,31 +510,33 @@ function! VsimProgrammerMode()
 
     nnoremap <silent> <buffer> <F1>       :call CocActionAsync('doHover')<CR>
 
-    nnoremap <buffer> <F2>                <Plug>(coc-rename)
-    nnoremap <silent> <buffer> <F12>      <Plug>(coc-definition)
-    nnoremap <silent> <buffer> <C-]>      <Plug>(coc-declaration)
-    nnoremap <silent> <buffer> <C-k><C-r> <Plug>(coc-references)
-    nnoremap <silent> <buffer> <C-k>r     <Plug>(coc-references)
-    inoremap <silent> <buffer> <C-l>      <Plug>(coc-snippets-expand)
+    nmap     <buffer> <F2>                <Plug>(coc-rename)
+    nmap     <silent> <buffer> <F12>      <Plug>(coc-definition)
+    nmap     <silent> <buffer> <C-]>      <Plug>(coc-declaration)
+    imap     <silent> <buffer> <C-l>      <Plug>(coc-snippets-expand)
 
-    nnoremap <silent> <buffer> gd         <Plug>(coc-definition)
-    nnoremap <silent> <buffer> gy         <Plug>(coc-type-definition)
-    nnoremap <silent> <buffer> gi         <Plug>(coc-implementation)
-    nnoremap <silent> <buffer> gr         <Plug>(coc-references)
+    nmap     <silent> <buffer> gd         <Plug>(coc-definition)
+    nmap     <silent> <buffer> gy         <Plug>(coc-type-definition)
+    nmap     <silent> <buffer> gi         <Plug>(coc-implementation)
+    nmap     <silent> <buffer> gr         <Plug>(coc-references)
 
-    call s:coc_key('p',   ':CocCommand<CR>')
-    call s:coc_key('[',   '<Plug>(coc-diagnostic-prev)')
-    call s:coc_key(']',   '<Plug>(coc-diagnostic-next)')
-    call s:coc_key('c',   ':CocListResume<CR>')
-    call s:coc_key('n',   ':CocNext<CR>')
-    call s:coc_key('b',   ':CocList buffers<CR>')
-    call s:coc_key('d',   ':CocList diagnostics<CR>')
-    call s:coc_key('f',   ':CocList files<CR>')
-    call s:coc_key('g',   ':CocList grep<CR>')
-    call s:coc_key('s',   ':CocList symbols<CR>')
-    call s:coc_key('m',   ':CocList marks<CR>')
-    call s:coc_key('tab', ':CocList mru<CR>')
-    call s:coc_key('w',   ':CocList windows<CR>')
+    nmap     <silent> <buffer> <C-h>      <Plug>(coc-float-jump)
+    imap     <silent> <buffer> <C-h>      <C-o>:call CocActionAsync('showSignatureHelp')<CR>
+
+    call s:vsim_key('k', 'r',   '<Plug>(coc-references)')
+    call s:vsim_key('c', 'p',   ':CocCommand<CR>')
+    call s:vsim_key('c', '[',   '<Plug>(coc-diagnostic-prev)')
+    call s:vsim_key('c', ']',   '<Plug>(coc-diagnostic-next)')
+    call s:vsim_key('c', 'c',   ':CocListResume<CR>')
+    call s:vsim_key('c', 'n',   ':CocNext<CR>')
+    call s:vsim_key('c', 'b',   ':CocList buffers<CR>')
+    call s:vsim_key('c', 'd',   ':CocList diagnostics<CR>')
+    call s:vsim_key('c', 'f',   ':CocList files<CR>')
+    call s:vsim_key('c', 'g',   ':CocList grep<CR>')
+    call s:vsim_key('c', 's',   ':CocList symbols<CR>')
+    call s:vsim_key('c', 'm',   ':CocList marks<CR>')
+    call s:vsim_key('c', 'tab', ':CocList mru<CR>')
+    call s:vsim_key('c', 'w',   ':CocList windows<CR>')
 
 endfunction
 
