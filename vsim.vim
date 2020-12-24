@@ -485,8 +485,8 @@ function! VsimProgrammerMode()
     vmap     <buffer> <C-e>d     <Plug>(coc-format-selected)
     nmap     <buffer> <C-e>d     <Plug><coc-format>
 
-    nmap     <buffer> <C-.>      <Plug>(coc-codeaction)
-    vmap     <buffer> <C-.>      <Plug>(coc-codeaction-selected)
+    nmap     <silent> <buffer> <C-.>      <Plug>(coc-codeaction)
+    vmap     <silent> <buffer> <C-.>      <Plug>(coc-codeaction-selected)
 
     if &filetype != 'vim'
         nnoremap <silent> <buffer> <S-K>      :call CocActionAsync('doHover')<CR>
