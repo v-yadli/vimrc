@@ -71,8 +71,8 @@ Plug 'junegunn/fzf.vim'
 Plug 'Olical/conjure'
 " Plug 'Olical/aniseed', { 'tag': 'v3.11.0' }
 Plug 'bakpakin/fennel.vim'
-" Plug 'puremourning/vimspector'
-Plug 'F:/git/vimspector'
+Plug 'puremourning/vimspector'
+" Plug 'F:/git/vimspector'
 Plug 'godlygeek/tabular'              " Required by vim-markdown
 Plug 'plasticboy/vim-markdown'
 Plug 'gyim/vim-boxdraw'
@@ -463,13 +463,11 @@ function! VsimDebuggerMode()
     nmap <S-F10> <Plug>VimspectorRunToCursor
     nmap <F11> <Plug>VimspectorStepInto
     nmap <S-F11> <Plug>VimspectorStepOut
+
+    call s:vsim_key('c', 't', '<Plug>(vmux-term-toggle)')
 endfunction
 
 function! VsimProgrammerMode()
-    if g:vsim_debugger_mode
-      call VsimDebuggerMode()
-      return
-    endif
 
     set updatetime=300
     set signcolumn=yes
@@ -538,6 +536,9 @@ function! VsimProgrammerMode()
     call s:vsim_key('c', 'tab', ':CocList mru<CR>')
     call s:vsim_key('c', 'w',   ':CocList windows<CR>')
 
+    if g:vsim_debugger_mode
+      call VsimDebuggerMode()
+    endif
 endfunction
 
 let g:coc_global_extensions=[
