@@ -47,7 +47,7 @@ Plug 'derekwyatt/vim-fswitch'
 Plug 'v-yadli/vim-tsl'
 Plug 'yatli/sleigh.vim'
 Plug 'yatli/vmux.vim'
-Plug 'F:/git/dsp56k.vim'
+Plug 'yatli/dsp56k.vim'
 
 " colorschemes
 " Plug 'morhetz/gruvbox'
