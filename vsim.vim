@@ -368,6 +368,7 @@ let g:airline#extensions#fugitiveline#enabled = 1
 let g:airline#extensions#branch#enabled = 1
 let g:airline#extensions#coc#get_error = 1
 let g:airline#extensions#coc#get_warning = 1
+let g:airline#extensions#whitespace#enabled = 0
 let g:airline_detect_spell=1
 let g:airline_detect_spelllang=1
 let g:airline_exclude_preview = 1
@@ -547,7 +548,7 @@ let g:coc_global_extensions=[
             \ 'coc-json',
             \ 'coc-yaml',
             \ 'coc-tsserver',
-            \ 'coc-python',
+            \ 'coc-pyright',
             \ 'coc-html',
             \ 'coc-highlight',
             \ 'coc-fsharp',
