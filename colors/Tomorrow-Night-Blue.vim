@@ -5,42 +5,29 @@
 
 
 " Default GUI Colours
-" Preview:
-"
-" s:foreground  = "#ffffff"
-" s:background  = "#002451"
-" s:selection   = "#003f8e"
-" s:line        = "#00346e"
-" s:comment     = "#7285b7"
-" s:red         = "#ff9da4"
-" s:orange      = "#ffc58f"
-" s:yellow      = "#ffeead"
-" s:green       = "#d1f1a9"
-" s:aqua        = "#99ffff"
-" s:blue        = "#bbdaff"
-" s:purple      = "#ebbbff"
-" s:window      = "#4d5057"
 "
 
-
-let s:foreground  = "ffffff"
-let s:background  = "002451"
-let s:selection   = "003f8e"
-let s:line        = "00346e"
-let s:comment     = "7285b7"
-let s:red         = "ff9da4"
-let s:orange      = "ffc58f"
-let s:yellow      = "ffeead"
-let s:green       = "d1f1a9"
-let s:aqua        = "99ffff"
-let s:blue        = "bbdaff"
-let s:purple      = "ebbbff"
-let s:window      = "4d5057"
+let s:foreground  = "#ffffff"
+let s:background  = "#001631"
+" let s:background  = "#002451"
+let s:selection   = "#003f8e"
+let s:line        = "#00346e"
+let s:comment     = "#7285b7"
+let s:red         = "#ff9da4"
+let s:orange      = "#ffc58f"
+let s:yellow      = "#ffeead"
+let s:green       = "#d1f1a9"
+let s:aqua        = "#99ffff"
+let s:blue        = "#bbdaff"
+let s:purple      = "#ebbbff"
+let s:window      = "#4d5057"
+let s:termbg      = "#0a102A"
 
 hi clear
 syntax reset
 
 let g:colors_name = "Tomorrow-Night-Blue"
+let g:vsim_termbg = g:colors_name
 
 if has("gui_running") || &t_Co == 88 || &t_Co == 256
 	" Returns an approximate grey index for the given grey level
@@ -239,11 +226,13 @@ if has("gui_running") || &t_Co == 88 || &t_Co == 256
 
 	" Sets the highlighting for the given group
 	fun! <SID>X(group, fg, bg, attr)
+		let l:fg = trim(a:fg, '#')
+		let l:bg = trim(a:bg, '#')
 		if a:fg != ""
-			exec "hi " . a:group . " guifg=#" . a:fg . " ctermfg=" . <SID>rgb(a:fg)
+			exec "hi " . a:group . " guifg=#" . l:fg . " ctermfg=" . <SID>rgb(l:fg)
 		endif
 		if a:bg != ""
-			exec "hi " . a:group . " guibg=#" . a:bg . " ctermbg=" . <SID>rgb(a:bg)
+			exec "hi " . a:group . " guibg=#" . l:bg . " ctermbg=" . <SID>rgb(l:bg)
 		endif
 		if a:attr != ""
 			exec "hi " . a:group . " gui=" . a:attr . " cterm=" . a:attr
@@ -267,6 +256,7 @@ if has("gui_running") || &t_Co == 88 || &t_Co == 256
 	call <SID>X("MoreMsg", s:green, "", "")
 	call <SID>X("Question", s:green, "", "")
 	call <SID>X("WarningMsg", s:red, "", "")
+	call <SID>X("ErrorMsg", s:foreground, "6a2010", "")
 	call <SID>X("MatchParen", "", s:selection, "")
 	call <SID>X("Folded", s:comment, s:background, "")
 	call <SID>X("FoldColumn", "", s:background, "")
@@ -282,28 +272,57 @@ if has("gui_running") || &t_Co == 88 || &t_Co == 256
         highlight Cursor       guibg=#ef1810 guifg=fg
         highlight CursorLineNr guifg=Brown
 	end
-    " Coc highlighting
-    highlight      CocUnderline          gui=underline
-    highlight      CocErrorSign          guifg=#ff0000
-    highlight      CocWarningSign        guifg=#ff922b
-    highlight      CocInfoSign           guifg=#fab005
-    highlight      CocHintSign           guifg=#15aabf
-    highlight      CocSelectedText       guifg=#fb4394
-    highlight      CocCodeLens           guifg=#999999
-    highlight link CocErrorFloat         Identifier
-    highlight link CocWarningFloat       Constant
-    highlight link CocInfoFloat          Normal
-    highlight link CocHintFloat          Normal
-    highlight      CocErrorHighlight     gui=undercurl guisp=#ff0000
-    highlight      CocWarningHighlight   gui=underline guisp=#ff922b
-    highlight      CocInfoHighlight      gui=underline guisp=Green
-    highlight      CocHintHighlight      gui=underline guisp=#15aabf
-    highlight link CocListMode           ModeMsg
-    highlight link CocListPath           Comment
-    highlight link CocFloating           Pmenu
-    highlight link CocHighlightText      Pmenu
-    highlight link CocHighlightTextRead  Pmenu
-    highlight link CocHighlightTextWrite Pmenu
+
+  " Coc highlighting
+  highlight      CocUnderline          gui=underline
+  highlight      CocErrorSign          guifg=#ff0000
+  highlight      CocWarningSign        guifg=#ff922b
+  highlight      CocInfoSign           guifg=#fab005
+  highlight      CocHintSign           guifg=#15aabf
+  highlight      CocSelectedText       guifg=#fb4394
+  highlight      CocCodeLens           guifg=#999999
+  highlight link CocErrorFloat         Identifier
+  highlight link CocWarningFloat       Constant
+  highlight link CocInfoFloat          Normal
+  highlight link CocHintFloat          Normal
+  highlight      CocErrorHighlight     gui=undercurl guisp=#ff0000
+  highlight      CocWarningHighlight   gui=underline guisp=#ff922b
+  highlight      CocInfoHighlight      gui=underline guisp=Green
+  highlight      CocHintHighlight      gui=underline guisp=#15aabf
+  highlight link CocListMode           ModeMsg
+  highlight link CocListPath           Comment
+  highlight link CocFloating           Pmenu
+  highlight link CocHighlightText      Pmenu
+  highlight link CocHighlightTextRead  Pmenu
+  highlight link CocHighlightTextWrite Pmenu
+
+  " Bar Bar Jinks (
+	call <SID>X(  "BufferCurrent",       s:foreground, s:background, "")
+  call <SID>X( 	"BufferCurrentSign",   "#ef1810", s:background, "")
+  call <SID>X( 	"BufferCurrentMod",    s:red, s:background, "")
+  call <SID>X( 	"BufferCurrentTarget", "#ef1810", s:background, "bold")
+  call <SID>X( 	"BufferCurrentIndex",  s:foreground, s:background, "bold")
+
+	call <SID>X(  "BufferVisible",       s:foreground, s:selection, "")
+	call <SID>X(  "BufferVisibleSign",   s:window, s:selection, "")
+	call <SID>X(  "BufferVisibleMod",    s:red, s:selection, "")
+	call <SID>X(  "BufferVisibleTarget", "#ef1810", s:selection, "bold")
+	call <SID>X(  "BufferVisibleIndex",  s:foreground, s:selection, "")
+
+	call <SID>X(  "BufferInactive",      '#bababa', s:window, "")
+  call <SID>X( 	"BufferInactiveSign",  '#151515', s:window, "")
+  call <SID>X( 	"BufferInactiveMod",   s:red, s:window, "")
+  call <SID>X( 	"BufferInactiveTarget","#ef1810", s:window, "bold")
+	call <SID>X(  "BufferInactiveIndex", '#bababa', s:window, "")
+
+  call <SID>X( 	"BufferTabpages",      s:background, s:foreground, "")
+  call <SID>X( 	"BufferTabpageFill",   s:background, s:selection, "")
+
+   if has('nvim')
+    hi! link TermCursor Cursor
+    hi TermCursorNC ctermfg=230 ctermbg=247 guifg=#fdf6e3 guibg=#93a1a1 guisp=NONE cterm=NONE gui=NONE
+		call <SID>X("VsimTermBackground",  s:foreground, s:termbg, "")
+  endif 
 
 	" Standard Highlighting
 	call <SID>X("Comment", s:comment, "", "")
@@ -324,7 +343,7 @@ if has("gui_running") || &t_Co == 88 || &t_Co == 256
 	call <SID>X("Type", s:blue, "", "none")
 	call <SID>X("Define", s:purple, "", "none")
 	call <SID>X("Include", s:blue, "", "")
-	"call <SID>X("Ignore", "666666", "", "")
+	"call <SID>X("Ignore", "#666666", "", "")
 
 	" Vim Highlighting
 	call <SID>X("vimCommand", s:red, "", "none")

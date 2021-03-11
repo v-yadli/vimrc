@@ -12,16 +12,47 @@
             }
         }
     },
+    "snippets.extends": {
+      "cpp": ["c"],
+      "typescript": ["javascript"]
+    },
+    "explorer.icon.enableVimDevicons": false,
+    "explorer.icon.enableNerdfont": true,
+    "explorer.previewAction.onHover": false,
+    "explorer.width": 30,
+    "explorer.keyMappings.global": {
+      "<space>": "toggleSelection"
+    },
+    "FSharp.UseSdkScripts": true,
+    "FSharp.Linter": false,
+    "fsharp.analysis.unusedDeclaration": false,
+    "xml.fileAssociations": [
+        {
+            "systemId": "https://raw.githubusercontent.com/dotnet/msbuild/master/src/MSBuild/Microsoft.Build.xsd",
+            "pattern": "**/*.fsproj"
+        },
+        {
+            "systemId": "C:/Users/Yatao/AppData/Local/nvim/xsd/AvaloniaXamlSchema.xsd",
+            "pattern": "**/*.xaml"
+        },
+        {
+            "systemId": "https://raw.githubusercontent.com/dotnet/msbuild/master/src/MSBuild/Microsoft.Build.xsd",
+            "pattern": "**/*.csproj"
+        }
+    ],
+    "xml.logs.client": true,
+    "xml.trace.server": "verbose",
     "latex.build.executable": "latexmk",
     "latex.build.args": ["-xelatex"],
     "latex.lint.onSave": true,
-    "python.jediEnabled": false,
+    "python.jediEnabled": true,
     "python.linting.enabled": false,
     "python.linting.pylintEnabled": false,
     "python.linting.pep8Enabled": true,
     "python.formatting.provider": "autopep8",
     "coc.preferences.hoverTarget": "float",
     "coc.preferences.enableFloatHighlight": true,
+    "coc.preferences.maxFileSize":"1MB",
     "suggest.floatEnable": true,
     "suggest.echodocSupport": false,
     "suggest.timeout": 5000,
@@ -31,8 +62,9 @@
     "coc.preferences.currentFunctionSymbolAutoUpdate": true,
     "coc.preferences.useQuickfixForLocations": false,
     "coc.preferences.extensionUpdateCheck":"weekly",
+    "coc.preferences.enableMarkdown": true,
+    "coc.preferences.colorSupport": true,
     "powershell.integratedConsole.focusConsoleOnExecute": false,
     "powershell.integratedConsole.showOnStartup": false,
-    "omnisharp.useDotnet": false,
-    "fsharp.analysis.unusedDeclaration": false
+    "omnisharp.trace.server": "verbose"
 }

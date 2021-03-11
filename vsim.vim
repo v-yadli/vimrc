@@ -1,5 +1,5 @@
 " Vism -- Vim with Visual Studio key bindings.
-" 
+"
 " Yatao Li<yatao.li@live.com>
 
 " Platform-specific variables
@@ -10,14 +10,8 @@ if has("win32")
     elseif filereadable('C:/Python27/python.exe')
         let g:python_host_prog  = 'C:/Python27/python.exe'
     endif
-    if filereadable('C:/Users/yatli/AppData/Local/Continuum/anaconda3/python.exe')
-        let g:python3_host_prog='C:/Users/yatli/AppData/Local/Continuum/anaconda3/python.exe'
-    elseif filereadable('C:/ProgramData/Anaconda3/python.exe')
-        let g:python3_host_prog='C:/ProgramData/Anaconda3/python.exe'
-    elseif filereadable('C:/tools/Anaconda3/python.exe')
-        let g:python3_host_prog='C:/tools/Anaconda3/python.exe'
-    elseif filereadable('C:/Program Files (x86)/Microsoft Visual Studio/Shared/Anaconda3_64/python.exe')
-        let g:python3_host_prog='C:/Program Files (x86)/Microsoft Visual Studio/Shared/Anaconda3_64/python.exe'
+    if filereadable('F:/anaconda3/python.exe')
+      let g:python3_host_prog  = 'F:/anaconda3/python.exe'
     endif
 else
     if filereadable(expand('~/anaconda3/bin/python3'))
@@ -26,6 +20,7 @@ else
 endif
 
 let g:vsim_init = 0
+let g:polyglot_disabled = ['fsharp', 'latex', 'xml', 'v', 'vlang']
 
 " Initialize plugin system
 call plug#begin(g:plugged_dir)
@@ -37,31 +32,22 @@ Plug 'roxma/vim-tmux-clipboard'
 Plug 'tmux-plugins/vim-tmux-focus-events'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'scrooloose/nerdcommenter'
-" Plug 'lervag/vimtex'
 Plug 'junegunn/vim-easy-align'
 Plug 'vim-scripts/LargeFile'
 Plug 'guns/vim-sexp'
 Plug 'bohlender/vim-smt2'
-Plug 'v-yadli/vim-tsl'
 Plug 'kshenoy/vim-signature'          " displays marks in the gutter (sign column)
 Plug 'mhinz/vim-signify'              " displays changes in the gutter
-Plug 'scrooloose/nerdtree',             { 'on': 'NERDTreeToggle' }
-Plug 'yatli/vmux.vim'
 Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-fugitive'
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'junegunn/fzf.vim'
-Plug 'tweekmonster/startuptime.vim'
 Plug 'mhinz/vim-startify'
 Plug 'Yggdroot/indentLine'
-Plug 'fidian/hexmode'
 Plug 'derekwyatt/vim-fswitch'
-
-if exists("g:fvim_loaded")
-    Plug 'ryanoasis/vim-devicons'
-    Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
-endif
+Plug 'v-yadli/vim-tsl'
+Plug 'yatli/sleigh.vim'
+Plug 'yatli/vmux.vim'
+Plug 'yatli/dsp56k.vim'
 
 " colorschemes
 " Plug 'morhetz/gruvbox'
@@ -69,21 +55,37 @@ endif
 " Plug 'NLKNguyen/papercolor-theme'
 
 " mighty coc.nvim
-Plug 'Shougo/neco-vim'
-Plug 'neoclide/coc-neco'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'jackguo380/vim-lsp-cxx-highlight'
+Plug 'Shougo/neco-vim'
+Plug 'neoclide/coc-neco'
 
 " Utilities -- Things that I do love to issue Ex commands to utilize
+Plug 'fidian/hexmode', { 'on': 'Hexmode' }
 Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
+Plug 'tweekmonster/startuptime.vim', { 'on': 'StartupTime' }
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
 
 " Laborotary -- Things I'd love to know more about
-if g:vsim_environment=="neovim"
-    Plug 'kassio/neoterm'
-endif
+" Plug 'jaawerth/fennel-nvim', { 'branch': 'dev' }
+Plug 'Olical/conjure'
+" Plug 'Olical/aniseed', { 'tag': 'v3.11.0' }
+Plug 'bakpakin/fennel.vim'
+Plug 'puremourning/vimspector'
+" Plug 'F:/git/vimspector'
 Plug 'godlygeek/tabular'              " Required by vim-markdown
 Plug 'plasticboy/vim-markdown'
 Plug 'gyim/vim-boxdraw'
+Plug 'honza/vim-snippets'
+
+if g:vsim_environment=="neovim"
+    Plug 'kyazdani42/nvim-web-devicons'
+    Plug 'kassio/neoterm'
+    Plug 'romgrk/barbar.nvim'
+else
+    Plug 'ryanoasis/vim-devicons'
+endif
 
 " Junkyard -- things that do not work for me, or never found useful.
 " Plug 'reedes/vim-pencil'          <--- not working anymore
@@ -99,16 +101,20 @@ Plug 'gyim/vim-boxdraw'
 " Plug 'v-yadli/vim-online-thesaurus'
 " Plug 'flazz/vim-colorschemes'     <--- need to customize some of the colors
 " Plug 'roxma/nvim-completion-manager' < trying alternatives..
-" Plug 'rking/ag.vim'               <---- fzf has this(!)
-" Plug 'KabbAmine/zeavim.vim'       <---- never calls Zeal actually...
-" Plug 'qpkorr/vim-bufkill'         <---- replaced by vmux.vim
+" Plug 'rking/ag.vim'               <--- fzf has this(!)
+" Plug 'KabbAmine/zeavim.vim'       <--- never calls Zeal actually...
+" Plug 'qpkorr/vim-bufkill'         <--- replaced by vmux.vim
+" Plug 'puremourning/vimspector'    <--- doesn't work well with NeoVim
+" Plug 'scrooloose/nerdtree',       <--- replaced by coc-explorer
+" Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+" Plug 'lervag/vimtex'
 "
 " -------------- BEGIN legacy programming environment.. ----------------
 "  They never pulled it together well.. Really.
 " Plug 'fsharp/vim-fsharp'
 " Plug 'OmniSharp/omnisharp-vim'
 " Plug 'autozimu/LanguageClient-neovim'
-" Plug 'Shougo/deoplete.nvim' 
+" Plug 'Shougo/deoplete.nvim'
 " -------------- END legacy programming environment.. ----------------
 
 " Writing tools
@@ -120,9 +126,6 @@ Plug 'panozzaj/vim-autocorrect'
 
 " Initialize plugin system finish
 call plug#end()
-
-let g:polyglot_disabled = ['fsharp', 'latex', 'xml', 'v']
-
 
 filetype plugin indent on
 
@@ -167,6 +170,8 @@ else
 endif
 set completeopt=longest,menuone,preview
 set previewheight=5
+" remove blank from sessionoptions
+set sessionoptions=buffers,curdir,folds,help,tabpages,winsize
 
 " Terminal color workaround
 if has("termguicolors") && !(has("win32") && $TERM != 'vtpcon') || exists("g:fvim_loaded")
@@ -181,6 +186,12 @@ if g:vsim_environment == 'neovim'
 else
     let g:vsim_latexmk_backend = 'jobs'
 endif
+
+" disable header folding
+let g:vim_markdown_folding_disabled = 1
+
+" do not use conceal feature, the implementation is not so good
+let g:vim_markdown_conceal = 0
 
 " let g:vimtex_view_general_viewer = 'SumatraPDF'
 " let g:vimtex_view_general_options
@@ -225,11 +236,11 @@ let g:airline_theme = 'falcon'
 "let g:airline_theme='tomorrow'
 "let g:airline_theme='gruvbox'
 
-"colorscheme Tomorrow-Night-Blue
+colorscheme Tomorrow-Night-Blue
 "colorscheme PaperColor
 let g:gruvbox_invert_selection=0
 "colorscheme gruvbox
-colorscheme falcon
+"colorscheme falcon
 "colorscheme pencil
 set guicursor=n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50
   \,a:blinkwait100-blinkoff500-blinkon500-Cursor/lCursor
@@ -254,7 +265,7 @@ nmap <Space> za
 execute "nmap <Leader>ss :source" . g:vsim_config_file . "<CR>"
 
 " Quick edit vimrc!
-execute "command! -nargs=0 Vimrc edit " . g:vsim_config_file 
+execute "command! -nargs=0 Vimrc edit " . g:vsim_config_file
 
 " quick cd to buffer directory
 command! -nargs=0 CD cd %:h
@@ -272,6 +283,7 @@ set completeopt=longest,menuone,preview
 " Coc settings
 " -- use <c-space>for trigger completion
 inoremap <silent><expr> <c-space> coc#refresh()
+
 " -- use <Tab> and <S-Tab> for navigate completion list:
 inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
@@ -354,13 +366,24 @@ let g:airline_highlighting_cache=1
 let g:airline#extensions#wordcount#enabled = 1
 let g:airline#extensions#fugitiveline#enabled = 1
 let g:airline#extensions#branch#enabled = 1
+let g:airline#extensions#coc#get_error = 1
+let g:airline#extensions#coc#get_warning = 1
+let g:airline#extensions#whitespace#enabled = 0
 let g:airline_detect_spell=1
 let g:airline_detect_spelllang=1
 let g:airline_exclude_preview = 1
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#buffer_nr_show = 1
-let g:airline#extensions#tabline#buffer_nr_format = '%s: '
-let g:airline#extensions#tabline#fnamemod = ':t'
+if g:vsim_environment=="neovim"
+    " use barbar
+    if !exists("g:bufferline")
+      let g:bufferline = {}
+    endif
+    let g:bufferline.icons="both"
+else
+    let g:airline#extensions#tabline#enabled = 1
+    let g:airline#extensions#tabline#buffer_nr_show = 1
+    let g:airline#extensions#tabline#buffer_nr_format = '%s: '
+    let g:airline#extensions#tabline#fnamemod = ':t'
+endif
 set ttimeoutlen=50
 
 " create airline parts for coc server status & coc_current_function
@@ -390,42 +413,21 @@ function! AirlineInit()
   let g:airline_section_x = airline#section#create(['buf_func', 'filetype'])
   let g:airline_section_y = airline#section#create(['ffenc'])
   let g:airline_section_z = airline#section#create(['cur_char', 'windowswap', 'obsession', '%3p%%'.spc, 'linenr', 'maxlinenr', spc.':%3v'])
-
-  let g:airline_section_error = '%{airline#util#wrap(airline#extensions#coc#get_error(),0)}'
-  let g:airline_section_warning = '%{airline#util#wrap(airline#extensions#coc#get_warning(),0)}'
 endfunction
 autocmd User AirlineAfterInit call AirlineInit()
 
 " exclude overwrite statusline of list filetype
 let g:airline_exclude_filetypes = ["list"]
 
-" set folder open/close glyphs
-let g:NERDTreeDirArrowExpandable="▸"
-let g:NERDTreeDirArrowCollapsible="▾"
-let g:NERDTreeHighlightFolders = 1
-" do not alter cursorline for NERDTree
-let g:NERDTreeHighlightCursorline = 0
-" show glyphs for NERDTree
-let g:webdevicons_enable_nerdtree = 1
-" don't show brackets around NERDTree glyphs
-let g:webdevicons_conceal_nerdtree_brackets = 1
-" show folder glyphs for NERDTree
-let g:WebDevIconsUnicodeDecorateFolderNodes = 1
-" show folder open/close glyphs
-let g:DevIconsEnableFoldersOpenClose = 1
-" more filetypes...
-let g:WebDevIconsUnicodeDecorateFileNodesPatternSymbols = {} " needed
-let g:WebDevIconsUnicodeDecorateFileNodesPatternSymbols['.*\.xaml$'] = 'ﭲ'
-let g:WebDevIconsUnicodeDecorateFileNodesPatternSymbols['.*\.svg$'] = 'ﰟ'
-let g:WebDevIconsUnicodeDecorateFileNodesPatternSymbols['.*\..*proj$'] = ''
-
 let g:indentLine_char_list = [ '┆', '┊']
 let g:indentLine_leadingSpaceChar = '·'
+let g:indentLine_fileTypeExclude = ['coc-explorer', 'neoterm']
 
 let g:startify_session_persistence = 1
 let g:startify_session_autoload = 1
 let g:startify_session_before_save = [
             \ 'echo "Cleaning up before saving.."',
+            \ ':CocCommand explorer --quit'
             \ ]
 "if exists('g:fvim_startify')
     "Startify
@@ -434,36 +436,60 @@ let g:startify_session_before_save = [
 """ Register a prefix-based key
 function! s:vsim_key(prefix, key, cmd)
     let key = len(a:key) == 1 ? a:key : '<'.a:key.'>'
-    execute 'nmap <silent> <buffer> <C-'.a:prefix.'>'.key.' '.a:cmd
-    execute 'nmap <silent> <buffer> <C-'.a:prefix.'><C-'.a:key.'> '.a:cmd
+    let mapcmd =  a:cmd =~ '<Plug>' ? 'nmap' : 'nnoremap'
+    execute mapcmd.' <silent> <buffer> <C-'.a:prefix.'>'.key.' '.a:cmd
+    execute mapcmd.' <silent> <buffer> <C-'.a:prefix.'><C-'.a:key.'> '.a:cmd
 endfunction
 
-""" Register a coc key
-function! s:coc_key(key,cmd)
-    call s:vsim_key('c', a:key, a:cmd)
+let g:vsim_debugger_mode = v:false
+
+function! VsimDebuggerMode()
+    let g:vsim_debugger_mode = v:true
+    silent! nunmap <buffer> <F5>
+    silent! nunmap <buffer> <S-F5>
+    silent! nunmap <buffer> <C-S-F5>
+    silent! nunmap <buffer> <F6>
+    silent! nunmap <buffer> <ins>
+    silent! nunmap <buffer> <F10>
+    silent! nunmap <buffer> <S-F10>
+    silent! nunmap <buffer> <F11>
+    silent! nunmap <buffer> <S-F11>
+
+    nmap <F5> <Plug>VimspectorContinue
+    nmap <S-F5> <Plug>VimspectorStop
+    nmap <C-S-F5> <Plug>VimspectorRestart
+    nmap <F6> <Plug>VimspectorPause
+    nmap <ins> <Plug>VimspectorToggleBreakpoint
+    nmap <S-ins> <Plug>VimspectorToggleConditionalBreakpoint
+    nmap <F10> <Plug>VimspectorStepOver
+    nmap <S-F10> <Plug>VimspectorRunToCursor
+    nmap <F11> <Plug>VimspectorStepInto
+    nmap <S-F11> <Plug>VimspectorStepOut
+
+    call s:vsim_key('c', 't', '<Plug>(vmux-term-toggle)')
 endfunction
 
 function! VsimProgrammerMode()
+
     set updatetime=300
     set signcolumn=yes
     autocmd! CursorHold  * silent call CocActionAsync('highlight')
-    autocmd! CursorHoldI * silent call CocActionAsync('showSignatureHelp')
     autocmd! User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
 
     setlocal nobackup
     setlocal nowritebackup
 
     setl formatexpr=CocAction('formatSelection')
-    vmap <buffer> <C-e><C-d> <Plug>(coc-format-selected)
-    nmap <buffer> <C-e><C-d> :call CocAction('format')<CR>
-    vmap <buffer> <C-e>d     <Plug>(coc-format-selected)
-    nmap <buffer> <C-e>d     :call CocAction('format')<CR>
+    vmap     <buffer> <C-e><C-d> <Plug>(coc-format-selected)
+    nmap     <buffer> <C-e><C-d> <Plug>(coc-format)
+    vmap     <buffer> <C-e>d     <Plug>(coc-format-selected)
+    nmap     <buffer> <C-e>d     <Plug><coc-format>
 
-    nmap <buffer> <C-.>      <Plug>(coc-codeaction)
-    vmap <buffer> <C-.>      <Plug>(coc-codeaction-selected)
+    nmap     <silent> <buffer> <C-.>      <Plug>(coc-codeaction)
+    vmap     <silent> <buffer> <C-.>      <Plug>(coc-codeaction-selected)
 
     if &filetype != 'vim'
-        nmap <silent> <buffer> <S-K>      :call CocActionAsync('doHover')<CR>
+        nnoremap <silent> <buffer> <S-K>      :call CocActionAsync('doHover')<CR>
     endif
 
     if &filetype == 'fsharp' || &filetype == 'vim'
@@ -471,42 +497,50 @@ function! VsimProgrammerMode()
     endif
 
     if &filetype == 'ps1'
-        nmap <buffer> <F5> :CocCommand powershell.execute<CR>
-        nmap <buffer> <F8> :CocCommand powershell.evaluateLine<CR>
-        vmap <buffer> <F8> :<C-u>CocCommand powershell.evaluateSelection<CR>
+        nnoremap <buffer> <F5> :CocCommand powershell.execute<CR>
+        nnoremap <buffer> <F8> :CocCommand powershell.evaluateLine<CR>
+        vnoremap <buffer> <F8> :<C-u>CocCommand powershell.evaluateSelection<CR>
     endif
 
     if &filetype == 'fsharp'
-        nmap <buffer> <F5> :CocCommand fsharp.run<CR>
-        nmap <buffer> <F8> :CocCommand fsharp.evaluateLine<CR>
-        vmap <buffer> <F8> :<C-u>CocCommand fsharp.evaluateSelection<CR>
+        nnoremap <buffer> <F5> :CocCommand fsharp.run<CR>
+        nnoremap <buffer> <F8> :CocCommand fsharp.evaluateLine<CR>
+        vnoremap <buffer> <F8> :<C-u>CocCommand fsharp.evaluateSelection<CR>
     endif
 
-    nmap <silent> <buffer> <F1>       :call CocActionAsync('doHover')<CR>
+    nnoremap <silent> <buffer> <F1>       :call CocActionAsync('doHover')<CR>
 
-    nmap <buffer> <F2>                <Plug>(coc-rename)
-    nmap <silent> <buffer> <F12>      <Plug>(coc-definition)
-    nmap <silent> <buffer> <C-]>      <Plug>(coc-declaration)
-    nmap <silent> <buffer> <C-k><C-r> <Plug>(coc-references)
-    nmap <silent> <buffer> <C-k>r     <Plug>(coc-references)
+    nmap     <buffer> <F2>                <Plug>(coc-rename)
+    nmap     <silent> <buffer> <F12>      <Plug>(coc-definition)
+    nmap     <silent> <buffer> <C-]>      <Plug>(coc-declaration)
+    imap     <silent> <buffer> <C-l>      <Plug>(coc-snippets-expand)
 
-    nmap <silent> <buffer> gd         <Plug>(coc-definition)
-    nmap <silent> <buffer> gy         <Plug>(coc-type-definition)
-    nmap <silent> <buffer> gi         <Plug>(coc-implementation)
-    nmap <silent> <buffer> gr         <Plug>(coc-references)
+    nmap     <silent> <buffer> gd         <Plug>(coc-definition)
+    nmap     <silent> <buffer> gy         <Plug>(coc-type-definition)
+    nmap     <silent> <buffer> gi         <Plug>(coc-implementation)
+    nmap     <silent> <buffer> gr         <Plug>(coc-references)
 
-    call s:coc_key('p',   ':CocCommand<CR>')
-    call s:coc_key('[',   '<Plug>(coc-diagnostic-prev)')
-    call s:coc_key(']',   '<Plug>(coc-diagnostic-next)')
-    call s:coc_key('c',   ':CocListResume<CR>')
-    call s:coc_key('n',   ':CocNext<CR>')
-    call s:coc_key('b',   ':CocList buffers<CR>')
-    call s:coc_key('d',   ':CocList diagnostics<CR>')
-    call s:coc_key('f',   ':CocList files<CR>')
-    call s:coc_key('g',   ':CocList grep<CR>')
-    call s:coc_key('s',   ':CocList symbols<CR>')
-    call s:coc_key('m',   ':CocList marks<CR>')
-    call s:coc_key('tab', ':CocList mru<CR>')
+    nmap     <silent> <buffer> <C-h>      <Plug>(coc-float-jump)
+    imap     <silent> <buffer> <C-h>      <C-o>:call CocActionAsync('showSignatureHelp')<CR>
+
+    call s:vsim_key('k', 'r',   '<Plug>(coc-references)')
+    call s:vsim_key('c', 'p',   ':CocCommand<CR>')
+    call s:vsim_key('c', '[',   '<Plug>(coc-diagnostic-prev)')
+    call s:vsim_key('c', ']',   '<Plug>(coc-diagnostic-next)')
+    call s:vsim_key('c', 'c',   ':CocListResume<CR>')
+    call s:vsim_key('c', 'n',   ':CocNext<CR>')
+    call s:vsim_key('c', 'b',   ':CocList buffers<CR>')
+    call s:vsim_key('c', 'd',   ':CocList diagnostics<CR>')
+    call s:vsim_key('c', 'f',   ':CocList files<CR>')
+    call s:vsim_key('c', 'g',   ':CocList grep<CR>')
+    call s:vsim_key('c', 's',   ':CocList symbols<CR>')
+    call s:vsim_key('c', 'm',   ':CocList marks<CR>')
+    call s:vsim_key('c', 'tab', ':CocList mru<CR>')
+    call s:vsim_key('c', 'w',   ':CocList windows<CR>')
+
+    if g:vsim_debugger_mode
+      call VsimDebuggerMode()
+    endif
 endfunction
 
 let g:coc_global_extensions=[
@@ -514,7 +548,7 @@ let g:coc_global_extensions=[
             \ 'coc-json',
             \ 'coc-yaml',
             \ 'coc-tsserver',
-            \ 'coc-python',
+            \ 'coc-pyright',
             \ 'coc-html',
             \ 'coc-highlight',
             \ 'coc-fsharp',
@@ -525,9 +559,15 @@ let g:coc_global_extensions=[
             \ 'coc-xml',
             \ 'coc-marketplace',
             \ 'coc-omnisharp',
+            \ 'coc-explorer',
+            \ 'coc-conjure',
             \ ]
 " \ 'coc-sh',
 " \ 'coc-vimtex',
+"
+let g:coc_filetype_map = {
+            \ 'xslt': 'xml',
+            \ }
 
 "set runtimepath^=F:/git/coc-powershell
 "set runtimepath^=F:/git/coc-omnisharp
@@ -537,26 +577,11 @@ nmap <C-tab> :bn<CR>
 nmap <C-S-tab> :bp<CR>
 
 autocmd FileType vim nnoremap <buffer> <S-K> :call VimrcGetHelp()<CR>
-autocmd FileType c,cpp,typescript,javascript,json,ps1,psm1,psd1,fsharp,cs,python,vim,xml,sh,cuda,verilog,tex call VsimProgrammerMode()
-
-"*****************************************************************************
-"" Abbreviations
-"*****************************************************************************
-"" no one is really happy until you have this shortcuts
-cnoreabbrev W! w!
-cnoreabbrev Q! q!
-cnoreabbrev Qall! qall!
-cnoreabbrev Wq wq
-cnoreabbrev Wa wa
-cnoreabbrev wQ wq
-cnoreabbrev WQ wq
-cnoreabbrev W w
-cnoreabbrev Q q
-cnoreabbrev Qall qall
+autocmd FileType c,cpp,typescript,javascript,json,ps1,psm1,psd1,fsharp,cs,python,vim,xml,sh,cuda,verilog,vue,tex,lua,fnl call VsimProgrammerMode()
 
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.db,*.sqlite
 
-" Tmux navigation settings
+" navigation settings
 let g:tmux_navigator_no_mappings = 1
 
 nnoremap <silent> <A-h> :TmuxNavigateLeft<cr>
@@ -577,20 +602,78 @@ inoremap <silent> <A-k> <C-O>:TmuxNavigateUp<cr>
 inoremap <silent> <A-l> <C-O>:TmuxNavigateRight<cr>
 inoremap <silent> <A-/> <C-O>:TmuxNavigatePrevious<cr>
 
-nnoremap <silent> <C-A-h> <C-w>H
-nnoremap <silent> <C-A-j> <C-w>J
-nnoremap <silent> <C-A-k> <C-w>K
-nnoremap <silent> <C-A-l> <C-w>L
+if g:vsim_environment=="neovim"
+    let g:vmux_no_default_bindings=1
+    " Magic buffer-picking mode
+    nnoremap <silent> <A-f> :BufferPick<CR>
+    " Sort automatically by...
+    "   -- note, conflict with za
+    "   nnoremap <silent> <Space>bd :BufferOrderByDirectory<CR>
+    "   nnoremap <silent> <Space>bl :BufferOrderByLanguage<CR>
+    " Re-order to previous/next
+    nnoremap <silent>    <A-,> :BufferMovePrevious<CR>
+    nnoremap <silent>    <A-.> :BufferMoveNext<CR>
+    " Goto buffer in position...
+    nnoremap <silent>    <A-1> :BufferGoto 1<CR>
+    nnoremap <silent>    <A-2> :BufferGoto 2<CR>
+    nnoremap <silent>    <A-3> :BufferGoto 3<CR>
+    nnoremap <silent>    <A-4> :BufferGoto 4<CR>
+    nnoremap <silent>    <A-5> :BufferGoto 5<CR>
+    nnoremap <silent>    <A-6> :BufferGoto 6<CR>
+    nnoremap <silent>    <A-7> :BufferGoto 7<CR>
+    nnoremap <silent>    <A-8> :BufferGoto 8<CR>
+    nnoremap <silent>    <A-9> :BufferLast<CR>
 
-nnoremap <silent> <A-1> :1b<cr>
-nnoremap <silent> <A-2> :2b<cr>
-nnoremap <silent> <A-3> :3b<cr>
-nnoremap <silent> <A-4> :4b<cr>
-nnoremap <silent> <A-5> :5b<cr>
-nnoremap <silent> <A-6> :6b<cr>
-nnoremap <silent> <A-7> :7b<cr>
-nnoremap <silent> <A-8> :8b<cr>
-nnoremap <silent> <A-9> :9b<cr>
+    " Quick buffer switch
+    nmap <silent><expr> <A-n> &buftype=="terminal" ? "<Plug>(vmux-buf-next)" : ":BufferNext<CR>"
+    nmap <silent><expr> <A-p> &buftype=="terminal" ? "<Plug>(vmux-buf-prev)" : ":BufferPrevious<CR>"
+    nmap <silent><expr> <A-w> &buftype=="terminal" ? "<Plug>(vmux-buf-kill)" : ":BufferClose<CR>"
+    tmap <silent> <A-n> <C-\><C-N><Plug>(vmux-buf-next)
+    tmap <silent> <A-p> <C-\><C-N><Plug>(vmux-buf-prev)
+    tmap <silent> <A-w> <C-\><C-N><Plug>(vmux-buf-kill)
+
+    " Quick window split
+    nmap <A-s> <Plug>(vmux-split-horizontal)
+    nmap <A-v> <Plug>(vmux-split-vertical)
+    nmap <A-q> <Plug>(vmux-split-close)
+
+    tmap <A-s> <C-\><C-N><Plug>(vmux-split-horizontal)
+    tmap <A-v> <C-\><C-N><Plug>(vmux-split-vertical)
+    tmap <A-q> <C-\><C-N><Plug>(vmux-split-close)
+
+    " Show/hide terminals
+    imap <F11> <C-O><Plug>(vmux-term-toggle)
+    vmap <F11> <C-O><Plug>(vmux-term-toggle)
+    nmap <F11> <Plug>(vmux-term-toggle)
+    tmap <F11> <C-\><C-n><Plug>(vmux-term-toggle)
+
+    " Quick window resize
+    nmap <A-Up>    <Plug>(vmux-resize-up)
+    nmap <A-Down>  <Plug>(vmux-resize-down)
+    nmap <A-Left>  <Plug>(vmux-resize-left)
+    nmap <A-Right> <Plug>(vmux-resize-right)
+
+    tmap <A-Up>    <C-\><C-N><Plug>(vmux-resize-up)i
+    tmap <A-Down>  <C-\><C-N><Plug>(vmux-resize-down)i
+    tmap <A-Left>  <C-\><C-N><Plug>(vmux-resize-left)i
+    tmap <A-Right> <C-\><C-N><Plug>(vmux-resize-right)i
+
+    " Tabs navigation
+    nnoremap <C-A-t> :tabnew<CR>
+    nnoremap <C-A-q> :tabclose<CR>
+    nnoremap <C-A-n> :tabnext<CR>
+    nnoremap <C-A-p> :tabprevious<CR>
+else
+    nnoremap <silent> <A-1> :1b<cr>
+    nnoremap <silent> <A-2> :2b<cr>
+    nnoremap <silent> <A-3> :3b<cr>
+    nnoremap <silent> <A-4> :4b<cr>
+    nnoremap <silent> <A-5> :5b<cr>
+    nnoremap <silent> <A-6> :6b<cr>
+    nnoremap <silent> <A-7> :7b<cr>
+    nnoremap <silent> <A-8> :8b<cr>
+    nnoremap <silent> <A-9> :9b<cr>
+endif
 
 if has("persistent_undo")
     set undodir=~/.undodir/
@@ -666,14 +749,13 @@ endfunction
 "{{{
 
 " <C-backspace> binding
-imap <C-BS> <C-o>"_db<C-o>"_x
-
+inoremap <C-BS> <C-w>
 
 " nmap <F6> :make<CR>
 
 " <C-W> (window) family
-nmap <C-w><C-s> :NERDTreeToggle<CR>
-imap <C-w><C-s> <Esc>:NERDTreeToggle<CR>
+nmap <C-w><C-s> :CocCommand explorer<CR>
+imap <C-w><C-s> <Esc>:CocCommand explorer<CR>
 nmap <C-w><C-u> :UndotreeToggle<CR>
 imap <C-w><C-u> <Esc>:UndotreeToggle<CR>
 
@@ -754,6 +836,8 @@ let s:vsim_theme_name    = ['falcon', 'gruvbox', 'gruvbox', 'Tomorrow', 'Tomorro
 let s:vsim_theme_bg      = ['dark',   'dark',    'light',   'light',    'dark',           'dark',                'light',  'dark',   'light',     'light',      'dark']
 let s:vsim_theme_airline = ['falcon', 'gruvbox', 'gruvbox', 'tomorrow', 'tomorrow',       'tomorrow',            '',       '',       '',          'papercolor', 'papercolor']
 
+autocmd TermOpen * if g:colors_name == g:vsim_termbg | setlocal winhighlight=Normal:VsimTermBackground | endif
+
 function! VsimToggleColor()
     let s:vsim_theme_idx = s:vsim_theme_idx + 1
     if s:vsim_theme_idx >= len(s:vsim_theme_name)
@@ -775,7 +859,17 @@ function! VsimToggleColor()
     if exists('g:fvim_loaded')
         FVimFontNormalWeight (l:bg == 'dark') ? 300 : 400
     endif
-    
+
+    if l:bg == 'dark'
+        hi LspCxxHlGroupEnumConstant ctermfg=Magenta guifg=#AD7FA8 cterm=none gui=none
+        hi LspCxxHlGroupNamespace ctermfg=Yellow guifg=#BBBB00 cterm=none gui=none
+        hi LspCxxHlGroupMemberVariable ctermfg=White guifg=White
+    else
+        hi LspCxxHlGroupEnumConstant ctermfg=Magenta guifg=#573F54 cterm=none gui=none
+        hi LspCxxHlGroupNamespace ctermfg=Yellow guifg=#3D3D00 cterm=none gui=none
+        hi LspCxxHlGroupMemberVariable ctermfg=Black guifg=Black
+    endif
+
     call VsimEcho("Current theme: ". l:theme)
 endfunction
 
@@ -784,5 +878,42 @@ vnoremap <F9> <C-O>:call VsimToggleColor()<CR>
 nnoremap <F9> :call VsimToggleColor()<CR>
 
 "}}}
+
+" from: https://vim.fandom.com/wiki/Convert_between_hex_and_decimal
+command! -nargs=? -range Dec2hex call s:Dec2hex(<line1>, <line2>, '<args>')
+function! s:Dec2hex(line1, line2, arg) range
+  if empty(a:arg)
+    if histget(':', -1) =~# "^'<,'>" && visualmode() !=# 'V'
+      let cmd = 's/\%V\<\d\+\>/\=printf("0x%x",submatch(0)+0)/g'
+    else
+      let cmd = 's/\<\d\+\>/\=printf("0x%x",submatch(0)+0)/g'
+    endif
+    try
+      execute a:line1 . ',' . a:line2 . cmd
+    catch
+      echo 'Error: No decimal number found'
+    endtry
+  else
+    echo printf('%x', a:arg + 0)
+  endif
+endfunction
+
+command! -nargs=? -range Hex2dec call s:Hex2dec(<line1>, <line2>, '<args>')
+function! s:Hex2dec(line1, line2, arg) range
+  if empty(a:arg)
+    if histget(':', -1) =~# "^'<,'>" && visualmode() !=# 'V'
+      let cmd = 's/\%V0x\x\+/\=submatch(0)+0/g'
+    else
+      let cmd = 's/0x\x\+/\=submatch(0)+0/g'
+    endif
+    try
+      execute a:line1 . ',' . a:line2 . cmd
+    catch
+      echo 'Error: No hex number starting "0x" found'
+    endtry
+  else
+    echo (a:arg =~? '^0x') ? a:arg + 0 : ('0x'.a:arg) + 0
+  endif
+endfunction
 
 let g:vsim_init = 1

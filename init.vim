@@ -23,5 +23,7 @@ else
     let g:vsim_config_dir  ="~/.config/nvim"
 endif
 
-let g:vsim_environment = "neovim"
-execute "source " . g:vsim_config_file
+if !exists("g:vscode")
+    let g:vsim_environment = "neovim"
+    execute "source " . g:vsim_config_file
+endif
