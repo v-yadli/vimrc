@@ -1,4 +1,8 @@
-if exists('g:GuiLoaded')
+if exists('g:GtkGuiLoaded')
+    call rpcnotify(1, 'Gui', 'Font',   'Iosevka Slab 12')
+    call rpcnotify(1, 'Gui', 'Option', 'Tabline', 0)
+    call rpcnotify(1, 'Gui', 'Option', 'Popupmenu', 0)
+  elseif exists('g:GuiLoaded')
     GuiFont! Iosevka Slab:h12
     GuiTabline 0
 
@@ -14,16 +18,11 @@ if exists('g:GuiLoaded')
         call _doVsimToggleFullScreen()
     endfunction
 
-elseif exists('g:GtkGuiLoaded')
-    call rpcnotify(1, 'Gui', 'Font',   'Iosevka Slab 12')
-    call rpcnotify(1, 'Gui', 'Option', 'Tabline', 0)
-    call rpcnotify(1, 'Gui', 'Option', 'Popupmenu', 0)
-    nnoremap <silent> <C-w><C-s> :call rpcnotify(1, 'Gui', 'Command', 'ToggleSidebar')<CR>
 elseif exists('g:fvim_loaded')
     FVimCustomTitleBar v:true
     FVimFontNormalWeight 300
     FVimFontBoldWeight 600
-    set guifont=Iosevka\ Slab:h14
+    set guifont=Iosevka\ Slab:h28
     nnoremap <silent> <C-ScrollWheelUp> :set guifont=+<CR>
     nnoremap <silent> <C-ScrollWheelDown> :set guifont=-<CR>
     nnoremap <silent> <C-S-ScrollWheelUp> :set guifont=.+<CR>
@@ -35,6 +34,7 @@ elseif exists('g:fvim_loaded')
     FVimKeyDisableShiftSpace v:true
     FVimUIPopupMenu v:true
     FVimUIWildMenu v:false
+    FVimUIMultiGrid v:false
     FVimCustomTitleBar v:true
     FVimBackgroundComposition 'none'
     FVimBackgroundOpacity 0.95
