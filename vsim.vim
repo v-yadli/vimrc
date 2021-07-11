@@ -55,8 +55,8 @@ Plug 'yatli/dsp56k.vim'
 " Plug 'NLKNguyen/papercolor-theme'
 
 " mighty coc.nvim
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'jackguo380/vim-lsp-cxx-highlight'
+" Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'neoclide/coc.nvim', {'branch': 'master', 'do': 'yarn install --frozen-lockfile'}
 Plug 'Shougo/neco-vim'
 Plug 'neoclide/coc-neco'
 
@@ -87,7 +87,7 @@ else
     Plug 'ryanoasis/vim-devicons'
 endif
 
-" Junkyard -- things that do not work for me, or never found useful.
+" Junkyard -- things that do not work for me, replaced, or never found useful.
 " Plug 'reedes/vim-pencil'          <--- not working anymore
 " Plug 'rakr/vim-one'               <--- very slow on start!!
 " Plug 'itchyny/lightline.vim'      <--- no tabline....
@@ -108,6 +108,7 @@ endif
 " Plug 'scrooloose/nerdtree',       <--- replaced by coc-explorer
 " Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 " Plug 'lervag/vimtex'
+" Plug 'jackguo380/vim-lsp-cxx-highlight' <--- replaced by coc.nvim native support for semantic hl
 "
 " -------------- BEGIN legacy programming environment.. ----------------
 "  They never pulled it together well.. Really.
@@ -860,15 +861,15 @@ function! VsimToggleColor()
         FVimFontNormalWeight (l:bg == 'dark') ? 300 : 400
     endif
 
-    if l:bg == 'dark'
-        hi LspCxxHlGroupEnumConstant ctermfg=Magenta guifg=#AD7FA8 cterm=none gui=none
-        hi LspCxxHlGroupNamespace ctermfg=Yellow guifg=#BBBB00 cterm=none gui=none
-        hi LspCxxHlGroupMemberVariable ctermfg=White guifg=White
-    else
-        hi LspCxxHlGroupEnumConstant ctermfg=Magenta guifg=#573F54 cterm=none gui=none
-        hi LspCxxHlGroupNamespace ctermfg=Yellow guifg=#3D3D00 cterm=none gui=none
-        hi LspCxxHlGroupMemberVariable ctermfg=Black guifg=Black
-    endif
+    "if l:bg == 'dark'
+        "hi LspCxxHlGroupEnumConstant ctermfg=Magenta guifg=#AD7FA8 cterm=none gui=none
+        "hi LspCxxHlGroupNamespace ctermfg=Yellow guifg=#BBBB00 cterm=none gui=none
+        "hi LspCxxHlGroupMemberVariable ctermfg=White guifg=White
+    "else
+        "hi LspCxxHlGroupEnumConstant ctermfg=Magenta guifg=#573F54 cterm=none gui=none
+        "hi LspCxxHlGroupNamespace ctermfg=Yellow guifg=#3D3D00 cterm=none gui=none
+        "hi LspCxxHlGroupMemberVariable ctermfg=Black guifg=Black
+    "endif
 
     call VsimEcho("Current theme: ". l:theme)
 endfunction

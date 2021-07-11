@@ -12,20 +12,23 @@
             }
         }
     },
+
     "snippets.extends": {
       "cpp": ["c"],
       "typescript": ["javascript"]
     },
-    "explorer.icon.enableVimDevicons": false,
+
     "explorer.icon.enableNerdfont": true,
+    "explorer.icon.source":"builtin",
     "explorer.previewAction.onHover": false,
     "explorer.width": 30,
     "explorer.keyMappings.global": {
       "<space>": "toggleSelection"
     },
+
     "FSharp.UseSdkScripts": true,
     "FSharp.Linter": false,
-    "fsharp.analysis.unusedDeclaration": false,
+
     "xml.fileAssociations": [
         {
             "systemId": "https://raw.githubusercontent.com/dotnet/msbuild/master/src/MSBuild/Microsoft.Build.xsd",
@@ -42,28 +45,35 @@
     ],
     "xml.logs.client": true,
     "xml.trace.server": "verbose",
+
     "latex.build.executable": "latexmk",
     "latex.build.args": ["-xelatex"],
     "latex.lint.onSave": true,
-    "python.jediEnabled": true,
+
+    "python.pythonPath": "F:/anaconda3/python.exe",
     "python.linting.enabled": false,
     "python.linting.pylintEnabled": false,
     "python.linting.pep8Enabled": true,
     "python.formatting.provider": "autopep8",
-    "coc.preferences.hoverTarget": "float",
+
+    "coc.preferences.promptInput": true,
+    "coc.preferences.enableMessageDialog": true,
+    "coc.preferences.semanticTokensHighlights": true,
     "coc.preferences.enableFloatHighlight": true,
     "coc.preferences.maxFileSize":"1MB",
+    "coc.preferences.currentFunctionSymbolAutoUpdate": true,
+    "coc.preferences.useQuickfixForLocations": false,
+    "coc.preferences.extensionUpdateCheck":"weekly",
+    "coc.preferences.enableMarkdown": true,
+    "coc.preferences.colorSupport": true,
+    "hover.target": "float",
     "suggest.floatEnable": true,
     "suggest.echodocSupport": false,
     "suggest.timeout": 5000,
     "suggest.maxCompleteItemCount": 200,
     "suggest.minTriggerInputLength": 2,
     "codeLens.enable": true,
-    "coc.preferences.currentFunctionSymbolAutoUpdate": true,
-    "coc.preferences.useQuickfixForLocations": false,
-    "coc.preferences.extensionUpdateCheck":"weekly",
-    "coc.preferences.enableMarkdown": true,
-    "coc.preferences.colorSupport": true,
+
     "powershell.integratedConsole.focusConsoleOnExecute": false,
     "powershell.integratedConsole.showOnStartup": false,
     "omnisharp.trace.server": "verbose"
