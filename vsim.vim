@@ -4,12 +4,6 @@
 
 " Platform-specific variables
 if has("win32")
-    " python2 for OmniSharp
-    if filereadable('C:/Python27Amd64/python.exe')
-        let g:python_host_prog  = 'C:/Python27Amd64/python.exe'
-    elseif filereadable('C:/Python27/python.exe')
-        let g:python_host_prog  = 'C:/Python27/python.exe'
-    endif
     if filereadable('F:/anaconda3/python.exe')
       let g:python3_host_prog  = 'F:/anaconda3/python.exe'
     endif
@@ -38,7 +32,6 @@ Plug 'guns/vim-sexp'
 Plug 'bohlender/vim-smt2'
 Plug 'kshenoy/vim-signature'          " displays marks in the gutter (sign column)
 Plug 'mhinz/vim-signify'              " displays changes in the gutter
-Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-fugitive'
 Plug 'mhinz/vim-startify'
@@ -48,6 +41,9 @@ Plug 'v-yadli/vim-tsl'
 Plug 'yatli/sleigh.vim'
 Plug 'yatli/vmux.vim'
 Plug 'yatli/dsp56k.vim'
+Plug 'godlygeek/tabular'              " Required by vim-markdown
+Plug 'plasticboy/vim-markdown'
+Plug 'gyim/vim-boxdraw'
 
 " colorschemes
 " Plug 'morhetz/gruvbox'
@@ -59,6 +55,7 @@ Plug 'yatli/dsp56k.vim'
 Plug 'neoclide/coc.nvim', {'branch': 'master', 'do': 'yarn install --frozen-lockfile'}
 Plug 'Shougo/neco-vim'
 Plug 'neoclide/coc-neco'
+Plug 'jackguo380/vim-lsp-cxx-highlight' " <--- coc.nvim has native support for semantic hl, but no 'active regions'
 
 " Utilities -- Things that I do love to issue Ex commands to utilize
 Plug 'fidian/hexmode', { 'on': 'Hexmode' }
@@ -66,25 +63,26 @@ Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
 Plug 'tweekmonster/startuptime.vim', { 'on': 'StartupTime' }
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
+Plug 'puremourning/vimspector'
+" Plug 'F:/git/vimspector'
 
 " Laborotary -- Things I'd love to know more about
 " Plug 'jaawerth/fennel-nvim', { 'branch': 'dev' }
 Plug 'Olical/conjure'
 " Plug 'Olical/aniseed', { 'tag': 'v3.11.0' }
 Plug 'bakpakin/fennel.vim'
-Plug 'puremourning/vimspector'
-" Plug 'F:/git/vimspector'
-Plug 'godlygeek/tabular'              " Required by vim-markdown
-Plug 'plasticboy/vim-markdown'
-Plug 'gyim/vim-boxdraw'
 Plug 'honza/vim-snippets'
 
 if g:vsim_environment=="neovim"
     Plug 'kyazdani42/nvim-web-devicons'
     Plug 'kassio/neoterm'
     Plug 'romgrk/barbar.nvim'
+    Plug 'tversteeg/registers.nvim', { 'branch': 'main' }
+    Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+    Plug 'PProvost/vim-ps1'
 else
     Plug 'ryanoasis/vim-devicons'
+    Plug 'sheerun/vim-polyglot'
 endif
 
 " Junkyard -- things that do not work for me, replaced, or never found useful.
@@ -108,7 +106,6 @@ endif
 " Plug 'scrooloose/nerdtree',       <--- replaced by coc-explorer
 " Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 " Plug 'lervag/vimtex'
-" Plug 'jackguo380/vim-lsp-cxx-highlight' <--- replaced by coc.nvim native support for semantic hl
 "
 " -------------- BEGIN legacy programming environment.. ----------------
 "  They never pulled it together well.. Really.
@@ -861,15 +858,15 @@ function! VsimToggleColor()
         FVimFontNormalWeight (l:bg == 'dark') ? 300 : 400
     endif
 
-    "if l:bg == 'dark'
-        "hi LspCxxHlGroupEnumConstant ctermfg=Magenta guifg=#AD7FA8 cterm=none gui=none
-        "hi LspCxxHlGroupNamespace ctermfg=Yellow guifg=#BBBB00 cterm=none gui=none
-        "hi LspCxxHlGroupMemberVariable ctermfg=White guifg=White
-    "else
-        "hi LspCxxHlGroupEnumConstant ctermfg=Magenta guifg=#573F54 cterm=none gui=none
-        "hi LspCxxHlGroupNamespace ctermfg=Yellow guifg=#3D3D00 cterm=none gui=none
-        "hi LspCxxHlGroupMemberVariable ctermfg=Black guifg=Black
-    "endif
+    if l:bg == 'dark'
+        hi LspCxxHlGroupEnumConstant ctermfg=Magenta guifg=#AD7FA8 cterm=none gui=none
+        hi LspCxxHlGroupNamespace ctermfg=Yellow guifg=#BBBB00 cterm=none gui=none
+        hi LspCxxHlGroupMemberVariable ctermfg=White guifg=White
+    else
+        hi LspCxxHlGroupEnumConstant ctermfg=Magenta guifg=#573F54 cterm=none gui=none
+        hi LspCxxHlGroupNamespace ctermfg=Yellow guifg=#3D3D00 cterm=none gui=none
+        hi LspCxxHlGroupMemberVariable ctermfg=Black guifg=Black
+    endif
 
     call VsimEcho("Current theme: ". l:theme)
 endfunction
@@ -916,5 +913,15 @@ function! s:Hex2dec(line1, line2, arg) range
     echo (a:arg =~? '^0x') ? a:arg + 0 : ('0x'.a:arg) + 0
   endif
 endfunction
+
+lua <<EOF
+require'nvim-treesitter.configs'.setup {
+    -- Modules and its options go here
+    highlight = { enable = true },
+    incremental_selection = { enable = true },
+    textobjects = { enable = true },
+}
+EOF
+
 
 let g:vsim_init = 1
