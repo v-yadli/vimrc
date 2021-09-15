@@ -28,7 +28,7 @@ Plug 'christoomey/vim-tmux-navigator'
 Plug 'scrooloose/nerdcommenter'
 Plug 'junegunn/vim-easy-align'
 Plug 'vim-scripts/LargeFile'
-Plug 'guns/vim-sexp'
+Plug 'guns/vim-sexp', {'for': ['lisp', 'clojure', 'cl', 'scheme', 'gasm']}
 Plug 'bohlender/vim-smt2'
 Plug 'kshenoy/vim-signature'          " displays marks in the gutter (sign column)
 Plug 'mhinz/vim-signify'              " displays changes in the gutter
@@ -37,10 +37,6 @@ Plug 'tpope/vim-fugitive'
 Plug 'mhinz/vim-startify'
 Plug 'Yggdroot/indentLine'
 Plug 'derekwyatt/vim-fswitch'
-Plug 'v-yadli/vim-tsl'
-Plug 'yatli/sleigh.vim'
-Plug 'yatli/vmux.vim'
-Plug 'yatli/dsp56k.vim'
 Plug 'godlygeek/tabular'              " Required by vim-markdown
 Plug 'plasticboy/vim-markdown'
 Plug 'gyim/vim-boxdraw'
@@ -68,18 +64,35 @@ Plug 'puremourning/vimspector'
 
 " Laborotary -- Things I'd love to know more about
 " Plug 'jaawerth/fennel-nvim', { 'branch': 'dev' }
-Plug 'Olical/conjure'
+Plug 'Olical/conjure', { 'for': ['clojure', 'fennel', 'scheme'] }
 " Plug 'Olical/aniseed', { 'tag': 'v3.11.0' }
-Plug 'bakpakin/fennel.vim'
+Plug 'bakpakin/fennel.vim', { 'for': ['fennel'] }
 Plug 'honza/vim-snippets'
+
+" ---------------- neovim dev ----------------
+" (OPTIONAL): This is a suggested plugin to get better Lua syntax highlighting
+"   but it's not currently required
+Plug 'euclidianAce/BetterLua.vim'
+" ---------------- neovim dev end ------------
+
 
 if g:vsim_environment=="neovim"
     Plug 'kyazdani42/nvim-web-devicons'
     Plug 'kassio/neoterm'
     Plug 'romgrk/barbar.nvim'
     Plug 'tversteeg/registers.nvim', { 'branch': 'main' }
-    Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+    " Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
     Plug 'PProvost/vim-ps1'
+
+" lua <<EOF
+" require'nvim-treesitter.configs'.setup {
+"     -- Modules and its options go here
+"     highlight = { enable = true },
+"     incremental_selection = { enable = true },
+"     textobjects = { enable = true },
+" }
+" EOF
+
 else
     Plug 'ryanoasis/vim-devicons'
     Plug 'sheerun/vim-polyglot'
@@ -122,8 +135,45 @@ Plug 'reedes/vim-wordy'
 Plug 'panozzaj/vim-autocorrect'
 " }}}
 
+" Dev space!
+Plug 'v-yadli/vim-tsl'
+Plug 'yatli/sleigh.vim'
+Plug 'yatli/vmux.vim'
+Plug 'yatli/dsp56k.vim'
+Plug 'yatli/gui-widgets.nvim'
+
 " Initialize plugin system finish
 call plug#end()
+
+" For neovim development
+lua <<EOF
+function get_lua_runtime()
+  local result = {};
+  for _, path in pairs(vim.api.nvim_list_runtime_paths()) do
+    local lua_path = path .. "/lua/";
+    if vim.fn.isdirectory(lua_path) == 1 then
+      result[lua_path] = true
+    end
+  end
+
+  -- This loads the `lua` files from nvim into the runtime.
+  result[vim.fn.expand("$VIMRUNTIME/lua/")] = true
+  result[vim.fn.expand("$VIMRUNTIME/vim/lsp/")] = true
+
+  return result
+end
+EOF
+" let g:lua_config = luaeval('get_lua_runtime()')
+" call coc#config('Lua.workspace.library', g:lua_config)
+call coc#config('Lua.workspace.library', {
+      \ $VIMRUNTIME . "/lua/": v:true,
+      \ $VIMRUNTIME . "/lua/vim/lsp/": v:true
+      \ })
+call coc#config("Lua.runtime.version", "LuaJIT")
+call coc#config('Lua.completion.keywordSnippet', 'Disable')
+call coc#config('Lua.diagnostics.enable', v:true)
+call coc#config('Lua.diagnostics.disable', ['trailing-space'])
+call coc#config('Lua.diagnostics.globals', ['vim', 'describe', 'it', 'before_each', 'after_each', 'teardown', 'pending', 'clear'])
 
 filetype plugin indent on
 
@@ -241,7 +291,7 @@ let g:gruvbox_invert_selection=0
 "colorscheme falcon
 "colorscheme pencil
 set guicursor=n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50
-  \,a:blinkwait100-blinkoff500-blinkon500-Cursor/lCursor
+  \,a:blinkwait1000-blinkoff500-blinkon500-Cursor/lCursor
   \,sm:block-blinkwait175-blinkoff150-blinkon175
 
 set cursorline
@@ -486,9 +536,7 @@ function! VsimProgrammerMode()
     nmap     <silent> <buffer> <C-.>      <Plug>(coc-codeaction)
     vmap     <silent> <buffer> <C-.>      <Plug>(coc-codeaction-selected)
 
-    if &filetype != 'vim'
-        nnoremap <silent> <buffer> <S-K>      :call CocActionAsync('doHover')<CR>
-    endif
+    nnoremap <silent> <buffer> <S-K>      :call CocActionAsync('doHover')<CR>
 
     if &filetype == 'fsharp' || &filetype == 'vim'
         setlocal foldmethod=indent
@@ -558,8 +606,9 @@ let g:coc_global_extensions=[
             \ 'coc-marketplace',
             \ 'coc-omnisharp',
             \ 'coc-explorer',
-            \ 'coc-conjure',
+            \ 'coc-lua' ,
             \ ]
+" \ 'coc-conjure'
 " \ 'coc-sh',
 " \ 'coc-vimtex',
 "
@@ -574,7 +623,6 @@ let g:coc_filetype_map = {
 nmap <C-tab> :bn<CR>
 nmap <C-S-tab> :bp<CR>
 
-autocmd FileType vim nnoremap <buffer> <S-K> :call VimrcGetHelp()<CR>
 autocmd FileType c,cpp,typescript,javascript,json,ps1,psm1,psd1,fsharp,cs,python,vim,xml,sh,cuda,verilog,vue,tex,lua,fnl call VsimProgrammerMode()
 
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.db,*.sqlite
@@ -913,15 +961,5 @@ function! s:Hex2dec(line1, line2, arg) range
     echo (a:arg =~? '^0x') ? a:arg + 0 : ('0x'.a:arg) + 0
   endif
 endfunction
-
-lua <<EOF
-require'nvim-treesitter.configs'.setup {
-    -- Modules and its options go here
-    highlight = { enable = true },
-    incremental_selection = { enable = true },
-    textobjects = { enable = true },
-}
-EOF
-
 
 let g:vsim_init = 1
