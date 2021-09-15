@@ -28,6 +28,7 @@
 
     "FSharp.UseSdkScripts": true,
     "FSharp.Linter": false,
+    "FSharp.server.trace": true,
 
     "xml.fileAssociations": [
         {
@@ -69,7 +70,7 @@
     "hover.target": "float",
     "suggest.floatEnable": true,
     "suggest.echodocSupport": false,
-    "suggest.timeout": 5000,
+    "suggest.timeout": 10000,
     "suggest.maxCompleteItemCount": 200,
     "suggest.minTriggerInputLength": 2,
     "codeLens.enable": true,
