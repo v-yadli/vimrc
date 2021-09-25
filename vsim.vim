@@ -83,16 +83,6 @@ if g:vsim_environment=="neovim"
     Plug 'tversteeg/registers.nvim', { 'branch': 'main' }
     " Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
     Plug 'PProvost/vim-ps1'
-
-" lua <<EOF
-" require'nvim-treesitter.configs'.setup {
-"     -- Modules and its options go here
-"     highlight = { enable = true },
-"     incremental_selection = { enable = true },
-"     textobjects = { enable = true },
-" }
-" EOF
-
 else
     Plug 'ryanoasis/vim-devicons'
     Plug 'sheerun/vim-polyglot'
@@ -140,6 +130,9 @@ Plug 'v-yadli/vim-tsl'
 Plug 'yatli/sleigh.vim'
 Plug 'yatli/vmux.vim'
 Plug 'yatli/dsp56k.vim'
+
+Plug 'nvim-lua/plenary.nvim'
+Plug 'bfredl/nvim-luadev'
 Plug 'yatli/gui-widgets.nvim'
 
 " Initialize plugin system finish
@@ -162,6 +155,15 @@ function get_lua_runtime()
 
   return result
 end
+
+--[[
+require'nvim-treesitter.configs'.setup {
+    -- Modules and its options go here
+    highlight = { enable = true },
+    incremental_selection = { enable = true },
+    textobjects = { enable = true },
+}
+]]--
 EOF
 " let g:lua_config = luaeval('get_lua_runtime()')
 " call coc#config('Lua.workspace.library', g:lua_config)
@@ -207,8 +209,6 @@ set guioptions-=m
 " Disable scroll bar
 set guioptions-=L
 set guioptions-=r
-" Bind ESC in normal mode to clear highlight search
-autocmd VimEnter * nnoremap <Esc> :nohlsearch<CR>
 " Necessity Evil Reloaded
 " let g:vim_fakeclip_tmux_plus=1
 if g:vsim_environment == "neovim"
@@ -271,7 +271,6 @@ function! WriterMode()
 endfunction
 
 let g:tex_flavor = "latex"
-autocmd FileType tex,mkd,markdown call WriterMode()
 
 "}}}
 
@@ -337,8 +336,6 @@ inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 " -- use <cr> to confirm complete
 inoremap <expr> <cr>    pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-" -- close preview window when completion is done.
-autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
 
 if exists("g:fvim_loaded")
     call coc#config('suggest.completionItemKindLabels', {
@@ -462,7 +459,6 @@ function! AirlineInit()
   let g:airline_section_y = airline#section#create(['ffenc'])
   let g:airline_section_z = airline#section#create(['cur_char', 'windowswap', 'obsession', '%3p%%'.spc, 'linenr', 'maxlinenr', spc.':%3v'])
 endfunction
-autocmd User AirlineAfterInit call AirlineInit()
 
 " exclude overwrite statusline of list filetype
 let g:airline_exclude_filetypes = ["list"]
@@ -521,8 +517,11 @@ function! VsimProgrammerMode()
 
     set updatetime=300
     set signcolumn=yes
-    autocmd! CursorHold  * silent call CocActionAsync('highlight')
-    autocmd! User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+    augroup vsim_prog
+      autocmd!
+      autocmd CursorHold  * silent call CocActionAsync('highlight')
+      autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+    augroup END
 
     setlocal nobackup
     setlocal nowritebackup
@@ -542,6 +541,10 @@ function! VsimProgrammerMode()
         setlocal foldmethod=indent
     endif
 
+    if &filetype == 'vim'
+      nmap gh :call VimrcGetHelp()<cr>
+    endif
+
     if &filetype == 'ps1'
         nnoremap <buffer> <F5> :CocCommand powershell.execute<CR>
         nnoremap <buffer> <F8> :CocCommand powershell.evaluateLine<CR>
@@ -552,6 +555,13 @@ function! VsimProgrammerMode()
         nnoremap <buffer> <F5> :CocCommand fsharp.run<CR>
         nnoremap <buffer> <F8> :CocCommand fsharp.evaluateLine<CR>
         vnoremap <buffer> <F8> :<C-u>CocCommand fsharp.evaluateSelection<CR>
+        call coc#config('coc.preferences.semanticTokensHighlight', v:false)
+    endif
+
+    if &filetype == 'lua'
+        vmap <buffer> <Leader>rr <Plug>(Luadev-Run)
+        nmap <buffer> <Leader>rr <Plug>(Luadev-Run)
+        nmap <buffer> <Leader>rl <Plug>(Luadev-RunLine)
     endif
 
     nnoremap <silent> <buffer> <F1>       :call CocActionAsync('doHover')<CR>
@@ -622,8 +632,6 @@ let g:coc_filetype_map = {
 " Quicker navigation in tabs^H^H^H^Hbuffers...
 nmap <C-tab> :bn<CR>
 nmap <C-S-tab> :bp<CR>
-
-autocmd FileType c,cpp,typescript,javascript,json,ps1,psm1,psd1,fsharp,cs,python,vim,xml,sh,cuda,verilog,vue,tex,lua,fnl call VsimProgrammerMode()
 
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.db,*.sqlite
 
@@ -882,8 +890,6 @@ let s:vsim_theme_name    = ['falcon', 'gruvbox', 'gruvbox', 'Tomorrow', 'Tomorro
 let s:vsim_theme_bg      = ['dark',   'dark',    'light',   'light',    'dark',           'dark',                'light',  'dark',   'light',     'light',      'dark']
 let s:vsim_theme_airline = ['falcon', 'gruvbox', 'gruvbox', 'tomorrow', 'tomorrow',       'tomorrow',            '',       '',       '',          'papercolor', 'papercolor']
 
-autocmd TermOpen * if g:colors_name == g:vsim_termbg | setlocal winhighlight=Normal:VsimTermBackground | endif
-
 function! VsimToggleColor()
     let s:vsim_theme_idx = s:vsim_theme_idx + 1
     if s:vsim_theme_idx >= len(s:vsim_theme_name)
@@ -961,5 +967,29 @@ function! s:Hex2dec(line1, line2, arg) range
     echo (a:arg =~? '^0x') ? a:arg + 0 : ('0x'.a:arg) + 0
   endif
 endfunction
+
+function! s:SynStack ()
+    for i1 in synstack(line("."), col("."))
+        let i2 = synIDtrans(i1)
+        let n1 = synIDattr(i1, "name")
+        let n2 = synIDattr(i2, "name")
+        echo n1 "->" n2
+    endfor
+endfunction
+command! -nargs=0 SynStack call s:SynStack()
+
+" -- autocommands
+
+augroup vsim
+  autocmd! 
+  " Bind ESC in normal mode to clear highlight search
+  autocmd VimEnter * nnoremap <Esc> :nohlsearch<CR>
+  autocmd FileType tex,mkd,markdown call WriterMode()
+  " -- close preview window when completion is done.
+  autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
+  autocmd User AirlineAfterInit call AirlineInit()
+  autocmd FileType c,cpp,typescript,javascript,json,ps1,psm1,psd1,fsharp,cs,python,vim,xml,sh,cuda,verilog,vue,tex,lua,fnl call VsimProgrammerMode()
+  autocmd TermOpen * if g:colors_name == g:vsim_termbg | setlocal winhighlight=Normal:VsimTermBackground | endif
+augroup END
 
 let g:vsim_init = 1

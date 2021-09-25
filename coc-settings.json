@@ -59,7 +59,7 @@
 
     "coc.preferences.promptInput": true,
     "coc.preferences.enableMessageDialog": true,
-    "coc.preferences.semanticTokensHighlights": true,
+    "coc.preferences.semanticTokensHighlights": false,
     "coc.preferences.enableFloatHighlight": true,
     "coc.preferences.maxFileSize":"1MB",
     "coc.preferences.currentFunctionSymbolAutoUpdate": true,
