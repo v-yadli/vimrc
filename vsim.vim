@@ -614,7 +614,6 @@ let g:coc_global_extensions=[
             \ 'coc-snippets',
             \ 'coc-xml',
             \ 'coc-marketplace',
-            \ 'coc-omnisharp',
             \ 'coc-explorer',
             \ 'coc-lua' ,
             \ ]
