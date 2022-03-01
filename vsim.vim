@@ -604,7 +604,7 @@ let g:coc_global_extensions=[
             \ 'coc-json',
             \ 'coc-yaml',
             \ 'coc-tsserver',
-            \ 'coc-pyright',
+            \ 'coc-jedi',
             \ 'coc-html',
             \ 'coc-highlight',
             \ 'coc-fsharp',
@@ -828,8 +828,8 @@ vmap <C-k><C-c> <plug>NERDCommenterComment
 vmap <C-k><C-u> <plug>NERDCommenterUncomment
 
 nnoremap <C-c> <silent> <C-c>
-nnoremap <C-k><C-c> <S-v>:call NERDComment("x", "Comment")<CR>
-nnoremap <C-k><C-u> <S-v>:call NERDComment("x", "Uncomment")<CR>
+nnoremap <C-k><C-c> <S-v>:call nerdcommenter#Comment("x", "Comment")<CR>
+nnoremap <C-k><C-u> <S-v>:call nerdcommenter#Comment("x", "Uncomment")<CR>
 nnoremap <C-k><C-o> :FSHere<CR>
 
 " <C-e> (view) family
