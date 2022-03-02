@@ -25,7 +25,7 @@ elseif exists('g:fvim_loaded')
     if g:fvim_os == "windows"
         set guifont=Iosevka\ Slab:h14
     else
-        set guifont=Iosevka\ Slab:h28
+        set guifont=Iosevka\ Slab:h14
     endif
     nnoremap <silent> <C-ScrollWheelUp> :set guifont=+<CR>
     nnoremap <silent> <C-ScrollWheelDown> :set guifont=-<CR>
