@@ -3,16 +3,6 @@
 " Yatao Li<yatao.li@live.com>
 
 " Platform-specific variables
-if has("win32")
-    if filereadable('F:/anaconda3/python.exe')
-      let g:python3_host_prog  = 'F:/anaconda3/python.exe'
-    endif
-else
-    if filereadable(expand('~/anaconda3/bin/python3'))
-        let g:python3_host_prog = '~/anaconda3/bin/python3'
-    endif
-endif
-
 let g:vsim_init = 0
 let g:polyglot_disabled = ['fsharp', 'latex', 'xml', 'v', 'vlang']
 
@@ -134,6 +124,7 @@ Plug 'yatli/dsp56k.vim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'bfredl/nvim-luadev'
 Plug 'yatli/gui-widgets.nvim'
+Plug 'yatli/nvim-ipy'
 
 " Initialize plugin system finish
 call plug#end()
@@ -613,7 +604,7 @@ let g:coc_global_extensions=[
             \ 'coc-json',
             \ 'coc-yaml',
             \ 'coc-tsserver',
-            \ 'coc-pyright',
+            \ 'coc-jedi',
             \ 'coc-html',
             \ 'coc-highlight',
             \ 'coc-fsharp',
