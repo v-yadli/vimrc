@@ -177,6 +177,15 @@ call coc#config('Lua.diagnostics.enable', v:true)
 call coc#config('Lua.diagnostics.disable', ['trailing-space'])
 call coc#config('Lua.diagnostics.globals', ['vim', 'describe', 'it', 'before_each', 'after_each', 'teardown', 'pending', 'clear'])
 
+" coc-explorer bug repro
+let g:coc_explorer_global_presets = {
+      \ 'floating': {
+        \ 'position': 'floating',
+      \}
+    \}
+" to trigger:
+" :CocCommand explorer --preset floating
+
 filetype plugin indent on
 
 set nowrap
@@ -828,8 +837,8 @@ vmap <C-k><C-c> <plug>NERDCommenterComment
 vmap <C-k><C-u> <plug>NERDCommenterUncomment
 
 nnoremap <C-c> <silent> <C-c>
-nnoremap <C-k><C-c> <S-v>:call NERDComment("x", "Comment")<CR>
-nnoremap <C-k><C-u> <S-v>:call NERDComment("x", "Uncomment")<CR>
+nnoremap <C-k><C-c> <S-v>:call nerdcommenter#Comment("x", "Comment")<CR>
+nnoremap <C-k><C-u> <S-v>:call nerdcommenter#Comment("x", "Uncomment")<CR>
 nnoremap <C-k><C-o> :FSHere<CR>
 
 " <C-e> (view) family
