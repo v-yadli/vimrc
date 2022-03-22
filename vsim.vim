@@ -261,13 +261,16 @@ let g:vim_markdown_conceal = 0
 "     \ ],
 "     \}
 
-function! WriterMode()
+function! VsimWriterMode()
     nnoremap <buffer> <F5> :silent! NextWordy<CR>
     let g:lexical#thesaurus = ['~/thesaurus/words.txt', '~/thesaurus/mthesaur.txt','~/thesaurus/roget13a.txt' ]
     let g:lexical#spell = 1
     call lexical#init()
     setlocal smartindent
     setlocal concealcursor="n"
+    call s:vsim_key('e', 'w', ':call VsimToggleWrap()<CR>')
+    call s:vsim_key('e', 'l', ':call IndentLinesToggle()<CR>')
+    call s:vsim_key('e', 's', ':call LeadingSpaceToggle()<CR>')
 endfunction
 
 let g:tex_flavor = "latex"
@@ -483,6 +486,7 @@ function! s:vsim_key(prefix, key, cmd)
     let mapcmd =  a:cmd =~ '<Plug>' ? 'nmap' : 'nnoremap'
     execute mapcmd.' <silent> <buffer> <C-'.a:prefix.'>'.key.' '.a:cmd
     execute mapcmd.' <silent> <buffer> <C-'.a:prefix.'><C-'.a:key.'> '.a:cmd
+    execute mapcmd.' <silent> <buffer> <Leader>'.a:prefix.key.' '.a:cmd
 endfunction
 
 let g:vsim_debugger_mode = v:false
@@ -597,6 +601,10 @@ function! VsimProgrammerMode()
     if g:vsim_debugger_mode
       call VsimDebuggerMode()
     endif
+
+    call s:vsim_key('e', 'w', ':call VsimToggleWrap()<CR>')
+    call s:vsim_key('e', 'l', ':call IndentLinesToggle()<CR>')
+    call s:vsim_key('e', 's', ':call LeadingSpaceToggle()<CR>')
 endfunction
 
 let g:coc_global_extensions=[
@@ -766,11 +774,12 @@ function! VsimToggleWrap()
         setlocal wrap
         setlocal colorcolumn=0
         setlocal textwidth=80
+        setlocal linebreak
         call VsimEcho("Wrap=SOFT")
-        nmap silent j gj
-        nmap silent k gk
-        nmap silent 0 g0
-        nmap silent $ g$
+        nmap <silent> <buffer> j gj
+        nmap <silent> <buffer> k gk
+        nmap <silent> <buffer> 0 g0
+        nmap <silent> <buffer> $ g$
     elseif s:vsim_wrap_state == 1
         let s:vsim_wrap_state = 2
         setlocal formatoptions=jtcroqmMn
@@ -836,11 +845,6 @@ nnoremap <C-k><C-o> :FSHere<CR>
 " set Wrap=OFF upon start
 let s:vsim_wrap_state = 3
 call VsimToggleWrap()
-
-call s:vsim_key('e', 'w', ':call VsimToggleWrap()<CR>')
-call s:vsim_key('e', 'l', ':call IndentLinesToggle()<CR>')
-call s:vsim_key('e', 's', ':call LeadingSpaceToggle()<CR>')
-
 
 nnoremap <C-;> :FZF<CR>
 inoremap <C-;> <C-o>:FZF<CR>
@@ -983,7 +987,7 @@ augroup vsim
   autocmd! 
   " Bind ESC in normal mode to clear highlight search
   autocmd VimEnter * nnoremap <Esc> :nohlsearch<CR>
-  autocmd FileType tex,mkd,markdown call WriterMode()
+  autocmd FileType tex,mkd,markdown call VsimWriterMode()
   " -- close preview window when completion is done.
   autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
   autocmd User AirlineAfterInit call AirlineInit()
