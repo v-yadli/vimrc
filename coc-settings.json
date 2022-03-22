@@ -52,9 +52,9 @@
     "xml.logs.client": true,
     "xml.trace.server": "verbose",
 
-    "latex.build.executable": "latexmk",
-    "latex.build.args": ["-xelatex"],
-    "latex.lint.onSave": true,
+    "texlab.build.onSave":true,
+    // "texlab.build.args": ["-xelatex"],
+    "texlab.chktex.onOpenAndSave":true,
 
     "python.pythonPath": "F:/anaconda3/python.exe",
     "python.linting.enabled": false,
@@ -64,14 +64,13 @@
 
     "coc.preferences.promptInput": true,
     "coc.preferences.enableMessageDialog": true,
-    "coc.preferences.semanticTokensHighlights": false,
     "coc.preferences.enableFloatHighlight": true,
     "coc.preferences.maxFileSize":"1MB",
     "coc.preferences.currentFunctionSymbolAutoUpdate": true,
     "coc.preferences.useQuickfixForLocations": false,
     "coc.preferences.extensionUpdateCheck":"weekly",
     "coc.preferences.enableMarkdown": true,
-    "coc.preferences.colorSupport": true,
+    "semanticTokens.filetypes":[ "fsharp" ],
     "hover.target": "float",
     "suggest.floatEnable": true,
     "suggest.echodocSupport": false,

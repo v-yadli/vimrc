@@ -4,7 +4,7 @@
 
 " Platform-specific variables
 let g:vsim_init = 0
-let g:polyglot_disabled = ['fsharp', 'latex', 'xml', 'v', 'vlang']
+let g:polyglot_disabled = ['forth', 'fsharp', 'latex', 'xml', 'v', 'vlang']
 
 " Initialize plugin system
 call plug#begin(g:plugged_dir)
