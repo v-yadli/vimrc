@@ -1,16 +1,5 @@
 {
     "languageserver": {
-        "ccls": {
-            "command": "ccls",
-            "filetypes": ["c", "cpp", "objc", "objcpp", "cuda"],
-            "rootPatterns": [".ccls", "compile_commands.json", ".vim/", ".git/", ".hg/"],
-            "initializationOptions": {
-                "cache": {
-                    "directory": ".ccls-cache"
-                },
-                "highlight": { "lsRanges" : true }
-            }
-        },
         "csharp-ls": {
           "command": "csharp-ls",
           "filetypes": ["cs"],
@@ -52,15 +41,18 @@
     "xml.logs.client": true,
     "xml.trace.server": "verbose",
 
-    "texlab.build.onSave":true,
+    // not good. wrong formats:
     // "texlab.build.args": ["-xelatex"],
+    "texlab.forwardSearch.executable": "SumatraPDF.exe",
+    "texlab.forwardSearch.args": [
+      "-reuse-instance",
+      "%p",
+      "-forward-search",
+      "%f",
+      "%l"
+    ],
+    "texlab.build.onSave":true,
     "texlab.chktex.onOpenAndSave":true,
-
-    "python.pythonPath": "F:/anaconda3/python.exe",
-    "python.linting.enabled": false,
-    "python.linting.pylintEnabled": false,
-    "python.linting.pep8Enabled": true,
-    "python.formatting.provider": "autopep8",
 
     "coc.preferences.promptInput": true,
     "coc.preferences.enableMessageDialog": true,
