@@ -177,6 +177,10 @@ call coc#config('Lua.diagnostics.enable', v:true)
 call coc#config('Lua.diagnostics.disable', ['trailing-space'])
 call coc#config('Lua.diagnostics.globals', ['vim', 'describe', 'it', 'before_each', 'after_each', 'teardown', 'pending', 'clear'])
 
+if !has("win32")
+  call coc#config('python.pythonPath', expand(g:vsim_config_dir . '/python_proxy.sh'))
+endif
+
 filetype plugin indent on
 
 set nowrap
