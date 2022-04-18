@@ -3,18 +3,8 @@
 " Yatao Li<yatao.li@live.com>
 
 " Platform-specific variables
-if has("win32")
-    if filereadable('F:/anaconda3/python.exe')
-      let g:python3_host_prog  = 'F:/anaconda3/python.exe'
-    endif
-else
-    if filereadable(expand('~/anaconda3/bin/python3'))
-        let g:python3_host_prog = '~/anaconda3/bin/python3'
-    endif
-endif
-
 let g:vsim_init = 0
-let g:polyglot_disabled = ['fsharp', 'latex', 'xml', 'v', 'vlang']
+let g:polyglot_disabled = ['forth', 'fsharp', 'latex', 'xml', 'v', 'vlang']
 
 " Initialize plugin system
 call plug#begin(g:plugged_dir)
@@ -69,6 +59,7 @@ Plug 'Olical/conjure', { 'for': ['clojure', 'fennel', 'scheme'] }
 Plug 'bakpakin/fennel.vim', { 'for': ['fennel'] }
 Plug 'honza/vim-snippets'
 
+Plug 'folke/which-key.nvim', { 'branch': 'main' }
 " ---------------- neovim dev ----------------
 " (OPTIONAL): This is a suggested plugin to get better Lua syntax highlighting
 "   but it's not currently required
@@ -134,9 +125,18 @@ Plug 'yatli/dsp56k.vim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'bfredl/nvim-luadev'
 Plug 'yatli/gui-widgets.nvim'
+Plug 'yatli/nvim-ipy'
 
 " Initialize plugin system finish
 call plug#end()
+
+lua << EOF
+  require("which-key").setup {
+    -- your configuration comes here
+    -- or leave it empty to use the default settings
+    -- refer to the configuration section below
+  }
+EOF
 
 " For neovim development
 lua <<EOF
@@ -180,6 +180,14 @@ call coc#config('Lua.diagnostics.globals', ['vim', 'describe', 'it', 'before_eac
 if !has("win32")
   call coc#config('python.pythonPath', expand(g:vsim_config_dir . '/python_proxy.sh'))
 endif
+" coc-explorer bug repro
+let g:coc_explorer_global_presets = {
+      \ 'floating': {
+        \ 'position': 'floating',
+      \}
+    \}
+" to trigger:
+" :CocCommand explorer --preset floating
 
 filetype plugin indent on
 
@@ -265,13 +273,19 @@ let g:vim_markdown_conceal = 0
 "     \ ],
 "     \}
 
-function! WriterMode()
+function! VsimWriterMode()
     nnoremap <buffer> <F5> :silent! NextWordy<CR>
     let g:lexical#thesaurus = ['~/thesaurus/words.txt', '~/thesaurus/mthesaur.txt','~/thesaurus/roget13a.txt' ]
     let g:lexical#spell = 1
     call lexical#init()
     setlocal smartindent
     setlocal concealcursor="n"
+    call s:vsim_key('e', 'w', ':call VsimToggleWrap()<CR>')
+    call s:vsim_key('e', 'l', ':call IndentLinesToggle()<CR>')
+    call s:vsim_key('e', 's', ':call LeadingSpaceToggle()<CR>')
+    if &filetype == 'tex'
+      nnoremap <buffer> <C-]> :silent CocCommand latex.ForwardSearch<CR>
+    endif
 endfunction
 
 let g:tex_flavor = "latex"
@@ -487,6 +501,7 @@ function! s:vsim_key(prefix, key, cmd)
     let mapcmd =  a:cmd =~ '<Plug>' ? 'nmap' : 'nnoremap'
     execute mapcmd.' <silent> <buffer> <C-'.a:prefix.'>'.key.' '.a:cmd
     execute mapcmd.' <silent> <buffer> <C-'.a:prefix.'><C-'.a:key.'> '.a:cmd
+    execute mapcmd.' <silent> <buffer> <Leader>'.a:prefix.key.' '.a:cmd
 endfunction
 
 let g:vsim_debugger_mode = v:false
@@ -601,6 +616,10 @@ function! VsimProgrammerMode()
     if g:vsim_debugger_mode
       call VsimDebuggerMode()
     endif
+
+    call s:vsim_key('e', 'w', ':call VsimToggleWrap()<CR>')
+    call s:vsim_key('e', 'l', ':call IndentLinesToggle()<CR>')
+    call s:vsim_key('e', 's', ':call LeadingSpaceToggle()<CR>')
 endfunction
 
 let g:coc_global_extensions=[
@@ -608,7 +627,7 @@ let g:coc_global_extensions=[
             \ 'coc-json',
             \ 'coc-yaml',
             \ 'coc-tsserver',
-            \ 'coc-pyright',
+            \ 'coc-jedi',
             \ 'coc-html',
             \ 'coc-highlight',
             \ 'coc-fsharp',
@@ -620,6 +639,7 @@ let g:coc_global_extensions=[
             \ 'coc-marketplace',
             \ 'coc-explorer',
             \ 'coc-lua' ,
+            \ 'coc-clangd',
             \ ]
 " \ 'coc-conjure'
 " \ 'coc-sh',
@@ -770,11 +790,12 @@ function! VsimToggleWrap()
         setlocal wrap
         setlocal colorcolumn=0
         setlocal textwidth=80
+        setlocal linebreak
         call VsimEcho("Wrap=SOFT")
-        nmap silent j gj
-        nmap silent k gk
-        nmap silent 0 g0
-        nmap silent $ g$
+        nmap <silent> <buffer> j gj
+        nmap <silent> <buffer> k gk
+        nmap <silent> <buffer> 0 g0
+        nmap <silent> <buffer> $ g$
     elseif s:vsim_wrap_state == 1
         let s:vsim_wrap_state = 2
         setlocal formatoptions=jtcroqmMn
@@ -832,19 +853,14 @@ vmap <C-k><C-c> <plug>NERDCommenterComment
 vmap <C-k><C-u> <plug>NERDCommenterUncomment
 
 nnoremap <C-c> <silent> <C-c>
-nnoremap <C-k><C-c> <S-v>:call NERDComment("x", "Comment")<CR>
-nnoremap <C-k><C-u> <S-v>:call NERDComment("x", "Uncomment")<CR>
+nnoremap <C-k><C-c> <S-v>:call nerdcommenter#Comment("x", "Comment")<CR>
+nnoremap <C-k><C-u> <S-v>:call nerdcommenter#Comment("x", "Uncomment")<CR>
 nnoremap <C-k><C-o> :FSHere<CR>
 
 " <C-e> (view) family
 " set Wrap=OFF upon start
 let s:vsim_wrap_state = 3
 call VsimToggleWrap()
-
-call s:vsim_key('e', 'w', ':call VsimToggleWrap()<CR>')
-call s:vsim_key('e', 'l', ':call IndentLinesToggle()<CR>')
-call s:vsim_key('e', 's', ':call LeadingSpaceToggle()<CR>')
-
 
 nnoremap <C-;> :FZF<CR>
 inoremap <C-;> <C-o>:FZF<CR>
@@ -987,7 +1003,7 @@ augroup vsim
   autocmd! 
   " Bind ESC in normal mode to clear highlight search
   autocmd VimEnter * nnoremap <Esc> :nohlsearch<CR>
-  autocmd FileType tex,mkd,markdown call WriterMode()
+  autocmd FileType tex,mkd,markdown call VsimWriterMode()
   " -- close preview window when completion is done.
   autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
   autocmd User AirlineAfterInit call AirlineInit()
