@@ -68,6 +68,7 @@ Plug 'Olical/conjure', { 'for': ['clojure', 'fennel', 'scheme'] }
 " Plug 'Olical/aniseed', { 'tag': 'v3.11.0' }
 Plug 'bakpakin/fennel.vim', { 'for': ['fennel'] }
 Plug 'honza/vim-snippets'
+Plug 'ojroques/vim-oscyank', { 'branch': 'main' }
 
 " ---------------- neovim dev ----------------
 " (OPTIONAL): This is a suggested plugin to get better Lua syntax highlighting
@@ -604,7 +605,6 @@ let g:coc_global_extensions=[
             \ 'coc-json',
             \ 'coc-yaml',
             \ 'coc-tsserver',
-            \ 'coc-pyright',
             \ 'coc-html',
             \ 'coc-highlight',
             \ 'coc-fsharp',
