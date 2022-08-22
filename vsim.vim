@@ -253,6 +253,7 @@ let g:vim_markdown_folding_disabled = 1
 
 " do not use conceal feature, the implementation is not so good
 let g:vim_markdown_conceal = 0
+let g:vim_markdown_conceal_code_blocks = 0
 
 " let g:vimtex_view_general_viewer = 'SumatraPDF'
 " let g:vimtex_view_general_options
@@ -765,9 +766,8 @@ function! VsimSetDirectoryToCurrentFile()
 endfunction
 
 function! VsimFindReferences()
-    call VsimSetDirectoryToCurrentFile()
     let currentWord = expand("<cword>", 1)
-    execute "Ag ".currentWord." ."
+    execute "Rg ".currentWord." ."
 endfunction
 
 function! VimrcGetHelp()
