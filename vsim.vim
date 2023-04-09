@@ -127,6 +127,7 @@ Plug 'nvim-lua/plenary.nvim'
 Plug 'bfredl/nvim-luadev'
 Plug 'yatli/gui-widgets.nvim'
 Plug 'yatli/nvim-ipy'
+Plug 'nvim-telescope/telescope.nvim'
 
 " Initialize plugin system finish
 call plug#end()
@@ -442,7 +443,7 @@ if g:vsim_environment=="neovim"
     if !exists("g:bufferline")
       let g:bufferline = {}
     endif
-    let g:bufferline.icons="both"
+    let g:bufferline.icons={ 'buffer_index': 1, 'filetype': { 'enabled': 1 } }
 else
     let g:airline#extensions#tabline#enabled = 1
     let g:airline#extensions#tabline#buffer_nr_show = 1
@@ -601,6 +602,7 @@ function! VsimProgrammerMode()
     imap     <silent> <buffer> <C-h>      <C-o>:call CocActionAsync('showSignatureHelp')<CR>
 
     call s:vsim_key('k', 'r',   '<Plug>(coc-references)')
+    call s:vsim_key('k', 'R',   ':call VsimFindReferences()<CR>')
     call s:vsim_key('c', 'p',   ':CocCommand<CR>')
     call s:vsim_key('c', '[',   '<Plug>(coc-diagnostic-prev)')
     call s:vsim_key('c', ']',   '<Plug>(coc-diagnostic-next)')
@@ -629,7 +631,7 @@ let g:coc_global_extensions=[
             \ 'coc-json',
             \ 'coc-yaml',
             \ 'coc-tsserver',
-            \ 'coc-jedi',
+            \ 'coc-pyright',
             \ 'coc-html',
             \ 'coc-highlight',
             \ 'coc-fsharp',
@@ -641,8 +643,10 @@ let g:coc_global_extensions=[
             \ 'coc-marketplace',
             \ 'coc-explorer',
             \ 'coc-lua' ,
-            \ 'coc-clangd',
             \ ]
+
+" \ 'coc-jedi',
+" \ 'coc-clangd',
 " \ 'coc-conjure'
 " \ 'coc-sh',
 " \ 'coc-vimtex',
