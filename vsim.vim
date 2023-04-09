@@ -59,6 +59,7 @@ Plug 'Olical/conjure', { 'for': ['clojure', 'fennel', 'scheme'] }
 Plug 'bakpakin/fennel.vim', { 'for': ['fennel'] }
 Plug 'honza/vim-snippets'
 Plug 'ojroques/vim-oscyank', { 'branch': 'main' }
+Plug 'm-pilia/vim-pkgbuild'
 
 Plug 'folke/which-key.nvim', { 'branch': 'main' }
 " ---------------- neovim dev ----------------
@@ -125,7 +126,7 @@ Plug 'yatli/dsp56k.vim'
 
 Plug 'nvim-lua/plenary.nvim'
 Plug 'bfredl/nvim-luadev'
-Plug 'yatli/gui-widgets.nvim'
+" Plug 'yatli/gui-widgets.nvim'
 Plug 'yatli/nvim-ipy'
 Plug 'nvim-telescope/telescope.nvim'
 
@@ -440,10 +441,10 @@ let g:airline_detect_spelllang=1
 let g:airline_exclude_preview = 1
 if g:vsim_environment=="neovim"
     " use barbar
-    if !exists("g:bufferline")
-      let g:bufferline = {}
-    endif
-    let g:bufferline.icons={ 'buffer_index': 1, 'filetype': { 'enabled': 1 } }
+    " if !exists("g:bufferline")
+    "   let g:bufferline = {}
+    " endif
+    " let g:bufferline.icons="both"
 else
     let g:airline#extensions#tabline#enabled = 1
     let g:airline#extensions#tabline#buffer_nr_show = 1
@@ -640,6 +641,7 @@ let g:coc_global_extensions=[
             \ 'coc-lists',
             \ 'coc-snippets',
             \ 'coc-xml',
+            \ 'coc-pyright',
             \ 'coc-marketplace',
             \ 'coc-explorer',
             \ 'coc-lua' ,
