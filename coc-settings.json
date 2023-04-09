@@ -4,7 +4,7 @@
           "command": "csharp-ls",
           "filetypes": ["cs"],
           "rootPatterns": ["*.csproj", ".vim/", ".git/", ".hg/"]
-        }
+        },
 //        },
 //        "ccls": {
 //            "command": "ccls",
@@ -34,7 +34,6 @@
 
     "FSharp.UseSdkScripts": true,
     "FSharp.Linter": false,
-    "FSharp.server.trace": true,
 
     "xml.fileAssociations": [
         {
@@ -74,6 +73,7 @@
     "coc.preferences.useQuickfixForLocations": false,
     "coc.preferences.extensionUpdateCheck":"weekly",
     "coc.preferences.enableMarkdown": true,
+    "codeLens.position": "eol",
     "semanticTokens.filetypes":[ "fsharp" ],
     "hover.target": "float",
     "suggest.floatEnable": true,
