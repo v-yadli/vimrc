@@ -10,8 +10,7 @@ let g:polyglot_disabled = ['forth', 'fsharp', 'latex', 'xml', 'v', 'vlang']
 call plug#begin(g:plugged_dir)
 
 " Solidworks -- Passive plugins/burned into the brain, fire and forget
-Plug 'vim-airline/vim-airline-themes'
-Plug 'bling/vim-airline'
+
 Plug 'roxma/vim-tmux-clipboard'
 Plug 'tmux-plugins/vim-tmux-focus-events'
 Plug 'christoomey/vim-tmux-navigator'
@@ -70,6 +69,7 @@ Plug 'euclidianAce/BetterLua.vim'
 
 
 if g:vsim_environment=="neovim"
+    Plug 'nvim-lualine/lualine.nvim'
     Plug 'kyazdani42/nvim-web-devicons'
     Plug 'kassio/neoterm'
     Plug 'romgrk/barbar.nvim'
@@ -102,6 +102,76 @@ endif
 " Plug 'scrooloose/nerdtree',       <--- replaced by coc-explorer
 " Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 " Plug 'lervag/vimtex'
+"
+" Starting with neovim 0.11 or so, airline renders powerline symbols with wrong color...
+" Plug 'vim-airline/vim-airline-themes'
+" Plug 'bling/vim-airline'
+"
+"    " airline settings
+"    let g:airline_powerline_fonts=1
+"    let g:airline_inactive_collapse=1
+"    let g:airline_inactive_alt_sep=0
+"    let g:airline_detect_modified=1
+"    let g:airline_exclude_preview=1
+"    let g:airline_highlighting_cache=1
+"    let g:airline#extensions#wordcount#enabled = 1
+"    let g:airline#extensions#fugitiveline#enabled = 1
+"    let g:airline#extensions#branch#enabled = 1
+"    let g:airline#extensions#coc#get_error = 1
+"    let g:airline#extensions#coc#get_warning = 1
+"    let g:airline#extensions#whitespace#enabled = 0
+"    let g:airline_detect_spell=1
+"    let g:airline_detect_spelllang=1
+"    let g:airline_exclude_preview = 1
+"    if g:vsim_environment=="neovim"
+"        " use barbar
+"        " if !exists("g:bufferline")
+"        "   let g:bufferline = {}
+"        " endif
+"        " let g:bufferline.icons="both"
+"    else
+"        let g:airline#extensions#tabline#enabled = 1
+"        let g:airline#extensions#tabline#buffer_nr_show = 1
+"        let g:airline#extensions#tabline#buffer_nr_format = '%s: '
+"        let g:airline#extensions#tabline#fnamemod = ':t'
+"    endif
+"    
+"    " create airline parts for coc server status & coc_current_function
+"    function! VsimAirlineCocServer()
+"      return get(g:, 'coc_status', '')
+"    endfunction
+"    function! VsimAirlineCurrentFunction()
+"      let n = get(b:, 'coc_current_function', '')
+"      if n != ''
+"          return n.' '
+"      else
+"          return n
+"      endif
+"    endfunction
+"    function! VsimAirlineCurrentChar()
+"      let chr = matchstr(getline('.'), '\%' . col('.') . 'c.')
+"      return '[' . printf("0x%04X", char2nr(chr)) . ']'
+"    endfunction
+"    
+"    call airline#parts#define_function('coc', 'VsimAirlineCocServer')
+"    call airline#parts#define_function('buf_func', 'VsimAirlineCurrentFunction')
+"    call airline#parts#define_function('cur_char', 'VsimAirlineCurrentChar')
+"    
+"    function! AirlineInit()
+"      let spc=g:airline_symbols.space
+"      let g:airline_section_a = airline#section#create(['crypt', 'paste', 'spell', 'iminsert', 'coc'])
+"      let g:airline_section_x = airline#section#create(['buf_func', 'filetype'])
+"      let g:airline_section_y = airline#section#create(['ffenc'])
+"      let g:airline_section_z = airline#section#create(['cur_char', 'windowswap', 'obsession', '%3p%%'.spc, 'linenr', 'maxlinenr', spc.':%3v'])
+"    endfunction
+"    
+"    " exclude overwrite statusline of list filetype
+"    let g:airline_exclude_filetypes = ["list"]
+"
+"    " let g:falcon_airline = 1
+"    " let g:airline_theme = 'falcon'
+"    " let g:airline_theme='tomorrow'
+"    " let g:airline_theme='gruvbox'
 "
 " -------------- BEGIN legacy programming environment.. ----------------
 "  They never pulled it together well.. Really.
@@ -138,6 +208,42 @@ lua << EOF
     -- your configuration comes here
     -- or leave it empty to use the default settings
     -- refer to the configuration section below
+  }
+
+  -- status line parts
+  local function VsimStatuslineCurrentFunction()
+    local n = vim.b.coc_current_function or ''
+    if n ~= '' then
+      return n .. ' '
+    else
+      return n
+    end
+  end
+
+  local function VsimStatuslineCurrentChar()
+    local line = vim.fn.getline('.')
+    local col = vim.fn.col('.')
+    local chr = vim.fn.matchstr(line, '\\%' .. col .. 'c.')
+    return '[' .. string.format("0x%04X", vim.fn.char2nr(chr)) .. ']'
+  end
+
+  require("lualine").setup {
+    sections = {
+      lualine_a = {'mode'},
+      lualine_b = {'branch', 'diff', 'diagnostics'},
+      lualine_c = {'filename'},
+      lualine_x = {'encoding', 'fileformat', 'filetype', VsimStatuslineCurrentFunction},
+      lualine_y = {'progress'},
+      lualine_z = {'location', VsimStatuslineCurrentChar}
+    },
+    inactive_sections = {
+      lualine_a = {},
+      lualine_b = {},
+      lualine_c = {'filename'},
+      lualine_x = {'location'},
+      lualine_y = {},
+      lualine_z = {}
+    },
   }
 EOF
 
@@ -297,13 +403,8 @@ let g:tex_flavor = "latex"
 "}}}
 
 set background=dark
-let g:falcon_airline = 1
 let g:falcon_inactive = 1
 let g:falcon_background = 1
-
-let g:airline_theme = 'falcon'
-"let g:airline_theme='tomorrow'
-"let g:airline_theme='gruvbox'
 
 colorscheme Tomorrow-Night-Blue
 "colorscheme PaperColor
@@ -423,67 +524,7 @@ if exists("g:fvim_loaded")
     call coc#config('codeLens', {'separator': '▸'})
 endif
 
-" airline settings
-let g:airline_powerline_fonts=1
-let g:airline_inactive_collapse=1
-let g:airline_inactive_alt_sep=0
-let g:airline_detect_modified=1
-let g:airline_exclude_preview=1
-let g:airline_highlighting_cache=1
-let g:airline#extensions#wordcount#enabled = 1
-let g:airline#extensions#fugitiveline#enabled = 1
-let g:airline#extensions#branch#enabled = 1
-let g:airline#extensions#coc#get_error = 1
-let g:airline#extensions#coc#get_warning = 1
-let g:airline#extensions#whitespace#enabled = 0
-let g:airline_detect_spell=1
-let g:airline_detect_spelllang=1
-let g:airline_exclude_preview = 1
-if g:vsim_environment=="neovim"
-    " use barbar
-    " if !exists("g:bufferline")
-    "   let g:bufferline = {}
-    " endif
-    " let g:bufferline.icons="both"
-else
-    let g:airline#extensions#tabline#enabled = 1
-    let g:airline#extensions#tabline#buffer_nr_show = 1
-    let g:airline#extensions#tabline#buffer_nr_format = '%s: '
-    let g:airline#extensions#tabline#fnamemod = ':t'
-endif
 set ttimeoutlen=50
-
-" create airline parts for coc server status & coc_current_function
-function! VsimAirlineCocServer()
-  return get(g:, 'coc_status', '')
-endfunction
-function! VsimAirlineCurrentFunction()
-  let n = get(b:, 'coc_current_function', '')
-  if n != ''
-      return n.' '
-  else
-      return n
-  endif
-endfunction
-function! VsimAirlineCurrentChar()
-  let chr = matchstr(getline('.'), '\%' . col('.') . 'c.')
-  return '[' . printf("0x%04X", char2nr(chr)) . ']'
-endfunction
-
-call airline#parts#define_function('coc', 'VsimAirlineCocServer')
-call airline#parts#define_function('buf_func', 'VsimAirlineCurrentFunction')
-call airline#parts#define_function('cur_char', 'VsimAirlineCurrentChar')
-
-function! AirlineInit()
-  let spc=g:airline_symbols.space
-  let g:airline_section_a = airline#section#create(['crypt', 'paste', 'spell', 'iminsert', 'coc'])
-  let g:airline_section_x = airline#section#create(['buf_func', 'filetype'])
-  let g:airline_section_y = airline#section#create(['ffenc'])
-  let g:airline_section_z = airline#section#create(['cur_char', 'windowswap', 'obsession', '%3p%%'.spc, 'linenr', 'maxlinenr', spc.':%3v'])
-endfunction
-
-" exclude overwrite statusline of list filetype
-let g:airline_exclude_filetypes = ["list"]
 
 let g:indentLine_char_list = [ '┆', '┊']
 let g:indentLine_leadingSpaceChar = '·'
@@ -914,7 +955,7 @@ endif
 let s:vsim_theme_idx     = 0
 let s:vsim_theme_name    = ['falcon', 'gruvbox', 'gruvbox', 'Tomorrow', 'Tomorrow-Night', 'Tomorrow-Night-Blue', 'pencil', 'pencil', 'colorzone', 'PaperColor', 'PaperColor']
 let s:vsim_theme_bg      = ['dark',   'dark',    'light',   'light',    'dark',           'dark',                'light',  'dark',   'light',     'light',      'dark']
-let s:vsim_theme_airline = ['falcon', 'gruvbox', 'gruvbox', 'tomorrow', 'tomorrow',       'tomorrow',            '',       '',       '',          'papercolor', 'papercolor']
+" let s:vsim_theme_airline = ['falcon', 'gruvbox', 'gruvbox', 'tomorrow', 'tomorrow',       'tomorrow',            '',       '',       '',          'papercolor', 'papercolor']
 
 function! VsimToggleColor()
     let s:vsim_theme_idx = s:vsim_theme_idx + 1
@@ -924,15 +965,15 @@ function! VsimToggleColor()
 
     let l:theme   = s:vsim_theme_name[s:vsim_theme_idx]
     let l:bg      = s:vsim_theme_bg[s:vsim_theme_idx]
-    let l:airline = s:vsim_theme_airline[s:vsim_theme_idx]
+    " let l:airline = s:vsim_theme_airline[s:vsim_theme_idx]
 
     execute "colorscheme "    . l:theme
     execute "set background=" . l:bg
 
-    if l:airline != ""
-        let g:airline_theme = l:airline
-        AirlineRefresh
-    endif
+    "  if l:airline != ""
+    "      let g:airline_theme = l:airline
+    "      AirlineRefresh
+    "  endif
 
     if exists('g:fvim_loaded')
         FVimFontNormalWeight (l:bg == 'dark') ? 300 : 400
@@ -1013,7 +1054,7 @@ augroup vsim
   autocmd FileType tex,mkd,markdown call VsimWriterMode()
   " -- close preview window when completion is done.
   autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
-  autocmd User AirlineAfterInit call AirlineInit()
+  " autocmd User AirlineAfterInit call AirlineInit()
   autocmd FileType c,cpp,typescript,javascript,json,ps1,psm1,psd1,fsharp,cs,python,vim,xml,sh,cuda,verilog,vue,tex,lua,fnl call VsimProgrammerMode()
   autocmd TermOpen * if g:colors_name == g:vsim_termbg | setlocal winhighlight=Normal:VsimTermBackground | endif
 augroup END

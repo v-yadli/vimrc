@@ -6,3 +6,4 @@ plugged
 rplugin.vim
 .netrwhist
 test/*
+**/.ccls-cache
